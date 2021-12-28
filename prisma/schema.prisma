@@ -14,11 +14,11 @@ generator client {
 }
 
 model Deck {
-  id            Int      @default(autoincrement()) @id
+  id            String   @default(uuid()) @id
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   title         String   @db.VarChar(255)
-  description   String
-  creatorId     String   @default("")
+  description   String   @default("")
+  creatorId     String   
 }
 
