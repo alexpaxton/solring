@@ -13,7 +13,6 @@ const CreateDeck: NextPage = () => {
     const data = {
       ...draftDeck,
       createdAt: new Date(Date.now()),
-      updatedAt: new Date(Date.now()),
       creatorId: 'boosh',
     }
 
