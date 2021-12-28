@@ -1,13 +1,17 @@
 import { FC, ReactNode } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
 import { useUser } from '@auth0/nextjs-auth0'
+
+const navExcludedRoutes = ['/user/pick-a-handle']
 
 interface Props {
     children: ReactNode
 }
 
 export const AppWrapper: FC<Props> = ({children}) => {
+  const { pathname } = useRouter()
   const { user } = useUser()
 
   let actions = (
@@ -24,17 +28,21 @@ export const AppWrapper: FC<Props> = ({children}) => {
     )
   }
 
+  const renderHeader = navExcludedRoutes.some(route => pathname.startsWith(route)) === false
+
   return (
     <App>
-      <Header>
-        <Left>
-          <Link href="/">
-            <Logo>Sol Ring</Logo>
-          </Link>
-          <Link href="/decks"><button>Decks</button></Link>
-        </Left>
-        <Actions>{actions}</Actions>
-      </Header>
+      {renderHeader && (
+        <Header>
+          <Left>
+            <Link href="/">
+              <Logo>Sol Ring</Logo>
+            </Link>
+            <Link href="/decks"><button>Decks</button></Link>
+          </Left>
+          <Actions>{actions}</Actions>
+        </Header>
+      )}
       <Main>{children}</Main>
     </App>
   )
