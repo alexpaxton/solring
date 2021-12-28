@@ -24,7 +24,9 @@ const CreateDeck: NextPage = () => {
         },
         body: JSON.stringify(data),
       })
-      console.log('create', resp)
+
+      const {newDeck} = await resp.json()
+      console.log('create', newDeck)
       window.alert('deck created!')
     } catch(err) {
       console.error(err)
