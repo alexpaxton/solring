@@ -1,8 +1,8 @@
 import { FC, ReactNode } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { useMe } from 'utils'
 import { useRouter } from 'next/router'
-import { useUser } from '@auth0/nextjs-auth0'
 
 const navExcludedRoutes = ['/user/pick-a-handle']
 
@@ -12,16 +12,16 @@ interface Props {
 
 export const AppWrapper: FC<Props> = ({children}) => {
   const { pathname } = useRouter()
-  const { user } = useUser()
+  const { user, handle } = useMe()
 
   let actions = (
     <a href="/api/auth/login">Login</a>
   )
 
-  if (user) {
+  if (user && handle) {
     actions = (
       <>
-        <p>Welcome {user.name}!</p>
+        <p>Logged in as {handle}</p>
         <Link href="/decks/create"><button type="button">Create Deck</button></Link>
         <a href="/api/auth/logout">Logout</a>
       </>
