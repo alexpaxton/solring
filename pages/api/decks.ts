@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import {prisma} from 'utils'
 
-export default async function assetHandler(req, res) {
+export default async function assetHandler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req
 
   switch (method) {
