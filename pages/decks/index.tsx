@@ -1,7 +1,8 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { prisma, stringifyDeckTimestamps } from 'utils'
 import {Deck} from 'types'
 import Head from 'next/head'
+import {prisma} from 'utils/prisma'
+import { stringifyDeckTimestamps } from 'utils'
 import styled from 'styled-components'
 
 interface Props {
