@@ -18,7 +18,7 @@ export const AppWrapper: FC<Props> = ({children}) => {
     actions = (
       <>
         <p>Welcome {user.name}!</p>
-        <Link href="/decks/create">Create Deck</Link>
+        <Link href="/decks/create"><button type="button">Create Deck</button></Link>
         <a href="/api/auth/logout">Logout</a>
       </>
     )
@@ -27,9 +27,12 @@ export const AppWrapper: FC<Props> = ({children}) => {
   return (
     <App>
       <Header>
-        <Link href="/">
-          <Logo>Sol Ring</Logo>
-        </Link>
+        <Left>
+          <Link href="/">
+            <Logo>Sol Ring</Logo>
+          </Link>
+          <Link href="/decks"><button>Decks</button></Link>
+        </Left>
         <Actions>{actions}</Actions>
       </Header>
       <Main>{children}</Main>
@@ -38,37 +41,55 @@ export const AppWrapper: FC<Props> = ({children}) => {
 }
 
 const App = styled.div`
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 `
 
 const Header = styled.header`
-    flex: 0 0 80px;
-    display: flex;
-    align-items: center;
-    background-color: #ccc;
-    padding: 0 30px;
-    justify-content: space-between;
+  flex: 0 0 80px;
+  display: flex;
+  align-items: center;
+  background-color: #ccc;
+  padding: 0 30px;
+  justify-content: space-between;
+`
+
+const Left = styled.div`
+  display: flex;
+  align-items: center;
+
+  & > button {
+    margin-left: 16px;
+  }
 `
 
 const Logo = styled.h1`
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0;
-    line-height: 1em;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+  line-height: 1em;
 `
 
 const Actions = styled.div`
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+
+  & > button,
+  & > a {
+    margin-left: 16px;
+  }
 `
 
 const Main = styled.main`
-    display: flex;
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  overflow: auto;
 `

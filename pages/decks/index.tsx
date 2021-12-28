@@ -47,11 +47,11 @@ function Decks({decks}: InferGetStaticPropsType<typeof getStaticProps>) {
 export default Decks
 
 const DeckGrid = styled.div`
-  padding: 8px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   display: grid;
   column-gap: 8px;
   row-gap: 8px;
+  margin-top: 30px;
 `
 
 const DeckCard = styled.div`

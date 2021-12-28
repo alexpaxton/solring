@@ -67,7 +67,9 @@ const Search = styled.div`
 `
 
 const Results = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-rows: 1fr;
+  grid-gap: 8px;
+  overflow: auto;
 `

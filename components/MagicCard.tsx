@@ -4,9 +4,7 @@ import styled from 'styled-components'
 
 export const MagicCard: FC<Card> = ({image_uris}) => {
   return (
-    <Container>
-      {image_uris && <img src={image_uris?.normal}/>}
-    </Container>
+    <Container style={{ backgroundImage: `url(${image_uris?.normal})` }} />
   )
 }
 
@@ -15,9 +13,14 @@ const Container = styled.div`
   border-radius: 7px;
   background-color: #ccc;
   margin-bottom: 4px;
-  overflow: hidden;
+  display: flex;
+  background-size: cover;
 
-  img {
-    width: 164px;
+  &:before {
+    content: "";
+    display: block;
+    height: 0;
+    width: 0;
+    padding-bottom: calc(680 / 488 * 100%);
   }
 `
