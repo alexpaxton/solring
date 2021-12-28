@@ -19,4 +19,6 @@ model Deck {
   updatedAt     DateTime @updatedAt
   title         String   @db.VarChar(255)
   description   String
+  creatorId     String   @default("")
 }
+
