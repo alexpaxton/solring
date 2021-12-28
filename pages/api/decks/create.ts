@@ -11,7 +11,7 @@ export default async function assetHandler(
   case 'POST':
     try {
       const newDeck = await prisma.deck.create({data: body})
-      res.status(200).json(newDeck)
+      res.status(200).json({newDeck})
     } catch (e) {
       console.error('Request error', e)
       res.status(500).json({ error: 'Error creating deck' })

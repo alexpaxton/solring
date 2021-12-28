@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react'
+import Link from 'next/link'
 import styled from 'styled-components'
 import { useUser } from '@auth0/nextjs-auth0'
 
@@ -17,6 +18,7 @@ export const AppWrapper: FC<Props> = ({children}) => {
     actions = (
       <>
         <p>Welcome {user.name}!</p>
+        <Link href="/decks/create">Create Deck</Link>
         <a href="/api/auth/logout">Logout</a>
       </>
     )
@@ -25,12 +27,12 @@ export const AppWrapper: FC<Props> = ({children}) => {
   return (
     <App>
       <Header>
-        <Logo>Sol Ring</Logo>
+        <Link href="/">
+          <Logo>Sol Ring</Logo>
+        </Link>
         <Actions>{actions}</Actions>
       </Header>
-      <Main>
-        {children}
-      </Main>
+      <Main>{children}</Main>
     </App>
   )
 }

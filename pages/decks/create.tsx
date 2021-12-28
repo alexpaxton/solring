@@ -25,9 +25,8 @@ const CreateDeck: NextPage = () => {
         },
         body: JSON.stringify(data),
       })
-      if (resp.status === 200) {
-        window.alert('deck created!')
-      }
+      console.log('create', resp)
+      window.alert('deck created!')
     } catch(err) {
       console.error(err)
     } 
