@@ -22,3 +22,10 @@ model Deck {
   creatorId     String   
 }
 
+model User {
+  id            String   @default(uuid()) @id
+  createdAt     DateTime @default(now())
+  email         String   @unique
+  handle        String   @db.VarChar(255) @unique
+}
+
