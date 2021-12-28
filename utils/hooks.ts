@@ -1,14 +1,16 @@
 import {useEffect, useState} from 'react'
 import {Me} from 'types'
 import {getMe} from 'utils'
+import {useRouter} from 'next/router'
 
 export const useMe = (): Me => {
+  const {pathname} = useRouter()
   const [isLoading, setLoading] = useState<boolean>(true)
   const [me, updateMe] = useState<Me>({isLoading: true})
 
   useEffect(() => {
     getCurrentUser()
-  }, [])
+  }, [pathname])
 
   async function getCurrentUser(): Promise<void> {
     setLoading(true)
