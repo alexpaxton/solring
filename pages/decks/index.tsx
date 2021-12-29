@@ -1,5 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import {Deck} from 'types'
+import {DeckCard} from 'components/DeckCard'
 import Head from 'next/head'
 import {prisma} from 'utils/prisma'
 import { stringifyDeckTimestamps } from 'utils'
@@ -29,7 +30,7 @@ function Decks({decks}: InferGetStaticPropsType<typeof getStaticProps>) {
     body = (
       <DeckGrid>
         {decks.map((deck) => (
-          <DeckCard key={deck.id}>{deck.title}</DeckCard>
+          <DeckCard key={deck.id} {...deck}/>
         ))}
       </DeckGrid>
     )
@@ -48,16 +49,22 @@ function Decks({decks}: InferGetStaticPropsType<typeof getStaticProps>) {
 export default Decks
 
 const DeckGrid = styled.div`
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   display: grid;
-  column-gap: 8px;
-  row-gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-auto-rows: 1fr;
+  grid-gap: 8px;
   margin-top: 30px;
-`
 
-const DeckCard = styled.div`
-  height: 100px;
-  background-color: #ccc;
-  border-radius: 4px;
-  padding: 8px;
+  &:before {
+    content: "";
+    width: 0;
+    padding-bottom: 70%;
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+  }
+
+  & > *:first-child {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+  }
 `
