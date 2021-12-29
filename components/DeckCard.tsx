@@ -1,11 +1,14 @@
 import { Deck } from 'types'
 import {FC} from 'react'
+import Link from 'next/link'
 import styled from 'styled-components'
 
-export const DeckCard: FC<Deck> = ({title, description, creatorHandle}) => {
+export const DeckCard: FC<Deck> = ({id, title, description, creatorHandle}) => {
   return (
     <Card>
-      <CardTitle>{title}</CardTitle>
+      <Link href={`/decks/${id}`}>
+        <CardTitle>{title}</CardTitle>
+      </Link>
       {description && <CardDesc>{description}</CardDesc>}
       <Creator>{`@${creatorHandle}`}</Creator>
     </Card>
@@ -23,6 +26,12 @@ const Card = styled.div`
 const CardTitle = styled.div`
   font-weight: bold;
   font-size: 16px;
+  cursor: pointer;
+  color: #0000ff;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `
 
 const CardDesc = styled.div`

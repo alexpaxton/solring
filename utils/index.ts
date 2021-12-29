@@ -1,4 +1,4 @@
-export { stringifyDeckTimestamps } from './parsers'
+export { stringifyDeckTimestamps, stringifyDecksTimestamps } from './parsers'
 export { sanitizeHandleInput } from './user_handles'
 export * from './apiCalls'
 export * from './hooks'

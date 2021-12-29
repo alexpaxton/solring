@@ -4,7 +4,7 @@ import {Deck} from 'types'
 import {DeckCard} from 'components/DeckCard'
 import Head from 'next/head'
 import {pluralizer} from 'utils'
-import { stringifyDeckTimestamps } from 'utils'
+import { stringifyDecksTimestamps } from 'utils'
 import styled from 'styled-components'
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 export const getStaticProps: GetStaticProps<Props> = async () => {
   try {
     const prismaDecks = await prisma.deck.findMany({ orderBy: { title: 'asc' } })
-    const cleanedDecks = stringifyDeckTimestamps(prismaDecks)
+    const cleanedDecks = stringifyDecksTimestamps(prismaDecks)
     const decksWithHandles = await Promise.all(
       cleanedDecks.map(addHandleToDeck)
     )
