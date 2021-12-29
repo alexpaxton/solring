@@ -1,4 +1,4 @@
-import { Deck as PrismaDeck } from '@prisma/client'
+import { Deck as PrismaDeck, User as PrismaUser } from '@prisma/client'
 import { UserProfile } from '@auth0/nextjs-auth0'
 
 export interface CleanedDeck extends Omit<PrismaDeck, 'createdAt' | 'updatedAt'> {
@@ -8,6 +8,11 @@ export interface CleanedDeck extends Omit<PrismaDeck, 'createdAt' | 'updatedAt'>
 
 export interface Deck extends CleanedDeck {
   creatorHandle: string
+}
+
+export interface User
+  extends Omit<PrismaUser, 'createdAt'> {
+  createdAt: string;
 }
 
 export interface Me {
