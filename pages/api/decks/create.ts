@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { getSession } from '@auth0/nextjs-auth0'
 import { prisma } from 'utils/prisma'
 
 export default async function assetHandler(
@@ -10,7 +11,31 @@ export default async function assetHandler(
   switch (method) {
   case 'POST':
     try {
-      const newDeck = await prisma.deck.create({data: body})
+      const session = await getSession(req, res)
+
+      if (!session) {
+        res.status(500).json({ error: 'No session' })
+        return
+      }
+
+      const sessionUser = session.user
+      const user = await prisma.user.findUnique({
+        where: { email: sessionUser.email },
+      })
+
+      if (!user) {
+        res.status(500).json({ error: 'Error fetching user' })
+        return
+      }
+
+      const data = {
+        ...body,
+        creator: user,
+      }
+
+      const newDeck = await prisma.deck.create({data})
+      // get user from session
+      // add user 
       res.status(200).json({newDeck})
     } catch (e) {
       console.error('Request error', e)

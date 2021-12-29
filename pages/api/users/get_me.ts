@@ -14,7 +14,7 @@ export default async function assetHandler(
       const session = await getSession(req, res)
 
       if (!session) {
-        res.status(500).json({ error: 'Error fetching user' })
+        res.status(500).json({ error: 'No session' })
         return
       }
 
