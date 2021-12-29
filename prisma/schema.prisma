@@ -20,6 +20,7 @@ model Deck {
   title         String   @db.VarChar(255)
   description   String   @default("")
   creatorId     String   
+  creator       User      @relation(fields: [creatorId], references: [id])
 }
 
 model User {
@@ -27,5 +28,6 @@ model User {
   createdAt     DateTime @default(now())
   email         String   @unique
   handle        String   @db.VarChar(255) @unique
+  decks         Deck[]
 }
 
