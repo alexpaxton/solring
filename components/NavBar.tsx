@@ -16,7 +16,9 @@ export const NavBar: FC = () => {
   if (user && handle) {
     actions = (
       <>
-        <p>Logged in as {handle}</p>
+        <p>
+          Logged in as <strong>{`@${handle}`}</strong>
+        </p>
         <Link href="/decks/create">
           <button type="button">Create Deck</button>
         </Link>
