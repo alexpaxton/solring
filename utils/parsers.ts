@@ -1,8 +1,8 @@
-import {Deck} from 'types'
+import {CleanedDeck} from 'types'
 import {Deck as PrismaDeck} from '@prisma/client'
 
-export function stringifyDeckTimestamps(decks: PrismaDeck[]): Deck[] {
-  return decks.map(deck => {
+export function stringifyDeckTimestamps(decks: PrismaDeck[]): CleanedDeck[] {
+  return decks.map((deck) => {
     return {
       ...deck,
       createdAt: deck.createdAt.toString(),

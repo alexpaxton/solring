@@ -2,12 +2,12 @@ import { Deck } from 'types'
 import {FC} from 'react'
 import styled from 'styled-components'
 
-export const DeckCard: FC<Deck> = ({title, description, creatorId}) => {
+export const DeckCard: FC<Deck> = ({title, description, creatorHandle}) => {
   return (
     <Card>
       <CardTitle>{title}</CardTitle>
       {description && <CardDesc>{description}</CardDesc>}
-      <Creator>{`@${creatorId}`}</Creator>
+      <Creator>{`@${creatorHandle}`}</Creator>
     </Card>
   )
 }

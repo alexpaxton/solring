@@ -1,11 +1,11 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import { addHandleToDeck, prisma } from 'utils/prisma'
 import {Deck} from 'types'
 import {DeckCard} from 'components/DeckCard'
 import Head from 'next/head'
-import {prisma} from 'utils/prisma'
+import {pluralizer} from 'utils'
 import { stringifyDeckTimestamps } from 'utils'
 import styled from 'styled-components'
-import {pluralizer} from 'utils'
 
 interface Props {
   decks: Deck[]
@@ -14,9 +14,13 @@ interface Props {
 export const getStaticProps: GetStaticProps<Props> = async () => {
   try {
     const prismaDecks = await prisma.deck.findMany({ orderBy: { title: 'asc' } })
-    const decks = stringifyDeckTimestamps(prismaDecks)
+    const cleanedDecks = stringifyDeckTimestamps(prismaDecks)
+    const decksWithHandles = await Promise.all(
+      cleanedDecks.map(addHandleToDeck)
+    )
+
     return {
-      props: { decks },
+      props: { decks: decksWithHandles },
     }
   } catch (err) {
     console.error(err)
