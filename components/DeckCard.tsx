@@ -1,6 +1,7 @@
 import { Deck } from 'types'
 import {FC} from 'react'
 import Link from 'next/link'
+import { Username } from 'components/Username'
 import styled from 'styled-components'
 
 export const DeckCard: FC<Deck> = ({id, title, description, creatorHandle}) => {
@@ -10,7 +11,9 @@ export const DeckCard: FC<Deck> = ({id, title, description, creatorHandle}) => {
         <CardTitle>{title}</CardTitle>
       </Link>
       {description && <CardDesc>{description}</CardDesc>}
-      <Creator>{`@${creatorHandle}`}</Creator>
+      <Creator>
+        <Username>{creatorHandle}</Username>
+      </Creator>
     </Card>
   )
 }

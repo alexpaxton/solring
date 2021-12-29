@@ -1,7 +1,9 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { addHandleToDeck, prisma } from 'utils/prisma'
 import { Deck } from 'types'
+import { EditDeckButton } from 'components/EditDeckButton'
 import Head from 'next/head'
+import { Username } from 'components/Username'
 import { stringifyDeckTimestamps } from 'utils'
 import styled from 'styled-components'
 
@@ -41,17 +43,18 @@ function DeckPage({ deck }: InferGetStaticPropsType<typeof getStaticProps>) {
   let title = 'Loading...'
   let body = <p>Loading...</p>
 
-
-
   if (deck) {
     title = deck.title
     body = (
       <DeckMeta>
-        <h1>{deck.title}</h1>
+        <TitleBar>
+          <h1>{deck.title}</h1>
+          <EditDeckButton creatorId={deck.creatorId} />
+        </TitleBar>
         <p>
-          Created by <strong>{deck.creatorHandle}</strong>
+          Created by <Username>{deck.creatorHandle}</Username>
         </p>
-        <p>{deck.description || 'No description'}</p>
+        <Description>{deck.description || 'No description'}</Description>
       </DeckMeta>
     )
   }
@@ -74,5 +77,16 @@ const DeckMeta = styled.div`
     padding-bottom: 60px;
     border-bottom: 1px solid #eee;
     margin-bottom: 60px;
+`
+
+const TitleBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
+const Description = styled.p`
+  font-size: 13px;
+  margin-top: 24px;
 `
 
