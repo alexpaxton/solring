@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { useMe } from 'utils'
 import { useRouter } from 'next/router'
 
-const navExcludedRoutes = ['/user/pick-a-handle']
+const navExcludedRoutes = ['/register/pick-a-handle']
 
 interface Props {
     children: ReactNode

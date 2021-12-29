@@ -30,7 +30,7 @@ const afterCallback: AfterCallback = async (
     console.log('User exists, proceed')
   } else {
     console.log('User does not exist or has not chosen a handle')
-    state.returnTo = `${state.returnTo}/user/pick-a-handle`
+    state.returnTo = `${state.returnTo}/register/pick-a-handle`
     console.log('state', state)
   }
   return session
