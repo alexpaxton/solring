@@ -5,6 +5,7 @@ import Head from 'next/head'
 import {prisma} from 'utils/prisma'
 import { stringifyDeckTimestamps } from 'utils'
 import styled from 'styled-components'
+import {pluralizer} from 'utils'
 
 interface Props {
   decks: Deck[]
@@ -25,6 +26,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
 function Decks({decks}: InferGetStaticPropsType<typeof getStaticProps>) {
   let body = <p>No decks exist</p>
+  const title = pluralizer('Deck', decks.length, true)
 
   if (decks.length) {
     body = (
@@ -35,12 +37,13 @@ function Decks({decks}: InferGetStaticPropsType<typeof getStaticProps>) {
       </DeckGrid>
     )
   }
+
   return (
     <>
       <Head>
         <title>Sol Ring / Decks</title>
       </Head>
-      <p>{decks.length} Decks</p>
+      <p>{title}</p>
       {body}
     </>
   )
