@@ -30,7 +30,7 @@ export default async function assetHandler(
 
       const data = {
         ...body,
-        creator: user,
+        creatorId: user.id,
       }
 
       const newDeck = await prisma.deck.create({data})
