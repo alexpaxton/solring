@@ -62,7 +62,7 @@ export const CreateDeckForm: FC<Props> = ({onSubmit}) => {
         value={description}
         onChange={handleInputChange}
       />
-      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleSubmit}>Create</button>
     </Wrapper>
   )
 }
