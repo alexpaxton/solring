@@ -1,34 +1,29 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { addHandleToDeck, prisma } from 'data_utils'
-import { Deck } from 'types'
+import { DeckWithHandle } from 'types'
 import { EditDeckButton } from 'components/EditDeckButton'
 import Head from 'next/head'
 import { Username } from 'components/Username'
-import { stringifyDeckTimestamps } from 'utils'
+import { prisma } from 'data_utils'
 import styled from 'styled-components'
 
 interface Props {
-  deck?: Deck;
+  deck: DeckWithHandle | null;
+  error?: string;
 }
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const id = context.params?.id as string
 
   try {
-    const prismaDeck = await prisma.deck.findUnique({where: {id: id}})
-    if (!prismaDeck) {
-      throw new Error('Can\'t find deck with that id')
-    }
-
-    const cleanedDeck = stringifyDeckTimestamps(prismaDeck)
-    const deckWithHandle = await addHandleToDeck(cleanedDeck)
+    const deck = await prisma.deck.findUnique({where: {id: id}, include: {creator: {select: {handle: true}}}})
+    const error = deck ? undefined : 'Couldn\'t find a deck with that ID'
 
     return {
-      props: { deck: deckWithHandle },
+      props: { deck, error },
     }
   } catch (err) {
     console.error(err)
-    return { props: { deck: undefined } }
+    return { props: { deck: null, error: 'Error fetching deck' } }
   }
 }
 
@@ -39,9 +34,16 @@ export async function getStaticPaths() {
   }
 }
 
-function DeckPage({ deck }: InferGetStaticPropsType<typeof getStaticProps>) {
+function DeckPage({ deck, error }: InferGetStaticPropsType<typeof getStaticProps>) {
   let title = 'Loading...'
   let body = <p>Loading...</p>
+
+  if (error) {
+    title = 'Oh no!'
+    body = (
+      <p>{error}</p>
+    )
+  }
 
   if (deck) {
     title = deck.title
@@ -52,7 +54,7 @@ function DeckPage({ deck }: InferGetStaticPropsType<typeof getStaticProps>) {
           <EditDeckButton creatorId={deck.creatorId} />
         </TitleBar>
         <p>
-          Created by <Username>{deck.creatorHandle}</Username>
+          Created by <Username>{deck.creator.handle}</Username>
         </p>
         <Description>{deck.description || 'No description'}</Description>
       </DeckMeta>

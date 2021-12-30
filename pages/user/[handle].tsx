@@ -1,39 +1,35 @@
-import { Deck, User } from 'types'
+import { DeckWithHandle, User } from 'types'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { addHandleToDeck, prisma } from 'data_utils'
-import { stringifyDecksTimestamps, stringifyUserTimestamps } from 'utils'
 import { DeckGrid } from 'components/DeckGrid'
 import Head from 'next/head'
 import { pluralizer } from 'utils'
+import { prisma } from 'data_utils'
 import styled from 'styled-components'
 
 interface Props {
-  user?: User;
-  decks: Deck[]
+  user: User | null;
+  error?: string
+  decks: DeckWithHandle[];
 }
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const handle = context.params?.handle as string
 
   try {
-    const prismaUser = await prisma.user.findUnique({where: {handle: handle}})
-    if (!prismaUser) {
-      throw new Error('Can\'t find user with that handle')
+    const user = await prisma.user.findUnique({where: {handle: handle}})
+    let decks: DeckWithHandle[] = []
+    const error = user ? undefined : 'Couldn\'t find a user with that handle'
+
+    if (user) {
+      decks = await prisma.deck.findMany({where: {creatorId: user.id}, include: {creator: {select: {handle: true}}}})
     }
 
-    const user = stringifyUserTimestamps(prismaUser)
-    const prismaDecks = await prisma.deck.findMany({where: {creatorId: user.id}})
-
-    const cleanedDecks = stringifyDecksTimestamps(prismaDecks)
-
-    const decks = await Promise.all(cleanedDecks.map(addHandleToDeck))
-
     return {
-      props: { user, decks },
+      props: { user, decks, error },
     }
   } catch (err) {
     console.error(err)
-    return { props: { user: undefined, decks: [] } }
+    return { props: { user: null, decks: [], error: 'Error fetching user' } }
   }
 }
 
@@ -44,9 +40,14 @@ export async function getStaticPaths() {
   }
 }
 
-function UserPage({ user, decks }: InferGetStaticPropsType<typeof getStaticProps>) {
+function UserPage({ user, decks, error }: InferGetStaticPropsType<typeof getStaticProps>) {
   let title = 'Loading...'
   let meta = <p>Loading...</p>
+
+  if (error) {
+    title = 'Oh no!'
+    meta = <p>{error}</p>
+  }
 
   if (user) {
     title = user.handle

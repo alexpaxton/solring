@@ -1,10 +1,10 @@
-import { Deck } from 'types'
 import { DeckCard } from 'components/DeckCard'
+import { DeckWithHandle } from 'types'
 import {FC} from 'react'
 import styled from 'styled-components'
 
 interface Props {
-  decks?: Deck[];
+  decks?: DeckWithHandle[];
 }
 
 export const DeckGrid: FC<Props> = ({decks}) => {
