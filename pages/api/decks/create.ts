@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from '@auth0/nextjs-auth0'
-import { prisma } from 'utils/prisma'
+import { prisma } from 'data_utils'
 
 export default async function assetHandler(
   req: NextApiRequest,

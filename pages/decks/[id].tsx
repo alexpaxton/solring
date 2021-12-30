@@ -1,5 +1,5 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { addHandleToDeck, prisma } from 'utils/prisma'
+import { addHandleToDeck, prisma } from 'data_utils'
 import { Deck } from 'types'
 import { EditDeckButton } from 'components/EditDeckButton'
 import Head from 'next/head'

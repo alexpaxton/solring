@@ -1,12 +1,15 @@
+import { Deck, User } from 'types'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import { addHandleToDeck, prisma } from 'data_utils'
+import { stringifyDecksTimestamps, stringifyUserTimestamps } from 'utils'
+import { DeckGrid } from 'components/DeckGrid'
 import Head from 'next/head'
-import { User } from 'types'
-import { prisma } from 'utils/prisma'
-import { stringifyUserTimestamps } from 'utils'
+import { pluralizer } from 'utils'
 import styled from 'styled-components'
 
 interface Props {
   user?: User;
+  decks: Deck[]
 }
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
@@ -19,13 +22,18 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
     }
 
     const user = stringifyUserTimestamps(prismaUser)
+    const prismaDecks = await prisma.deck.findMany({where: {creatorId: user.id}})
+
+    const cleanedDecks = stringifyDecksTimestamps(prismaDecks)
+
+    const decks = await Promise.all(cleanedDecks.map(addHandleToDeck))
 
     return {
-      props: { user },
+      props: { user, decks },
     }
   } catch (err) {
     console.error(err)
-    return { props: { user: undefined } }
+    return { props: { user: undefined, decks: [] } }
   }
 }
 
@@ -36,17 +44,18 @@ export async function getStaticPaths() {
   }
 }
 
-function UserPage({ user }: InferGetStaticPropsType<typeof getStaticProps>) {
+function UserPage({ user, decks }: InferGetStaticPropsType<typeof getStaticProps>) {
   let title = 'Loading...'
-  let body = <p>Loading...</p>
+  let meta = <p>Loading...</p>
 
   if (user) {
     title = user.handle
-    body = (
+    meta = (
       <DeckMeta>
         <TitleBar>
           <h1>{user.handle}</h1>
         </TitleBar>
+        <p>{pluralizer('Deck', decks.length, true)}</p>
       </DeckMeta>
     )
   }
@@ -56,7 +65,8 @@ function UserPage({ user }: InferGetStaticPropsType<typeof getStaticProps>) {
       <Head>
         <title>Sol Ring / {title}</title>
       </Head>
-      {body}
+      {meta}
+      <DeckGrid decks={decks} />
     </>
   )
 }

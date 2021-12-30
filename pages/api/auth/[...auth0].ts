@@ -4,7 +4,7 @@ import {
   handleAuth,
   handleCallback,
 } from '@auth0/nextjs-auth0'
-import { prisma } from 'utils/prisma'
+import { prisma } from 'data_utils'
 
 interface TransientStore {
   [key: string]: any

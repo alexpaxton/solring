@@ -1,11 +1,6 @@
 import { CleanedDeck, Deck } from 'types'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from './prisma'
 
-export const prisma: PrismaClient = new PrismaClient()
-
-// if (process.env.NODE_ENV === 'development') global.prisma = prisma
-
-// Put this somewhere else. Keep running into issue where you can't import prisma client into frontend code
 export const addHandleToDeck = async (deck: CleanedDeck): Promise<Deck> => {
   const { creatorId } = deck
   const user = await prisma.user.findUnique({ where: { id: creatorId } })

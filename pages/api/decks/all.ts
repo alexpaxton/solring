@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import {prisma} from 'utils/prisma'
+import {prisma} from 'data_utils'
 
 export default async function assetHandler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req
