@@ -35,6 +35,7 @@ export default async function assetHandler(
 
       if (user.email !== sessionUser.email) {
         res.status(401).json({ error: 'Not allowed to edit this deck' })
+        return
       }
 
       const updatedDeck = await prisma.deck.update({
