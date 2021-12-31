@@ -1,5 +1,5 @@
-import {CreateHandleForm} from 'components/CreateHandleForm'
-import {FC} from 'react'
+import { CreateHandleForm } from 'components/CreateHandleForm'
+import { FC } from 'react'
 
 const PickAHandlePage: FC = () => {
   return (

@@ -1,5 +1,9 @@
-import { DeckWithHandle, User } from 'types'
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import {
+  DeckWithHandle, User 
+} from 'types'
+import {
+  GetStaticProps, InferGetStaticPropsType 
+} from 'next'
 import { DeckGrid } from 'components/DeckGrid'
 import Head from 'next/head'
 import { pluralizer } from 'utils'
@@ -16,20 +20,29 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const handle = context.params?.handle as string
 
   try {
-    const user = await prisma.user.findUnique({where: {handle: handle}})
+    const user = await prisma.user.findUnique({ where: { handle: handle } })
     let decks: DeckWithHandle[] = []
     const error = user ? undefined : 'Couldn\'t find a user with that handle'
 
     if (user) {
-      decks = await prisma.deck.findMany({where: {creatorId: user.id}, include: {creator: {select: {handle: true}}}})
+      decks = await prisma.deck.findMany({
+        where: { creatorId: user.id },
+        include: { creator: { select: { handle: true } } } 
+      })
     }
 
-    return {
-      props: { user, decks, error },
-    }
+    return { props: {
+      user,
+      decks,
+      error 
+    }, }
   } catch (err) {
     console.error(err)
-    return { props: { user: null, decks: [], error: 'Error fetching user' } }
+    return { props: {
+      user: null,
+      decks: [],
+      error: 'Error fetching user' 
+    } }
   }
 }
 
@@ -40,7 +53,9 @@ export async function getStaticPaths() {
   }
 }
 
-function UserPage({ user, decks, error }: InferGetStaticPropsType<typeof getStaticProps>) {
+function UserPage({
+  user, decks, error 
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   let title = 'Loading...'
   let meta = <p>Loading...</p>
 

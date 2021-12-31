@@ -1,6 +1,8 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from '@auth0/nextjs-auth0'
 import { prisma } from 'data_utils'
+import {
+  NextApiRequest, NextApiResponse
+} from 'next'
 
 export default async function assetHandler(
   req: NextApiRequest,
@@ -19,23 +21,26 @@ export default async function assetHandler(
       }
 
       const sessionUser = session.user
-      const user = await prisma.user.findUnique({
-        where: { email: sessionUser.email },
-      })
+      const user = await prisma.user.findUnique(
+        { where: { email: sessionUser.email } }
+      )
 
       if (!user) {
         res.status(500).json({ error: 'Error fetching user' })
         return
       }
 
-      res.status(200).json({...user, user: sessionUser})
+      res.status(200).json({
+        ...user,
+        user: sessionUser 
+      })
     } catch (e) {
       console.error('Request error', e)
       res.status(500).json({ error: 'Error fetching user' })
     }
     break
   default:
-    res.setHeader('Allow', ['POST'])
+    res.setHeader('Allow', [ 'POST' ])
     res.status(405).end(`Method ${method} Not Allowed`)
     break
   }

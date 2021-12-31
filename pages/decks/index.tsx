@@ -1,8 +1,10 @@
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import {DeckGrid} from 'components/DeckGrid'
+import {
+  GetStaticProps, InferGetStaticPropsType 
+} from 'next'
+import { DeckGrid } from 'components/DeckGrid'
 import { DeckWithHandle } from 'types'
 import Head from 'next/head'
-import {pluralizer} from 'utils'
+import { pluralizer } from 'utils'
 import { prisma } from 'data_utils'
 
 interface Props {
@@ -11,18 +13,19 @@ interface Props {
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   try {
-    const decks = await prisma.deck.findMany({ orderBy: { title: 'asc' }, include: {creator: {select: {handle: true}}} })
+    const decks = await prisma.deck.findMany({
+      orderBy: { title: 'asc' },
+      include: { creator: { select: { handle: true } } } 
+    })
 
-    return {
-      props: { decks },
-    }
+    return { props: { decks }, }
   } catch (err) {
     console.error(err)
     return { props: { decks: [] } }
   }
 }
 
-function Decks({decks}: InferGetStaticPropsType<typeof getStaticProps>) {
+function Decks({ decks }: InferGetStaticPropsType<typeof getStaticProps>) {
   let body = <p>No decks exist</p>
   const title = pluralizer('Deck', decks.length, true)
 

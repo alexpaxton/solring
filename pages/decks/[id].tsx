@@ -1,4 +1,6 @@
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import {
+  GetStaticProps, InferGetStaticPropsType 
+} from 'next'
 import { DeckWithHandle } from 'types'
 import { EditDeckButton } from 'components/EditDeckButton'
 import Head from 'next/head'
@@ -15,15 +17,22 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const id = context.params?.id as string
 
   try {
-    const deck = await prisma.deck.findUnique({where: {id: id}, include: {creator: {select: {handle: true}}}})
+    const deck = await prisma.deck.findUnique({
+      where: { id: id },
+      include: { creator: { select: { handle: true } } } 
+    })
     const error = deck ? undefined : 'Couldn\'t find a deck with that ID'
 
-    return {
-      props: { deck, error },
-    }
+    return { props: {
+      deck,
+      error 
+    }, }
   } catch (err) {
     console.error(err)
-    return { props: { deck: null, error: 'Error fetching deck' } }
+    return { props: {
+      deck: null,
+      error: 'Error fetching deck' 
+    } }
   }
 }
 
@@ -34,7 +43,9 @@ export async function getStaticPaths() {
   }
 }
 
-function DeckPage({ deck, error }: InferGetStaticPropsType<typeof getStaticProps>) {
+function DeckPage({
+  deck, error 
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   let title = 'Loading...'
   let body = <p>Loading...</p>
 

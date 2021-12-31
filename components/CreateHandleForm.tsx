@@ -1,15 +1,17 @@
-import { ChangeEvent, FC, useState } from 'react'
-import {createUser} from 'utils'
+import {
+  ChangeEvent, FC, useState 
+} from 'react'
+import { createUser } from 'utils'
 import { sanitizeHandleInput } from 'utils'
 import styled from 'styled-components'
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 import { useUser } from '@auth0/nextjs-auth0'
 
 export const CreateHandleForm: FC = () => {
   const { push } = useRouter()
-  const {user} = useUser()
-  const [draftHandle, setDraftHandle] = useState<string>('')
-  const [error, setError] = useState<string>('')
+  const { user } = useUser()
+  const [ draftHandle, setDraftHandle ] = useState<string>('')
+  const [ error, setError ] = useState<string>('')
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const sanitizedInput = sanitizeHandleInput(e.target.value)
@@ -40,7 +42,10 @@ export const CreateHandleForm: FC = () => {
     const isValid = validateForm()
 
     if (isValid && user && user.email) {
-      createUser({ email: user.email, handle: draftHandle }, handleSuccess)
+      createUser({
+        email: user.email,
+        handle: draftHandle 
+      }, handleSuccess)
     }
 
   }

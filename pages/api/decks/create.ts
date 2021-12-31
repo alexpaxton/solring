@@ -1,12 +1,16 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from '@auth0/nextjs-auth0'
 import { prisma } from 'data_utils'
+import {
+  NextApiRequest, NextApiResponse
+} from 'next'
 
 export default async function assetHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { method, body } = req
+  const {
+    method, body 
+  } = req
   
   switch (method) {
   case 'POST':
@@ -19,9 +23,9 @@ export default async function assetHandler(
       }
 
       const sessionUser = session.user
-      const user = await prisma.user.findUnique({
-        where: { email: sessionUser.email },
-      })
+      const user = await prisma.user.findUnique(
+        { where: { email: sessionUser.email } }
+      )
 
       if (!user) {
         res.status(500).json({ error: 'Error fetching user' })
@@ -33,17 +37,17 @@ export default async function assetHandler(
         creatorId: user.id,
       }
 
-      const newDeck = await prisma.deck.create({data})
+      const newDeck = await prisma.deck.create({ data })
       // get user from session
       // add user 
-      res.status(200).json({newDeck})
+      res.status(200).json({ newDeck })
     } catch (e) {
       console.error('Request error', e)
       res.status(500).json({ error: 'Error creating deck' })
     }
     break
   default:
-    res.setHeader('Allow', ['POST'])
+    res.setHeader('Allow', [ 'POST' ])
     res.status(405).end(`Method ${method} Not Allowed`)
     break
   }

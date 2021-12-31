@@ -1,10 +1,11 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import {
-  Session,
   handleAuth,
-  handleCallback,
+  handleCallback, Session
 } from '@auth0/nextjs-auth0'
 import { prisma } from 'data_utils'
+import {
+  NextApiRequest, NextApiResponse 
+} from 'next'
 
 interface TransientStore {
   [key: string]: any
@@ -24,24 +25,19 @@ const afterCallback: AfterCallback = async (
   state
 ) => {
   const email = session.user.email
-  console.log('email', email)
   const user = await prisma.user.findUnique({ where: { email } })
   if (user && user.handle) {
     console.log('User exists, proceed')
   } else {
-    console.log('User does not exist or has not chosen a handle')
     state.returnTo = `${state.returnTo}/register/pick-a-handle`
-    console.log('state', state)
   }
   return session
 }
 
-export default handleAuth({
-  async callback(req, res) {
-    try {
-      await handleCallback(req, res, { afterCallback })
-    } catch (error: any) {
-      res.status(error.status || 500).end(error.message)
-    }
-  },
-})
+export default handleAuth({ async callback(req, res) {
+  try {
+    await handleCallback(req, res, { afterCallback })
+  } catch (error: any) {
+    res.status(error.status || 500).end(error.message)
+  }
+}, })

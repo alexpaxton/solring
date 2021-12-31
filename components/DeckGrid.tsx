@@ -1,13 +1,13 @@
 import { DeckCard } from 'components/DeckCard'
 import { DeckWithHandle } from 'types'
-import {FC} from 'react'
+import { FC } from 'react'
 import styled from 'styled-components'
 
 interface Props {
   decks?: DeckWithHandle[];
 }
 
-export const DeckGrid: FC<Props> = ({decks}) => {
+export const DeckGrid: FC<Props> = ({ decks }) => {
   if (!decks) {
     return null
   }

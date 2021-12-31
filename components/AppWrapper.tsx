@@ -1,18 +1,22 @@
-import { FC, ReactNode } from 'react'
-import {NavBar} from 'components/NavBar'
-import styled from 'styled-components'
+import { NavBar } from 'components/NavBar'
 import { useRouter } from 'next/router'
+import {
+  FC, ReactNode
+} from 'react'
+import styled from 'styled-components'
 
-const navExcludedRoutes = ['/register/pick-a-handle']
+const navExcludedRoutes = [ '/register/pick-a-handle' ]
 
 interface Props {
     children: ReactNode
 }
 
-export const AppWrapper: FC<Props> = ({children}) => {
+export const AppWrapper: FC<Props> = ({ children }) => {
   const { pathname } = useRouter()
 
-  const renderHeader = navExcludedRoutes.some(route => pathname.startsWith(route)) === false
+  const renderHeader = navExcludedRoutes.some(
+    route => pathname.startsWith(route)
+  ) === false
 
   return (
     <App>

@@ -1,8 +1,8 @@
 import { Card } from 'scryfall-sdk'
-import {FC} from 'react'
+import { FC } from 'react'
 import styled from 'styled-components'
 
-export const MagicCard: FC<Card> = ({image_uris}) => {
+export const MagicCard: FC<Card> = ({ image_uris }) => {
   return (
     <Container style={{ backgroundImage: `url(${image_uris?.normal})` }} />
   )

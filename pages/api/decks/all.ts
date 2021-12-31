@@ -1,7 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import {prisma} from 'data_utils'
+import { prisma } from 'data_utils'
+import {
+  NextApiRequest, NextApiResponse 
+} from 'next'
 
-export default async function assetHandler(req: NextApiRequest, res: NextApiResponse) {
+export default async function assetHandler(
+  req: NextApiRequest, res: NextApiResponse) {
   const { method } = req
 
   switch (method) {
@@ -15,7 +18,7 @@ export default async function assetHandler(req: NextApiRequest, res: NextApiResp
     }
     break
   default:
-    res.setHeader('Allow', ['GET'])
+    res.setHeader('Allow', [ 'GET' ])
     res.status(405).end(`Method ${method} Not Allowed`)
     break
   }

@@ -1,4 +1,6 @@
-import {ChangeEvent, FC, useState} from 'react'
+import {
+  ChangeEvent, FC, useState 
+} from 'react'
 import styled from 'styled-components'
 
 export interface DraftDeck {
@@ -11,10 +13,10 @@ interface Props {
 }
 
 
-export const CreateDeckForm: FC<Props> = ({onSubmit}) => {
-  const [title, updateTitle] = useState<string>('')
-  const [description, updateDescription] = useState<string>('')
-  const [error, setError] = useState<string>('')
+export const CreateDeckForm: FC<Props> = ({ onSubmit }) => {
+  const [ title, updateTitle ] = useState<string>('')
+  const [ description, updateDescription ] = useState<string>('')
+  const [ error, setError ] = useState<string>('')
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const fieldTitle = e.target.name
@@ -41,7 +43,10 @@ export const CreateDeckForm: FC<Props> = ({onSubmit}) => {
   function handleSubmit() {
     const valid = validate()
     if (valid) {
-      onSubmit({title, description})
+      onSubmit({
+        title,
+        description 
+      })
     }
   }
 

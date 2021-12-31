@@ -1,9 +1,13 @@
-import { CreateDeckForm, DraftDeck } from 'components/CreateDeckForm'
+import {
+  CreateDeckForm, DraftDeck 
+} from 'components/CreateDeckForm'
 import type { NextPage } from 'next'
 import { useUser } from '@auth0/nextjs-auth0'
 
 const CreateDeck: NextPage = () => {
-  const {user, isLoading, error} = useUser()
+  const {
+    user, isLoading, error 
+  } = useUser()
 
   async function handleSubmit(draftDeck: DraftDeck) {
     if (!user) {
@@ -18,13 +22,11 @@ const CreateDeck: NextPage = () => {
     try {
       const resp = await fetch('/api/decks/create', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json', },
         body: JSON.stringify(data),
       })
 
-      const {newDeck} = await resp.json()
+      const { newDeck } = await resp.json()
       console.log('deck created!', newDeck)
       window.alert('deck created!')
     } catch(err) {

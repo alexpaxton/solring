@@ -1,12 +1,16 @@
-import {Card, Cards} from 'scryfall-sdk'
-import { ChangeEvent, FC, useState } from 'react'
+import {
+  Card, Cards 
+} from 'scryfall-sdk'
+import {
+  ChangeEvent, FC, useState 
+} from 'react'
 import { MagicCard } from 'components/MagicCard'
 import styled from 'styled-components'
 
 export const Test: FC =() => {
-  const [inputValue, setInputValue] = useState<string>('')
-  const [pending, setPending] = useState<boolean>(false)
-  const [results, setResults] = useState<Card[]>([])
+  const [ inputValue, setInputValue ] = useState<string>('')
+  const [ pending, setPending ] = useState<boolean>(false)
+  const [ results, setResults ] = useState<Card[]>([])
 
   const fetchyFetch = async () => {
     setPending(true)
