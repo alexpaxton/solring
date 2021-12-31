@@ -1,5 +1,7 @@
-import { Deck as PrismaDeck, User as PrismaUser } from '@prisma/client'
 import { UserProfile } from '@auth0/nextjs-auth0'
+import {
+  Deck as PrismaDeck, User as PrismaUser
+} from '@prisma/client'
 
 export type User = PrismaUser
 

@@ -1,12 +1,10 @@
-import {
-  GetStaticProps, InferGetStaticPropsType 
-} from 'next'
-import { DeckWithHandle } from 'types'
-import { EditDeckButton } from 'components/EditDeckButton'
-import Head from 'next/head'
-import { Username } from 'components/Username'
+import { DeckViewer } from 'components/deck/DeckViewer'
 import { prisma } from 'data_utils'
-import styled from 'styled-components'
+import {
+  GetStaticProps, InferGetStaticPropsType
+} from 'next'
+import Head from 'next/head'
+import { DeckWithHandle } from 'types'
 
 interface Props {
   deck: DeckWithHandle | null;
@@ -59,16 +57,7 @@ function DeckPage({
   if (deck) {
     title = deck.title
     body = (
-      <DeckMeta>
-        <TitleBar>
-          <h1>{deck.title}</h1>
-          <EditDeckButton creatorId={deck.creatorId} />
-        </TitleBar>
-        <p>
-          Created by <Username>{deck.creator.handle}</Username>
-        </p>
-        <Description>{deck.description || 'No description'}</Description>
-      </DeckMeta>
+      <DeckViewer deck={deck} />
     )
   }
 
@@ -83,23 +72,3 @@ function DeckPage({
 }
 
 export default DeckPage
-
-const DeckMeta = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 60px;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 60px;
-`
-
-const TitleBar = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`
-
-const Description = styled.p`
-  font-size: 13px;
-  margin-top: 24px;
-`
-
