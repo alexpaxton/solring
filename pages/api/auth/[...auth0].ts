@@ -4,7 +4,7 @@ import {
 } from '@auth0/nextjs-auth0'
 import { prisma } from 'data_utils'
 import {
-  NextApiRequest, NextApiResponse 
+  NextApiRequest, NextApiResponse
 } from 'next'
 
 interface TransientStore {
@@ -16,7 +16,7 @@ type AfterCallback = (
   res: NextApiResponse,
   session: Session,
   state: TransientStore
-) => Promise<Session>;
+) => Promise<Session>
 
 const afterCallback: AfterCallback = async (
   req,
