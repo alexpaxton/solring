@@ -20,3 +20,8 @@ export interface DeckWithHandle extends PrismaDeck {
     handle: string;
   };
 }
+
+export interface DeckRequest {
+  deck?: Deck
+  error?: string
+}

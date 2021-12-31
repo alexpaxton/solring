@@ -33,7 +33,8 @@ export default async function assetHandler(
         return
       }
 
-      if (user.email !== sessionUser.email) {
+      if (deck.creatorId !== user.id) {
+        console.log(deck.creatorId, user.id)
         res.status(401).json({ error: 'Not allowed to edit this deck' })
         return
       }

@@ -49,12 +49,23 @@ export const DeckEditor: FC<Props> = ({ deck }) => {
 
     if (isValid) {
       setLoading(true)
-      const updatedDeck = await updateDeck({
-        ...deck,
-        title: draftTitle,
-        description: draftDescription 
-      })
-      push(`/decks/${updatedDeck.id}`)
+
+      try {
+        const response = await updateDeck({
+          ...deck,
+          title: draftTitle,
+          description: draftDescription 
+        })
+
+        if (response.error) {
+          setError(response.error)
+        } else if (response.deck) {
+          push(`/decks/${response.deck.id}`)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+
       setLoading(false)
     }
   }

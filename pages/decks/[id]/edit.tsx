@@ -1,14 +1,10 @@
 import { DeckEditor } from 'components/deck/DeckEditor'
-import { DeckViewer } from 'components/deck/DeckViewer'
 import { prisma } from 'data_utils'
 import {
   GetStaticProps, InferGetStaticPropsType
 } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 import { DeckWithHandle } from 'types'
-import { useMe } from 'utils'
 
 interface Props {
   deck: DeckWithHandle | null;
@@ -48,15 +44,6 @@ export async function getStaticPaths() {
 function EditDeckPage({
   deck, error 
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { user } = useMe()
-  const { push } = useRouter()
-
-  useEffect(() => {
-    if (deck && !user) {
-      push(`/decks/${deck.id}`)
-    }
-  }, [ deck, user ])
-
   let title = 'Loading...'
   let body = <p>Loading...</p>
 
@@ -71,13 +58,6 @@ function EditDeckPage({
     title = `Editing ${deck.title}`
     body = (
       <DeckEditor deck={deck} />
-    )
-  }
-
-  if (!user && deck) {
-    title = `${deck.title}`
-    body = (
-      <DeckViewer deck={deck} />
     )
   }
 

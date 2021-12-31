@@ -1,6 +1,5 @@
 import {
-  Deck,
-  DeckWithHandle,
+  DeckRequest, DeckWithHandle,
   Me,
   User
 } from 'types'
@@ -32,7 +31,7 @@ export const getMe: GetMe = async (callback) => {
   return user
 }
 
-type UpdateDeck = (data: DeckWithHandle, callback?: () => void) => Promise<Deck>
+type UpdateDeck = (data: DeckWithHandle, callback?: () => void) => Promise<DeckRequest>
 
 export const updateDeck: UpdateDeck = async (data, callback) => {
   const resp = await fetch('/api/decks/update', {
@@ -41,7 +40,7 @@ export const updateDeck: UpdateDeck = async (data, callback) => {
     body: JSON.stringify(data),
   })
 
-  const { deck } = await resp.json()
+  const respData = await resp.json()
   callback && callback()
-  return deck
+  return respData
 }
