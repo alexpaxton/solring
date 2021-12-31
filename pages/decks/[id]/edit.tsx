@@ -5,6 +5,8 @@ import {
   GetStaticProps, InferGetStaticPropsType
 } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import { DeckWithHandle } from 'types'
 import { useMe } from 'utils'
 
@@ -47,6 +49,14 @@ function EditDeckPage({
   deck, error 
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { user } = useMe()
+  const { push } = useRouter()
+
+  useEffect(() => {
+    if (deck && !user) {
+      push(`/decks/${deck.id}`)
+    }
+  }, [ deck, user ])
+
   let title = 'Loading...'
   let body = <p>Loading...</p>
 
