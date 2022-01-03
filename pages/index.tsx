@@ -1,6 +1,5 @@
-import Head from 'next/head'
 import type { NextPage } from 'next'
-import { Test } from 'components/Test'
+import Head from 'next/head'
 
 const Home: NextPage = () => {
   return (
@@ -10,7 +9,7 @@ const Home: NextPage = () => {
         <meta name="description" content="MTG Deck Builder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Test />
+      <p>Howdy!</p>
     </>
   )
 }

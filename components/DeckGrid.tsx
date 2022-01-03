@@ -1,7 +1,7 @@
 import { DeckCard } from 'components/DeckCard'
-import { DeckWithHandle } from 'types'
 import { FC } from 'react'
 import styled from 'styled-components'
+import { DeckWithHandle } from 'types'
 
 interface Props {
   decks?: DeckWithHandle[];
@@ -27,7 +27,6 @@ const Grid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-auto-rows: 1fr;
   grid-gap: 8px;
-  margin-top: 30px;
 
   &:before {
     content: "";

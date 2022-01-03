@@ -1,11 +1,12 @@
-import {
-  GetStaticProps, InferGetStaticPropsType 
-} from 'next'
 import { DeckGrid } from 'components/DeckGrid'
-import { DeckWithHandle } from 'types'
-import Head from 'next/head'
-import { pluralizer } from 'utils'
 import { prisma } from 'data_utils'
+import {
+  GetStaticProps, InferGetStaticPropsType
+} from 'next'
+import Head from 'next/head'
+import styled from 'styled-components'
+import { DeckWithHandle } from 'types'
+import { pluralizer } from 'utils'
 
 interface Props {
   decks: DeckWithHandle[];
@@ -36,14 +37,25 @@ function Decks({ decks }: InferGetStaticPropsType<typeof getStaticProps>) {
   }
 
   return (
-    <>
+    <DecksPage>
       <Head>
         <title>Sol Ring / Decks</title>
       </Head>
       <p>{title}</p>
       {body}
-    </>
+    </DecksPage>
   )
 }
 
 export default Decks
+
+const DecksPage = styled.div`
+  padding: 30px;
+  flex: 1 0 0;
+  width: 100%;
+  overflow: auto;
+
+  > p {
+    margin-bottom: 30px;
+  }
+`

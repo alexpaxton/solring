@@ -43,6 +43,4 @@ const Main = styled.main`
   flex: 1 0 0;
   display: flex;
   flex-direction: column;
-  padding: 30px;
-  overflow: auto;
 `

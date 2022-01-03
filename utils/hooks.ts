@@ -2,6 +2,9 @@ import {
   RefObject,
   useEffect, useState
 } from 'react'
+import {
+  Card, CardIdentifier, Cards
+} from 'scryfall-sdk'
 import { Me } from 'types'
 import { getMe } from 'utils'
 
@@ -71,4 +74,36 @@ export const useOnClickOutside: UseOnClickOutside = (ref, handler) => {
     // ... passing it into this hook.
     [ ref, handler ]
   )
+}
+
+interface UseScryfallCards {
+  loading: boolean
+}
+
+
+export const useScryfallCards = (ids: string[], callback: (cards: Card[]) => void): UseScryfallCards => {
+  const [ loading, setLoading ] = useState<boolean>(true)
+
+  // Not recommended to use an async function inside useEffect, could cause race conditions
+  // https://stackoverflow.com/questions/53332321/react-hook-warnings-for-async-function-in-useeffect-useeffect-function-must-ret
+  useEffect(() => {
+    async function fetchScryfallCards() {
+      const query: CardIdentifier[] = ids.map(id => {
+        return { id }
+      })
+      const response = await Cards.collection(...query)
+      const data = await response.waitForAll()
+      const onlyCards = data.filter(card => 'id' in card)
+      callback(onlyCards)
+      setLoading(false)
+    }
+
+    if (ids.length) {
+      fetchScryfallCards()
+    } else {
+      setLoading(false)
+    }
+  }, [ ids ])
+
+  return { loading }
 }

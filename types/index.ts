@@ -13,7 +13,9 @@ export interface Me {
   isLoading: boolean;
 }
 
-export type Deck = PrismaDeck
+export interface Deck extends Omit<PrismaDeck, 'cards'> {
+  cards: string[]
+}
 
 export interface DeckWithHandle extends PrismaDeck {
   creator: {

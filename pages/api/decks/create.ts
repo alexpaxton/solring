@@ -35,11 +35,11 @@ export default async function assetHandler(
       const data = {
         ...body,
         creatorId: user.id,
+        cards: [],
       }
 
       const newDeck = await prisma.deck.create({ data })
-      // get user from session
-      // add user 
+
       res.status(200).json({ newDeck })
     } catch (e) {
       console.error('Request error', e)

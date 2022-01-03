@@ -3,7 +3,7 @@ import { prisma } from 'data_utils'
 import {
   NextApiRequest, NextApiResponse
 } from 'next'
-import { DeckWithHandle } from 'types'
+import { Deck } from 'types'
 
 export default async function assetHandler(
   req: NextApiRequest,
@@ -11,7 +11,7 @@ export default async function assetHandler(
 ) {
   const { method } = req
 
-  const deck = req.body as DeckWithHandle
+  const deck = req.body as Deck
   
   switch (method) {
   case 'POST':
@@ -34,7 +34,6 @@ export default async function assetHandler(
       }
 
       if (deck.creatorId !== user.id) {
-        console.log(deck.creatorId, user.id)
         res.status(401).json({ error: 'Not allowed to edit this deck' })
         return
       }
@@ -45,6 +44,7 @@ export default async function assetHandler(
           updatedAt: new Date(Date.now()),
           title: deck.title,
           description: deck.description,
+          cards: deck.cards,
         }
       })
       res.status(200).json({ deck: updatedDeck })
