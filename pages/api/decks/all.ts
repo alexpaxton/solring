@@ -1,6 +1,6 @@
 import { prisma } from 'data_utils'
 import {
-  NextApiRequest, NextApiResponse 
+  NextApiRequest, NextApiResponse
 } from 'next'
 
 export default async function assetHandler(
@@ -10,7 +10,7 @@ export default async function assetHandler(
   switch (method) {
   case 'GET':
     try {
-      const decks = await prisma.deck.findMany()
+      const decks = await prisma.deck.findMany({ include: { creator: { select: { handle: true } } } })
       res.status(200).json(decks)
     } catch (e) {
       console.error('Request error', e)

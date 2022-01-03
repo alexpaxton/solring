@@ -19,7 +19,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
       include: { creator: { select: { handle: true } } } 
     })
 
-    return { props: { decks }, }
+    return { props: { decks } }
   } catch (err) {
     console.error(err)
     return { props: { decks: [] } }
