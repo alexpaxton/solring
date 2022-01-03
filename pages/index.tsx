@@ -9,7 +9,7 @@ const Home: NextPage = () => {
         <meta name="description" content="MTG Deck Builder" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <p>Howdy!</p>
+      <p>Yo ho ho!</p>
     </>
   )
 }
