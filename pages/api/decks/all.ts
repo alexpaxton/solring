@@ -7,6 +7,16 @@ export default async function assetHandler(
   req: NextApiRequest, res: NextApiResponse) {
   const { method } = req
 
+  res.setHeader(
+    'Content-Type',
+    'application/json'
+  )
+
+  res.setHeader(
+    'Cache-Control',
+    's-maxage=1, stale-while-revalidate=59'
+  )
+
   switch (method) {
   case 'GET':
     try {

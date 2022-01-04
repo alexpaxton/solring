@@ -80,7 +80,6 @@ interface UseScryfallCards {
   loading: boolean
 }
 
-
 export const useScryfallCards = (ids: string[], callback: (cards: Card[]) => void): UseScryfallCards => {
   const [ loading, setLoading ] = useState<boolean>(true)
 
