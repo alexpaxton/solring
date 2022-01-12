@@ -3,10 +3,16 @@ import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
 
 export const MagicCard: FC<Card> = ({
-  image_uris, children 
+  image_uris, children, card_faces,
 }) => {
+  let image = image_uris?.small
+
+  if (card_faces) {
+    image = card_faces[0].image_uris?.small
+  }
+
   return (
-    <Container style={{ backgroundImage: `url(${image_uris?.normal})` }}>{children}</Container>
+    <Container style={{ backgroundImage: `url(${image})` }}>{children}</Container>
   )
 }
 
