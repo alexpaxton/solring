@@ -62,7 +62,7 @@ const allColors = [ 'w','u','b','r','g' ]
 function getQuery({
   cardName, ruleText, cmc, cmcAlt, cmcMode, cardType, colors, colorMode
 }: FiltersContextType): string {
-  const query: string[] = []
+  const query = [ '-is:funny' ]
 
   cardName.length && query.push(`name:${cardName}`)
   ruleText.length && query.push(`oracle:"${ruleText}"`)
