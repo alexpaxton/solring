@@ -1,7 +1,7 @@
-import {
-  FC, useEffect 
-} from 'react'
 import Link from 'next/link'
+import {
+  FC, useEffect
+} from 'react'
 import styled from 'styled-components'
 import { useMe } from 'utils'
 
@@ -39,6 +39,9 @@ export const NavBar: FC = () => {
         </Link>
         <Link href="/decks">
           <button>Decks</button>
+        </Link>
+        <Link href="/gatherer">
+          <button>Gatherer</button>
         </Link>
       </Left>
       <Actions>{actions}</Actions>
