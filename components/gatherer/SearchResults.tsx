@@ -5,7 +5,25 @@ import { FC } from 'react'
 import styled from 'styled-components'
 
 export const SearchResults: FC = () => {
-  const { results } = useSearchResults()
+  const {
+    results, loading, error 
+  } = useSearchResults()
+  
+  if (loading) {
+    return (
+      <ResultsContainer>
+        <p>Loading...</p>
+      </ResultsContainer>
+    )
+  }
+
+  if (error) {
+    return (
+      <ResultsContainer>
+        <p>{error}</p>
+      </ResultsContainer>
+    )
+  }
 
   return <ResultsContainer>
     <CardGrid>
@@ -21,4 +39,5 @@ const ResultsContainer = styled.div`
   display: flex; 
   overflow-y: auto;
   flex-direction: column;
+  align-items: center;
 `
