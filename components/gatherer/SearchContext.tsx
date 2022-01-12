@@ -13,6 +13,8 @@ interface SearchContextType {
   loading: boolean
   search: () => Promise<void>
   error: null | string
+  focusedCard: Card | null
+  setFocusedCard: (card: Card | null) => void
 }
 const SearchContext = createContext<SearchContextType | undefined>(undefined)
 
@@ -20,10 +22,12 @@ export const SearchContextProvider: FC = ({ children }) => {
   const [ results, updateResults ] = useState<Card[]>([])
   const [ loading, updateLoading ] = useState<boolean>(false)
   const [ error, updateError ] = useState<string | null>(null)
+  const [ focusedCard, setFocusedCard ] = useState<Card | null>(null)
   const filters = useFilters()
 
   async function search() {
     updateLoading(true)
+    setFocusedCard(null)
     const query = getQuery(filters)
     console.log(`%cQuery: ${query}`, 'color: #766cff')
     const data = await Cards.search(query)
@@ -44,6 +48,8 @@ export const SearchContextProvider: FC = ({ children }) => {
     loading,
     search,
     error,
+    focusedCard,
+    setFocusedCard,
   }}>{children}</SearchContext.Provider>
 }
 
