@@ -7,9 +7,12 @@ import styled from 'styled-components'
 
 interface Props {
   card: Card
+  className?: string
 }
 
-export const PreviewCard: FC<Props> = ({ card }) => {
+export const PreviewCard: FC<Props> = ({
+  card, className 
+}) => {
   const { removeCard } = useCards()
   const { loading } = useDeck()
 
@@ -17,8 +20,9 @@ export const PreviewCard: FC<Props> = ({ card }) => {
     removeCard(card)
   }
 
+  console.log('card', card)
   return (
-    <MagicCard {...card}>
+    <MagicCard {...card} className={className}>
       {!loading && <DeleteButton onClick={handleClick}>X</DeleteButton>}
     </MagicCard>
   )
@@ -34,4 +38,9 @@ const DeleteButton = styled.button`
   background-color: #000;
   color: #fff;
   font-size: 14px;
+  opacity: 0;
+
+  .magic-card:hover & {
+    opacity: 1;
+  }
 `

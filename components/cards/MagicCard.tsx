@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
+import { classnames } from 'utils'
 
 interface Props extends Card {
   highRes?: boolean
@@ -17,9 +18,10 @@ export const MagicCard: FC<Props> = ({
   }
 
   const split = image?.split('?')[0]
+  const cardClass = classnames(className, { 'magic-card': true })
 
   return (
-    <Container style={{ backgroundImage: `url(${split})` }} className={className}>{children}</Container>
+    <Container style={{ backgroundImage: `url(${split})` }} className={cardClass}>{children}</Container>
   )
 }
 

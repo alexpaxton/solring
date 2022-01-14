@@ -1,17 +1,16 @@
-import { PreviewCard } from 'components/cards/PreviewCard'
-import { CardGrid } from 'components/deck/CardGrid'
-import { useCards } from 'components/deck/CardsContext'
+import { DeckPreviewCurve } from 'components/deck/DeckPreviewCurve'
+import { DeckPreviewGrid } from 'components/deck/DeckPreviewGrid'
+import { DeckPreviewType } from 'components/deck/DeckPreviewType'
 import { FC } from 'react'
 import styled from 'styled-components'
 
-export const DeckPreview: FC = () => {
-  const { cards } = useCards()
 
+export const DeckPreview: FC = () => {
   return (
     <Container>
-      <CardGrid>
-        {cards.map(card => <PreviewCard key={card.id} card={card} />)}
-      </CardGrid>
+      <DeckPreviewGrid />
+      <DeckPreviewCurve />
+      <DeckPreviewType />
     </Container>
   )
 }
@@ -19,5 +18,4 @@ export const DeckPreview: FC = () => {
 const Container = styled.div`
   flex: 1 0 0;
   overflow: auto;
-  padding: 30px;
 `

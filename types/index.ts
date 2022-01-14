@@ -33,3 +33,6 @@ export interface DeckRequest {
 export type ColorMode = 'include' | 'exclude' | 'exactly'
 export type CMCMode = 'atLeast' | 'atMost' | 'exactly' | 'between'
  
+// Deck View
+
+export type DeckViewMode = 'grid' | 'curve' | 'type'

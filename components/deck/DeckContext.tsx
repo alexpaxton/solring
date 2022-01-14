@@ -3,7 +3,9 @@ import { useRouter } from 'next/router'
 import {
   ChangeEvent, createContext, FC, useContext, useState
 } from 'react'
-import { DeckWithHandle } from 'types'
+import {
+  DeckViewMode, DeckWithHandle
+} from 'types'
 import {
   scryfallToData, updateDeck
 } from 'utils'
@@ -15,6 +17,8 @@ interface DeckContextType {
   updateField: (e: ChangeEvent<HTMLInputElement>) => void
   submit: () => Promise<void>
   loading: boolean
+  mode: DeckViewMode
+  setMode: (mode: DeckViewMode) => void
 }
 
 interface Props {
@@ -33,6 +37,8 @@ export const DeckContextProvider: FC<Props> = ({
   const [ error, setError ] = useState<string>('')
   const [ loading, setLoading ] = useState<boolean>(false)
   const { cards } = useCards()
+  const [ mode, setMode ] = useState<DeckViewMode>('grid')
+
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const {
@@ -93,6 +99,8 @@ export const DeckContextProvider: FC<Props> = ({
       updateField: handleInputChange,
       submit: handleSave,
       loading,
+      mode,
+      setMode,
     }}>
       {children}
     </DeckContext.Provider>

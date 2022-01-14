@@ -8,7 +8,14 @@ import { Cards } from 'scryfall-sdk'
 import styled from 'styled-components'
 import { useOnClickOutside } from 'utils'
 
-export const SearchWidget: FC =() => {
+interface Props {
+  leftElements?: JSX.Element | JSX.Element[]
+  rightElements?: JSX.Element | JSX.Element[]
+}
+
+export const SearchWidget: FC<Props> = ({
+  leftElements, rightElements 
+}) => {
   const [ isSuggesting, setSuggesting ] = useState<boolean>(false)
   const [ inputValue, setInputValue ] = useState<string>('')
   const [ pending, setPending ] = useState<boolean>(false)
@@ -123,6 +130,7 @@ export const SearchWidget: FC =() => {
 
   return (
     <Container>
+      {leftElements}
       <Search ref={containerRef}> 
         <input
           type="text"
@@ -142,6 +150,7 @@ export const SearchWidget: FC =() => {
             {!pending && !results.length && inputValue.length >= 2 && <Result>No cards match <strong>{inputValue}</strong></Result>}
           </Results>)}
       </Search>
+      {rightElements}
     </Container>
   )
 }
