@@ -48,7 +48,8 @@ const Header = styled.header`
   flex: 0 0 80px;
   display: flex;
   align-items: center;
-  background-color: #ccc;
+  background-color: #333;
+  color: #fff;
   padding: 0 30px;
   justify-content: space-between;
 `

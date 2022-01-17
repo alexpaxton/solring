@@ -26,7 +26,7 @@ export const DeckCard: FC<DeckWithHandle> = ({
 const Card = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #ccc;
+  background-color: #222;
   border-radius: 4px;
   padding: 12px;
 `
@@ -35,7 +35,7 @@ const CardTitle = styled.div`
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
-  color: #0000ff;
+  color: #fff;
 
   &:hover {
     text-decoration: underline;
@@ -51,6 +51,6 @@ const Creator = styled.div`
   font-size: 13px;
   margin-top: 8px;
   padding-top: 8px;
-  border-top: 1px solid #aaa;
+  border-top: 1px solid #444;
   width: 100%;
 `

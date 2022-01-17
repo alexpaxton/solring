@@ -3,6 +3,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   overflow: hidden;
+  background-color: #000;
+  color: #888;
 }
 
 * {
@@ -16,4 +18,17 @@ p {
 
 button {
   cursor: pointer;
+}
+
+a:link,
+a:active,
+a:visited {
+  font-weight: 700;
+  text-decoration: none;
+  color: rgb(114, 101, 255);
+}
+
+a:hover {
+  text-decoration: underline;
+  color: rgb(152, 147, 250);
 }

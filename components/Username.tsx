@@ -15,11 +15,12 @@ export const Username: FC<Props> = ({ children }) => (
 const UsernameLink = styled.span`
   font-size: inherit;
   font-weight: bold;
-  color: #0000ff;
+  color: rgb(114, 101, 255);
   text-decoration: none;
   cursor: pointer;
 
   &:hover {
+    color: rgb(152, 147, 250);
     text-decoration: underline;
   }
 `
