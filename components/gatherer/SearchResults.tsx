@@ -13,7 +13,7 @@ export const SearchResults: FC = () => {
   if (loading) {
     return (
       <ResultsContainer>
-        <p>Loading...</p>
+        <MessageText>Loading...</MessageText>
       </ResultsContainer>
     )
   }
@@ -21,7 +21,15 @@ export const SearchResults: FC = () => {
   if (error) {
     return (
       <ResultsContainer>
-        <p>{error}</p>
+        <MessageText>{error}</MessageText>
+      </ResultsContainer>
+    )
+  }
+
+  if (!results.length) {
+    return (
+      <ResultsContainer>
+        <MessageText>Fill out some of the fields above and click <strong>Search</strong></MessageText>
       </ResultsContainer>
     )
   }
@@ -35,6 +43,10 @@ export const SearchResults: FC = () => {
     <FocusPanel />
   </ResultsContainer>
 }
+
+const MessageText = styled.p`
+  padding: 80px 0;
+`
 
 const ResultsContainer = styled.div`
   width: 100%;
