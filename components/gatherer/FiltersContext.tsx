@@ -78,7 +78,7 @@ const initialState: FiltersState = {
   colorMode: 'include',
   cmc: 0,
   cmcAlt: 0,
-  cmcMode: 'exactly'
+  cmcMode: 'atLeast'
 }
 
 const filtersReducer = (state: FiltersState, action: FiltersAction) => {
