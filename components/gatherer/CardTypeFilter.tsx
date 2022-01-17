@@ -19,7 +19,7 @@ export const CardTypeFilter: FC = () => {
 
   return (
     <Field label="Type">
-      <Input type="text" value={cardType} onChange={handleInputChange} />
+      <Input type="text" value={cardType} onChange={handleInputChange} placeholder="ex: enchantment"/>
     </Field>
   )
 }

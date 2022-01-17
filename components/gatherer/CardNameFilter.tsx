@@ -20,7 +20,7 @@ export const CardNameFilter: FC = () => {
 
   return (
     <BigField label="Card Name">
-      <Input type="text" value={cardName} onChange={handleInputChange} />
+      <Input type="text" value={cardName} onChange={handleInputChange} placeholder="ex: counterspell" />
     </BigField>
   )
 }
