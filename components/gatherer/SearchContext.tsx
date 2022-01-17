@@ -83,8 +83,16 @@ function getQuery({
   const query = ['-is:funny']
 
   cardName.length && query.push(`name:${cardName}`)
-  ruleText.length && query.push(`oracle:"${ruleText}"`)
   cardType.length && query.push(`type:${cardType}`)
+
+  if (ruleText.length && ruleText.startsWith('"') && ruleText.endsWith('"')) {
+    query.push(`oracle:${ruleText}`)
+  } else if (ruleText.length && ruleText.includes(' ')) {
+    const ruleTextWords = ruleText.split(' ')
+    ruleTextWords.forEach((word) => query.push(`o:${word}`))
+  } else if (ruleText.length) {
+    query.push(`o:${ruleText}`)
+  }
 
   switch (cmcMode) {
     case 'exactly':

@@ -16,7 +16,12 @@ export const RuleTextFilter: FC = () => {
 
   return (
     <BigField label="Rule Text">
-      <Input type="text" value={ruleText} onChange={handleInputChange} />
+      <Input
+        type="text"
+        value={ruleText}
+        onChange={handleInputChange}
+        placeholder='Use "" to match exact text'
+      />
     </BigField>
   )
 }
