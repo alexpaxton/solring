@@ -2,9 +2,7 @@ import { CreateHandleForm } from 'components/CreateHandleForm'
 import { FC } from 'react'
 
 const PickAHandlePage: FC = () => {
-  return (
-    <CreateHandleForm />
-  )
+  return <CreateHandleForm />
 }
 
 export default PickAHandlePage

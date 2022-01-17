@@ -1,13 +1,11 @@
 import { DeckViewer } from 'components/deck/DeckViewer'
 import { prisma } from 'data_utils'
-import {
-  GetStaticProps, NextPage
-} from 'next'
+import { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import { DeckWithHandle } from 'types'
 
 interface Props {
-  deck: DeckWithHandle | null;
+  deck: DeckWithHandle | null
 }
 
 const DeckPage: NextPage<Props> = ({ deck }: Props) => {
@@ -16,9 +14,7 @@ const DeckPage: NextPage<Props> = ({ deck }: Props) => {
 
   if (deck) {
     title = deck.title
-    body = (
-      <DeckViewer deck={deck} />
-    )
+    body = <DeckViewer deck={deck} />
   }
 
   return (
@@ -35,16 +31,16 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const id = context.params?.id as string
 
   if (!id) {
-    return { notFound: true, }
+    return { notFound: true }
   }
 
   const deck = await prisma.deck.findUnique({
     where: { id: id },
-    include: { creator: { select: { handle: true } } } 
+    include: { creator: { select: { handle: true } } },
   })
 
   if (!deck) {
-    return { notFound: true, }
+    return { notFound: true }
   }
 
   return { props: { deck } }

@@ -6,10 +6,8 @@ import { FC } from 'react'
 import styled from 'styled-components'
 
 export const SearchResults: FC = () => {
-  const {
-    results, loading, error
-  } = useSearchResults()
-  
+  const { results, loading, error } = useSearchResults()
+
   if (loading) {
     return (
       <ResultsContainer>
@@ -29,19 +27,25 @@ export const SearchResults: FC = () => {
   if (!results.length) {
     return (
       <ResultsContainer>
-        <MessageText>Fill out some of the fields above and click <strong>Search</strong></MessageText>
+        <MessageText>
+          Fill out some of the fields above and click <strong>Search</strong>
+        </MessageText>
       </ResultsContainer>
     )
   }
 
-  return <ResultsContainer>
-    <MainPanel>
-      <CardGrid>
-        {results.map(card => <SearchResultCard key={card.id} card={card} />)}
-      </CardGrid>
-    </MainPanel>
-    <FocusPanel />
-  </ResultsContainer>
+  return (
+    <ResultsContainer>
+      <MainPanel>
+        <CardGrid>
+          {results.map((card) => (
+            <SearchResultCard key={card.id} card={card} />
+          ))}
+        </CardGrid>
+      </MainPanel>
+      <FocusPanel />
+    </ResultsContainer>
+  )
 }
 
 const MessageText = styled.p`
@@ -51,7 +55,7 @@ const MessageText = styled.p`
 const ResultsContainer = styled.div`
   width: 100%;
   flex: 1 0 0;
-  display: flex; 
+  display: flex;
   flex-direction: row;
   justify-content: center;
   position: relative;

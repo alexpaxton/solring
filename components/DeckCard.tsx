@@ -1,11 +1,14 @@
-import { DeckWithHandle } from 'types'
-import { FC } from 'react'
-import Link from 'next/link'
 import { Username } from 'components/Username'
+import Link from 'next/link'
+import { FC } from 'react'
 import styled from 'styled-components'
+import { DeckWithHandle } from 'types'
 
 export const DeckCard: FC<DeckWithHandle> = ({
-  id, title, description, creator: { handle } 
+  id,
+  title,
+  description,
+  creator: { handle },
 }) => {
   return (
     <Card>

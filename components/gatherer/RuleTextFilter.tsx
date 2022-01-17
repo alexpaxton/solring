@@ -1,20 +1,16 @@
 import { Field } from 'components/gatherer/Field'
 import { useFilters } from 'components/gatherer/FiltersContext'
 import { Input } from 'components/gatherer/Inputs'
-import {
-  ChangeEvent, FC
-} from 'react'
+import { ChangeEvent, FC } from 'react'
 import styled from 'styled-components'
 
 export const RuleTextFilter: FC = () => {
-  const {
-    ruleText, dispatch 
-  } = useFilters()
+  const { ruleText, dispatch } = useFilters()
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     dispatch({
       type: 'updateRuleText',
-      payload: { ruleText: e.target.value } 
+      payload: { ruleText: e.target.value },
     })
   }
 
@@ -28,4 +24,3 @@ export const RuleTextFilter: FC = () => {
 const BigField = styled(Field)`
   flex: 1 0 0;
 `
-

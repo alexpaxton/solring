@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { DeckWithHandle } from 'types'
 
 interface Props {
-  decks?: DeckWithHandle[];
+  decks?: DeckWithHandle[]
 }
 
 export const DeckGrid: FC<Props> = ({ decks }) => {
@@ -21,7 +21,6 @@ export const DeckGrid: FC<Props> = ({ decks }) => {
   )
 }
 
-
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -29,7 +28,7 @@ const Grid = styled.div`
   grid-gap: 8px;
 
   &:before {
-    content: "";
+    content: '';
     width: 0;
     padding-bottom: 70%;
     grid-row: 1 / 1;

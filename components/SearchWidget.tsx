@@ -2,33 +2,39 @@ import { useCards } from 'components/deck/CardsContext'
 import { useDeck } from 'components/deck/DeckContext'
 import throttle from 'lodash.throttle'
 import {
-  ChangeEvent, FC, KeyboardEvent, MouseEvent, useEffect, useMemo, useRef, useState
+  ChangeEvent,
+  FC,
+  KeyboardEvent,
+  MouseEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
 } from 'react'
 import { Cards } from 'scryfall-sdk'
 import styled from 'styled-components'
 import { useOnClickOutside } from 'utils'
 
-export const SearchWidget: FC =() => {
-  const [ isSuggesting, setSuggesting ] = useState<boolean>(false)
-  const [ inputValue, setInputValue ] = useState<string>('')
-  const [ pending, setPending ] = useState<boolean>(false)
-  const [ results, setResults ] = useState<string[]>([])
+export const SearchWidget: FC = () => {
+  const [isSuggesting, setSuggesting] = useState<boolean>(false)
+  const [inputValue, setInputValue] = useState<string>('')
+  const [pending, setPending] = useState<boolean>(false)
+  const [results, setResults] = useState<string[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
-  const [ selected, setSelected ] = useState<string>('')
+  const [selected, setSelected] = useState<string>('')
   const { loading } = useDeck()
-  const {
-    addCard, isCardInDeck 
-  } = useCards()
+  const { addCard, isCardInDeck } = useCards()
 
   const nothingIsSelected = selected === '' && results.length
-  const selectedIsNotInResults = selected && results.length && !results.includes(selected)
+  const selectedIsNotInResults =
+    selected && results.length && !results.includes(selected)
 
   useEffect(() => {
     if (nothingIsSelected || selectedIsNotInResults) {
       setSelected(results[0])
     }
-  }, [ nothingIsSelected, selectedIsNotInResults, results ])
+  }, [nothingIsSelected, selectedIsNotInResults, results])
 
   useOnClickOutside(containerRef, handleStopSuggesting)
 
@@ -39,7 +45,10 @@ export const SearchWidget: FC =() => {
     setPending(false)
   }
 
-  const throttledGetSuggestions = useMemo(() => throttle(getSuggestions, 75),[])
+  const throttledGetSuggestions = useMemo(
+    () => throttle(getSuggestions, 75),
+    [],
+  )
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value)
@@ -48,14 +57,14 @@ export const SearchWidget: FC =() => {
 
   function handleKeyUp(e: KeyboardEvent<HTMLInputElement>) {
     switch (e.key) {
-    case 'Enter':
-      return handleSubmit()
-    case 'Escape':
-      return handleStopSuggesting()
-    case 'ArrowUp':
-      return handleSelectPrevious()
-    case 'ArrowDown':
-      return handleSelectNext()
+      case 'Enter':
+        return handleSubmit()
+      case 'Escape':
+        return handleStopSuggesting()
+      case 'ArrowUp':
+        return handleSelectPrevious()
+      case 'ArrowDown':
+        return handleSelectNext()
     }
   }
 
@@ -123,7 +132,7 @@ export const SearchWidget: FC =() => {
 
   return (
     <Container>
-      <Search ref={containerRef}> 
+      <Search ref={containerRef}>
         <input
           type="text"
           value={inputValue}
@@ -138,9 +147,24 @@ export const SearchWidget: FC =() => {
         {isSuggesting && (
           <Results>
             {pending && <p>Loading...</p>}
-            {!pending && results.map(result => <Result key={result} className={getResultClassName(result)} onMouseOver={handleResultHover} onClick={handleSubmit}>{result}</Result>)}
-            {!pending && !results.length && inputValue.length >= 2 && <Result>No cards match <strong>{inputValue}</strong></Result>}
-          </Results>)}
+            {!pending &&
+              results.map((result) => (
+                <Result
+                  key={result}
+                  className={getResultClassName(result)}
+                  onMouseOver={handleResultHover}
+                  onClick={handleSubmit}
+                >
+                  {result}
+                </Result>
+              ))}
+            {!pending && !results.length && inputValue.length >= 2 && (
+              <Result>
+                No cards match <strong>{inputValue}</strong>
+              </Result>
+            )}
+          </Results>
+        )}
       </Search>
     </Container>
   )

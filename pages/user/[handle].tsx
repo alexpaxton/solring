@@ -1,19 +1,15 @@
-import {
-  DeckWithHandle, User 
-} from 'types'
-import {
-  GetStaticProps, InferGetStaticPropsType 
-} from 'next'
 import { DeckGrid } from 'components/DeckGrid'
-import Head from 'next/head'
-import { pluralizer } from 'utils'
 import { prisma } from 'data_utils'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import Head from 'next/head'
 import styled from 'styled-components'
+import { DeckWithHandle, User } from 'types'
+import { pluralizer } from 'utils'
 
 interface Props {
-  user: User | null;
+  user: User | null
   error?: string
-  decks: DeckWithHandle[];
+  decks: DeckWithHandle[]
 }
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
@@ -22,27 +18,31 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
   try {
     const user = await prisma.user.findUnique({ where: { handle: handle } })
     let decks: DeckWithHandle[] = []
-    const error = user ? undefined : 'Couldn\'t find a user with that handle'
+    const error = user ? undefined : "Couldn't find a user with that handle"
 
     if (user) {
       decks = await prisma.deck.findMany({
         where: { creatorId: user.id },
-        include: { creator: { select: { handle: true } } } 
+        include: { creator: { select: { handle: true } } },
       })
     }
 
-    return { props: {
-      user,
-      decks,
-      error 
-    }, }
+    return {
+      props: {
+        user,
+        decks,
+        error,
+      },
+    }
   } catch (err) {
     console.error(err)
-    return { props: {
-      user: null,
-      decks: [],
-      error: 'Error fetching user' 
-    } }
+    return {
+      props: {
+        user: null,
+        decks: [],
+        error: 'Error fetching user',
+      },
+    }
   }
 }
 
@@ -54,7 +54,9 @@ export async function getStaticPaths() {
 }
 
 function UserPage({
-  user, decks, error 
+  user,
+  decks,
+  error,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   let title = 'Loading...'
   let meta = <p>Loading...</p>
@@ -90,11 +92,11 @@ function UserPage({
 export default UserPage
 
 const DeckMeta = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 60px;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 60px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 60px;
 `
 
 const TitleBar = styled.div`
@@ -102,4 +104,3 @@ const TitleBar = styled.div`
   align-items: center;
   justify-content: space-between;
 `
-

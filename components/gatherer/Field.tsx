@@ -7,9 +7,7 @@ interface Props {
   className?: string
 }
 
-export const Field: FC<Props> = ({
-  children, label, className
-}) => {
+export const Field: FC<Props> = ({ children, label, className }) => {
   return (
     <Container className={className}>
       <div className="label">{label}</div>
@@ -23,7 +21,7 @@ const Container = styled.div`
   margin-right: 8px;
   align-items: center;
   background-color: #eee;
-  
+
   &:last-child {
     margin-right: 0;
   }

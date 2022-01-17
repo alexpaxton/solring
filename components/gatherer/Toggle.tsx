@@ -6,13 +6,15 @@ interface Props {
   onToggle: (active: boolean) => void
 }
 
-export const Toggle: FC<Props> = ({
-  active, onToggle, children 
-}) => {
+export const Toggle: FC<Props> = ({ active, onToggle, children }) => {
   function handleClick() {
     onToggle(!active)
   }
-  return <Box onClick={handleClick} className={active ? 'active' : undefined}>{children}</Box>
+  return (
+    <Box onClick={handleClick} className={active ? 'active' : undefined}>
+      {children}
+    </Box>
+  )
 }
 
 const Box = styled.div`

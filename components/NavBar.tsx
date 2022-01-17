@@ -1,15 +1,10 @@
 import Link from 'next/link'
-import {
-  FC, useEffect
-} from 'react'
+import { FC, useEffect } from 'react'
 import styled from 'styled-components'
 import { useMe } from 'utils'
 
-
 export const NavBar: FC = () => {
-  const {
-    user, handle, forceRefresh 
-  } = useMe()
+  const { user, handle, forceRefresh } = useMe()
 
   useEffect(() => {
     forceRefresh()

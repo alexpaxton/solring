@@ -4,17 +4,13 @@ import { FC } from 'react'
 import styled from 'styled-components'
 
 export const FocusPanel: FC = () => {
-  const {
-    focusedCard, setFocusedCard 
-  } = useSearchResults()
+  const { focusedCard, setFocusedCard } = useSearchResults()
 
   if (focusedCard === null) {
     return null
   }
 
-  const {
-    name, oracle_text 
-  } = focusedCard
+  const { name, oracle_text } = focusedCard
 
   return (
     <SidePanel>

@@ -1,22 +1,19 @@
-import {
-  ChangeEvent, FC, useState 
-} from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 import styled from 'styled-components'
 
 export interface DraftDeck {
-  title: string;
-  description: string;
+  title: string
+  description: string
 }
 
 interface Props {
-  onSubmit: (Draft: DraftDeck) => void;
+  onSubmit: (Draft: DraftDeck) => void
 }
 
-
 export const CreateDeckForm: FC<Props> = ({ onSubmit }) => {
-  const [ title, updateTitle ] = useState<string>('')
-  const [ description, updateDescription ] = useState<string>('')
-  const [ error, setError ] = useState<string>('')
+  const [title, updateTitle] = useState<string>('')
+  const [description, updateDescription] = useState<string>('')
+  const [error, setError] = useState<string>('')
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const fieldTitle = e.target.name
@@ -45,7 +42,7 @@ export const CreateDeckForm: FC<Props> = ({ onSubmit }) => {
     if (valid) {
       onSubmit({
         title,
-        description 
+        description,
       })
     }
   }
@@ -73,13 +70,13 @@ export const CreateDeckForm: FC<Props> = ({ onSubmit }) => {
 }
 
 const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    background-color: #ddd;
-    padding: 30px;
-    margin: 30px;
+  display: flex;
+  flex-direction: column;
+  background-color: #ddd;
+  padding: 30px;
+  margin: 30px;
 `
 
 const ErrorMessage = styled.p`
-    color: #ff0000;
+  color: #ff0000;
 `

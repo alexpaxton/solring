@@ -1,16 +1,12 @@
 import { DeckGrid } from 'components/DeckGrid'
 import { prisma } from 'data_utils'
-import {
-  GetStaticProps, NextPage
-} from 'next'
+import { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import { FC } from 'react'
 import styled from 'styled-components'
 import { SWRConfig } from 'swr'
 import { DeckWithHandle } from 'types'
-import {
-  pluralizer, useDecksWithHandles
-} from 'utils'
+import { pluralizer, useDecksWithHandles } from 'utils'
 
 interface Props {
   fallback: {
@@ -19,9 +15,7 @@ interface Props {
 }
 
 const DecksIndexGrid: FC = () => {
-  const {
-    decks, isError, isLoading
-  } = useDecksWithHandles()
+  const { decks, isError, isLoading } = useDecksWithHandles()
 
   if (isLoading) {
     return <p>Loading...</p>
@@ -41,7 +35,6 @@ const DecksIndexGrid: FC = () => {
       <DeckGrid decks={decks} />
     </>
   )
-
 }
 
 const DecksIndex: NextPage<Props> = ({ fallback }: Props) => {
@@ -62,7 +55,7 @@ export default DecksIndex
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const decks = await prisma.deck.findMany({
     orderBy: { title: 'asc' },
-    include: { creator: { select: { handle: true } } } 
+    include: { creator: { select: { handle: true } } },
   })
 
   return { props: { fallback: { '/api/decks/all': decks } } }

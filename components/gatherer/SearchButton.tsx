@@ -3,12 +3,12 @@ import { FC } from 'react'
 import styled from 'styled-components'
 
 export const SearchButton: FC = () => {
-  const {
-    search, loading 
-  } = useSearchResults()
+  const { search, loading } = useSearchResults()
 
   return (
-    <Button onClick={search} disabled={loading}>Search</Button>
+    <Button onClick={search} disabled={loading}>
+      Search
+    </Button>
   )
 }
 

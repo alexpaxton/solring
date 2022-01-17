@@ -2,28 +2,24 @@ import { Field } from 'components/gatherer/Field'
 import { useFilters } from 'components/gatherer/FiltersContext'
 import { Select } from 'components/gatherer/Inputs'
 import { Toggle } from 'components/gatherer/Toggle'
-import {
-  ChangeEvent, FC
-} from 'react'
+import { ChangeEvent, FC } from 'react'
 import styled from 'styled-components'
 import { ColorMode } from 'types'
 
-export const ColorFilter:FC = () => {
-  const {
-    colors, dispatch, colorMode
-  } = useFilters()
+export const ColorFilter: FC = () => {
+  const { colors, dispatch, colorMode } = useFilters()
 
   function handleColorToggle(color: string, active: boolean) {
     if (active) {
       dispatch({
         type: 'updateColors',
-        payload: { colors: [ ...colors, color ] } 
+        payload: { colors: [...colors, color] },
       })
     } else {
-      const updatedColors = colors.filter(c => c !== color)
+      const updatedColors = colors.filter((c) => c !== color)
       dispatch({
         type: 'updateColors',
-        payload: { colors: updatedColors } 
+        payload: { colors: updatedColors },
       })
     }
   }
@@ -33,7 +29,7 @@ export const ColorFilter:FC = () => {
 
     dispatch({
       type: 'updateColorMode',
-      payload: { colorMode: mode, }
+      payload: { colorMode: mode },
     })
   }
 
@@ -44,11 +40,36 @@ export const ColorFilter:FC = () => {
         <option value="exclude">Exclude</option>
         <option value="exactly">Exactly</option>
       </ModeSelect>
-      <Toggle active={colors.includes('w')} onToggle={(active) => handleColorToggle('w', active)}>W</Toggle>
-      <Toggle active={colors.includes('u')} onToggle={(active) => handleColorToggle('u', active)}>U</Toggle>
-      <Toggle active={colors.includes('b')} onToggle={(active) => handleColorToggle('b', active)}>B</Toggle>
-      <Toggle active={colors.includes('r')} onToggle={(active) => handleColorToggle('r', active)}>R</Toggle>
-      <Toggle active={colors.includes('g')} onToggle={(active) => handleColorToggle('g', active)}>G</Toggle>
+      <Toggle
+        active={colors.includes('w')}
+        onToggle={(active) => handleColorToggle('w', active)}
+      >
+        W
+      </Toggle>
+      <Toggle
+        active={colors.includes('u')}
+        onToggle={(active) => handleColorToggle('u', active)}
+      >
+        U
+      </Toggle>
+      <Toggle
+        active={colors.includes('b')}
+        onToggle={(active) => handleColorToggle('b', active)}
+      >
+        B
+      </Toggle>
+      <Toggle
+        active={colors.includes('r')}
+        onToggle={(active) => handleColorToggle('r', active)}
+      >
+        R
+      </Toggle>
+      <Toggle
+        active={colors.includes('g')}
+        onToggle={(active) => handleColorToggle('g', active)}
+      >
+        G
+      </Toggle>
     </Field>
   )
 }

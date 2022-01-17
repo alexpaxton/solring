@@ -8,18 +8,29 @@ interface Props extends Card {
 }
 
 export const MagicCard: FC<Props> = ({
-  image_uris, children, card_faces, highRes, className
+  image_uris,
+  children,
+  card_faces,
+  highRes,
+  className,
 }) => {
   let image = highRes ? image_uris?.large : image_uris?.small
 
   if (card_faces) {
-    image = highRes ? card_faces[0].image_uris?.large : card_faces[0].image_uris?.small
+    image = highRes
+      ? card_faces[0].image_uris?.large
+      : card_faces[0].image_uris?.small
   }
 
   const split = image?.split('?')[0]
 
   return (
-    <Container style={{ backgroundImage: `url(${split})` }} className={className}>{children}</Container>
+    <Container
+      style={{ backgroundImage: `url(${split})` }}
+      className={className}
+    >
+      {children}
+    </Container>
   )
 }
 

@@ -10,7 +10,9 @@ export const DeckPreview: FC = () => {
   return (
     <Container>
       <CardGrid>
-        {cards.map(card => <PreviewCard key={card.id} card={card} />)}
+        {cards.map((card) => (
+          <PreviewCard key={card.id} card={card} />
+        ))}
       </CardGrid>
     </Container>
   )
