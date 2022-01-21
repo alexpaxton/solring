@@ -1,6 +1,7 @@
 import { MagicCard } from 'components/cards/MagicCard'
 import { CardGrid } from 'components/deck/CardGrid'
 import { EditDeckButton } from 'components/EditDeckButton'
+import { PageHeader } from 'components/layout'
 import { Username } from 'components/Username'
 import { FC, useState } from 'react'
 import { Card } from 'scryfall-sdk'
@@ -19,7 +20,7 @@ export const DeckViewer: FC<Props> = ({ deck }) => {
 
   return (
     <>
-      <DeckMeta>
+      <StyledPageHeader>
         <TitleBar>
           <h1>{deck.title}</h1>
           <EditDeckButton creatorId={deck.creatorId} deckId={deck.id} />
@@ -28,7 +29,7 @@ export const DeckViewer: FC<Props> = ({ deck }) => {
           Created by <Username>{deck.creator.handle}</Username>
         </p>
         <Description>{deck.description || 'No description'}</Description>
-      </DeckMeta>
+      </StyledPageHeader>
       <Deck>
         {loading && <p>Loading...</p>}
         {!!cards.length && (
@@ -44,11 +45,8 @@ export const DeckViewer: FC<Props> = ({ deck }) => {
   )
 }
 
-const DeckMeta = styled.div`
-  display: flex;
+const StyledPageHeader = styled(PageHeader)`
   flex-direction: column;
-  border-bottom: 1px solid #eee;
-  padding: 30px;
 `
 
 const TitleBar = styled.div`

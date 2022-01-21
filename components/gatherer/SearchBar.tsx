@@ -4,12 +4,13 @@ import { CMCFilter } from 'components/gatherer/CMCFilter'
 import { ColorFilter } from 'components/gatherer/ColorFilter'
 import { RuleTextFilter } from 'components/gatherer/RuleTextFilter'
 import { SearchButton } from 'components/gatherer/SearchButton'
+import { PageHeader } from 'components/layout'
 import { FC } from 'react'
 import styled from 'styled-components'
 
 export const SearchBar: FC = () => {
   return (
-    <SearchContainer>
+    <PageHeader>
       <SearchRows>
         <SearchRow>
           <CardNameFilter />
@@ -22,16 +23,9 @@ export const SearchBar: FC = () => {
         </SearchRow>
       </SearchRows>
       <SearchButton />
-    </SearchContainer>
+    </PageHeader>
   )
 }
-
-const SearchContainer = styled.div`
-  width: 100%;
-  padding: 30px;
-  display: flex;
-  border-bottom: 1px solid #ddd;
-`
 
 const SearchRows = styled.div`
   flex: 1 0 0;

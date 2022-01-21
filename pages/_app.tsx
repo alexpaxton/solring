@@ -1,5 +1,5 @@
 import { UserProvider } from '@auth0/nextjs-auth0'
-import { AppWrapper } from 'components/layout/AppWrapper'
+import { AppWrapper } from 'components/layout'
 import type { AppProps } from 'next/app'
 import 'normalize.css'
 import 'styles/globals.css'
