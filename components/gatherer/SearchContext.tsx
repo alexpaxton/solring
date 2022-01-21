@@ -83,7 +83,13 @@ function getQuery({
   const query = ['-is:funny']
 
   cardName.length && query.push(`name:${cardName}`)
-  cardType.length && query.push(`type:${cardType}`)
+
+  if (cardType.length && cardType.includes(' ')) {
+    const cardTypes = cardType.split(' ')
+    cardTypes.forEach((type) => query.push(`type:${type}`))
+  } else if (cardType.length) {
+    query.push(`type:${cardType}`)
+  }
 
   if (ruleText.length && ruleText.startsWith('"') && ruleText.endsWith('"')) {
     query.push(`oracle:${ruleText}`)
