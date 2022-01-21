@@ -33,7 +33,7 @@ export const ColorFilter: FC = () => {
   }
 
   return (
-    <InputGroup label="Color">
+    <StyledInputGroup label="Color">
       <ModeSelect value={colorMode} onChange={handleModeChange}>
         <option value="include">Include</option>
         <option value="exclude">Exclude</option>
@@ -42,37 +42,36 @@ export const ColorFilter: FC = () => {
       <Toggle
         active={colors.includes('w')}
         onToggle={(active) => handleColorToggle('w', active)}
-      >
-        W
-      </Toggle>
+        color="w"
+      />
       <Toggle
         active={colors.includes('u')}
         onToggle={(active) => handleColorToggle('u', active)}
-      >
-        U
-      </Toggle>
+        color="u"
+      />
       <Toggle
         active={colors.includes('b')}
         onToggle={(active) => handleColorToggle('b', active)}
-      >
-        B
-      </Toggle>
+        color="b"
+      />
       <Toggle
         active={colors.includes('r')}
         onToggle={(active) => handleColorToggle('r', active)}
-      >
-        R
-      </Toggle>
+        color="r"
+      />
       <Toggle
         active={colors.includes('g')}
         onToggle={(active) => handleColorToggle('g', active)}
-      >
-        G
-      </Toggle>
-    </InputGroup>
+        color="g"
+      />
+    </StyledInputGroup>
   )
 }
 
 const ModeSelect = styled(Select)`
   margin-right: 8px;
+`
+
+const StyledInputGroup = styled(InputGroup)`
+  padding-right: 8px;
 `
