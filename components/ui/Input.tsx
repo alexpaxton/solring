@@ -30,4 +30,14 @@ export const Input = styled.input`
     box-shadow: 0 0 7px 1px ${colors.p0}, 0 0 3px 0 ${colors.p1};
     text-shadow: 0 0 4px ${colors.p1};
   }
+
+  &::placeholder {
+    color: ${colors.n3};
+    font-style: italic;
+    transition: color 0.25s ease;
+  }
+
+  &:focus::placeholder {
+    color: ${colors.p3};
+  }
 `
