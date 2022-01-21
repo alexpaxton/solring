@@ -34,50 +34,56 @@ Button.defaultProps = {
 const BaseButton = styled.button`
   border-radius: 4px;
   height: 32px;
+  line-height: 32px;
   border: 0;
   padding: 0 12px;
   font-size: 13px;
   font-weight: 700;
   outline: none;
-  color: ${colors.n5};
+  text-decoration: none;
   transition: color 0.25s ease, background-color 0.25s ease,
     box-shadow 0.25s ease;
 
+  &,
+  &:link,
+  &:active,
+  &:visited {
+    color: ${colors.n7};
+  }
+
   &:hover {
+    text-decoration: none;
+    color: ${colors.n7};
     cursor: pointer;
   }
 `
 
-const PrimaryButton = styled(BaseButton)`
+export const PrimaryButton = styled(BaseButton)`
   background-color: ${colors.p0};
-  color: ${colors.n7};
 
   &:hover {
     background-color: ${colors.p1};
   }
 `
 
-const SecondaryButton = styled(BaseButton)`
+export const SecondaryButton = styled(BaseButton)`
   background-color: ${colors.g0};
-  color: ${colors.n7};
 
   &:hover {
     background-color: ${colors.g1};
   }
 `
 
-const DangerButton = styled(BaseButton)`
+export const DangerButton = styled(BaseButton)`
   background-color: ${colors.r0};
-  color: ${colors.n7};
 
   &:hover {
     background-color: ${colors.r1};
   }
 `
 
-const NeutralButton = styled(BaseButton)`
+export const NeutralButton = styled(BaseButton)`
   background-color: ${colors.n3};
-  color: ${colors.n7};
 
   &:hover {
     background-color: ${colors.n4};
