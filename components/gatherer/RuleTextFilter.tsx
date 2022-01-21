@@ -1,6 +1,5 @@
-import { Field } from 'components/gatherer/Field'
 import { useFilters } from 'components/gatherer/FiltersContext'
-import { Input } from 'components/gatherer/Inputs'
+import { Input, InputGroup } from 'components/ui'
 import { ChangeEvent, FC } from 'react'
 import styled from 'styled-components'
 
@@ -15,17 +14,18 @@ export const RuleTextFilter: FC = () => {
   }
 
   return (
-    <BigField label="Rule Text">
+    <BigInputGroup label="Rule Text">
       <Input
         type="text"
         value={ruleText}
         onChange={handleInputChange}
         placeholder='Use "" to match exact text'
+        spellCheck={false}
       />
-    </BigField>
+    </BigInputGroup>
   )
 }
 
-const BigField = styled(Field)`
+const BigInputGroup = styled(InputGroup)`
   flex: 1 0 0;
 `

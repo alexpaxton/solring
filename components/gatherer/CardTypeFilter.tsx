@@ -1,6 +1,5 @@
-import { Field } from 'components/gatherer/Field'
 import { useFilters } from 'components/gatherer/FiltersContext'
-import { Input } from 'components/gatherer/Inputs'
+import { Input, InputGroup } from 'components/ui'
 import { ChangeEvent, FC } from 'react'
 
 export const CardTypeFilter: FC = () => {
@@ -14,13 +13,14 @@ export const CardTypeFilter: FC = () => {
   }
 
   return (
-    <Field label="Type">
+    <InputGroup label="Type">
       <Input
         type="text"
         value={cardType}
         onChange={handleInputChange}
         placeholder="ex: enchantment"
+        spellCheck={false}
       />
-    </Field>
+    </InputGroup>
   )
 }

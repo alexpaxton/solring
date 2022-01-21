@@ -1,6 +1,5 @@
-import { Field } from 'components/gatherer/Field'
 import { useFilters } from 'components/gatherer/FiltersContext'
-import { Input } from 'components/gatherer/Inputs'
+import { Input, InputGroup } from 'components/ui'
 import { ChangeEvent, FC } from 'react'
 import styled from 'styled-components'
 
@@ -15,17 +14,18 @@ export const CardNameFilter: FC = () => {
   }
 
   return (
-    <BigField label="Card Name">
+    <BigInputGroup label="Card Name">
       <Input
         type="text"
         value={cardName}
         onChange={handleInputChange}
         placeholder="ex: counterspell"
+        spellCheck={false}
       />
-    </BigField>
+    </BigInputGroup>
   )
 }
 
-const BigField = styled(Field)`
+const BigInputGroup = styled(InputGroup)`
   flex: 1 0 0;
 `

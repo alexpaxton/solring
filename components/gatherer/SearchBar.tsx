@@ -45,6 +45,14 @@ const SearchRow = styled.div`
   align-items: center;
   margin-bottom: 8px;
 
+  & > * {
+    margin-right: 8px;
+  }
+
+  & > *:last-child {
+    margin-right: 0;
+  }
+
   &:last-child {
     margin-bottom: 0;
   }

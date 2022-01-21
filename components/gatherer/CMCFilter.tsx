@@ -1,6 +1,5 @@
-import { Field } from 'components/gatherer/Field'
 import { useFilters } from 'components/gatherer/FiltersContext'
-import { Input, Select } from 'components/gatherer/Inputs'
+import { Input, InputGroup, Select } from 'components/ui'
 import { ChangeEvent, FC } from 'react'
 import styled from 'styled-components'
 import { CMCMode } from 'types'
@@ -45,7 +44,7 @@ export const CMCFilter: FC = () => {
   }
 
   return (
-    <Field label="CMC">
+    <InputGroup label="CMC">
       <Select value={cmcMode} onChange={handleModeChange}>
         <option value="exactly">Exactly</option>
         <option value="atLeast">At Least</option>
@@ -68,7 +67,7 @@ export const CMCFilter: FC = () => {
           onChange={handleInputChange}
         />
       )}
-    </Field>
+    </InputGroup>
   )
 }
 

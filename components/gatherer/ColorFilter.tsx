@@ -1,7 +1,6 @@
-import { Field } from 'components/gatherer/Field'
 import { useFilters } from 'components/gatherer/FiltersContext'
-import { Select } from 'components/gatherer/Inputs'
 import { Toggle } from 'components/gatherer/Toggle'
+import { InputGroup, Select } from 'components/ui'
 import { ChangeEvent, FC } from 'react'
 import styled from 'styled-components'
 import { ColorMode } from 'types'
@@ -34,7 +33,7 @@ export const ColorFilter: FC = () => {
   }
 
   return (
-    <Field label="Color">
+    <InputGroup label="Color">
       <ModeSelect value={colorMode} onChange={handleModeChange}>
         <option value="include">Include</option>
         <option value="exclude">Exclude</option>
@@ -70,7 +69,7 @@ export const ColorFilter: FC = () => {
       >
         G
       </Toggle>
-    </Field>
+    </InputGroup>
   )
 }
 
