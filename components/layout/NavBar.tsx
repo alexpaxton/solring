@@ -1,4 +1,4 @@
-import { colors } from 'components/ui'
+import { colors, LinkButton } from 'components/ui'
 import Link from 'next/link'
 import { FC, useEffect } from 'react'
 import styled from 'styled-components'
@@ -11,7 +11,7 @@ export const NavBar: FC = () => {
     forceRefresh()
   }, [])
 
-  let actions = <a href="/api/auth/login">Login</a>
+  let actions = <LinkButton href="/api/auth/login">Login</LinkButton>
 
   if (user && handle) {
     actions = (
@@ -69,6 +69,8 @@ const Logo = styled.h1`
   font-weight: bold;
   margin: 0;
   line-height: 1em;
+  text-transform: uppercase;
+  margin-right: 16px;
 `
 
 const Actions = styled.div`
