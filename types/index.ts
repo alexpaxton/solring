@@ -1,5 +1,11 @@
 import { UserProfile } from '@auth0/nextjs-auth0'
 import { Deck as PrismaDeck, User as PrismaUser } from '@prisma/client'
+import { CSSProperties } from 'react'
+
+export interface StandardProps {
+  className?: string
+  style?: CSSProperties
+}
 
 export type User = PrismaUser
 
