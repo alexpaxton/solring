@@ -7,7 +7,8 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react/jsx-runtime"
+    "plugin:react/jsx-runtime",
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -18,19 +19,5 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint"],
-  "rules": {
-    "indent": ["error", 2],
-    "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "single"],
-    "semi": ["error", "never"],
-    "@typescript-eslint/semi": ["error", "never"],
-    "no-extra-semi": "error",
-    "array-bracket-spacing": [
-      "error",
-      "always"
-    ],
-    "object-curly-spacing": ["error", "always"],
-    "object-curly-newline": ["error", { "minProperties": 2 }],
-    "object-property-newline": ["error", { "allowAllPropertiesOnSameLine": false }]
-  }
+  "rules": {}
 }

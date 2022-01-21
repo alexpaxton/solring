@@ -1,9 +1,5 @@
-import {
-  createContext, Dispatch, FC, useContext, useReducer
-} from 'react'
-import {
-  CMCMode, ColorMode
-} from 'types'
+import { createContext, Dispatch, FC, useContext, useReducer } from 'react'
+import { CMCMode, ColorMode } from 'types'
 
 export interface FiltersState {
   cardName: string
@@ -62,13 +58,13 @@ interface UpdateCMCAction {
   payload: Partial<CMCPayload>
 }
 
-type FiltersAction = 
-  UpdateNameAction | 
-  UpdateTypeAction | 
-  UpdateColorsAction | 
-  UpdateColorModeAction | 
-  UpdateRuleTextAction |
-  UpdateCMCAction
+type FiltersAction =
+  | UpdateNameAction
+  | UpdateTypeAction
+  | UpdateColorsAction
+  | UpdateColorModeAction
+  | UpdateRuleTextAction
+  | UpdateCMCAction
 
 const initialState: FiltersState = {
   cardName: '',
@@ -78,43 +74,43 @@ const initialState: FiltersState = {
   colorMode: 'include',
   cmc: 0,
   cmcAlt: 0,
-  cmcMode: 'exactly'
+  cmcMode: 'atLeast',
 }
 
 const filtersReducer = (state: FiltersState, action: FiltersAction) => {
-  switch(action.type) {
-  case 'updateName':
-    return {
-      ...state,
-      cardName: action.payload.cardName
-    }
-  case 'updateType':
-    return {
-      ...state,
-      cardType: action.payload.cardType
-    }
-  case 'updateRuleText':
-    return {
-      ...state,
-      ruleText: action.payload.ruleText
-    }
-  case 'updateColors':
-    return {
-      ...state,
-      colors: action.payload.colors
-    }
-  case 'updateColorMode':
-    return {
-      ...state,
-      colorMode: action.payload.colorMode
-    }
-  case 'updateCMC':
-    return {
-      ...state,
-      ...action.payload
-    }
-  default:
-    throw new Error()
+  switch (action.type) {
+    case 'updateName':
+      return {
+        ...state,
+        cardName: action.payload.cardName,
+      }
+    case 'updateType':
+      return {
+        ...state,
+        cardType: action.payload.cardType,
+      }
+    case 'updateRuleText':
+      return {
+        ...state,
+        ruleText: action.payload.ruleText,
+      }
+    case 'updateColors':
+      return {
+        ...state,
+        colors: action.payload.colors,
+      }
+    case 'updateColorMode':
+      return {
+        ...state,
+        colorMode: action.payload.colorMode,
+      }
+    case 'updateCMC':
+      return {
+        ...state,
+        ...action.payload,
+      }
+    default:
+      throw new Error()
   }
 }
 
@@ -125,13 +121,15 @@ export interface FiltersContextType extends FiltersState {
 const FiltersContext = createContext<FiltersContextType | undefined>(undefined)
 
 export const FiltersContextProvider: FC = ({ children }) => {
-  const [ state, dispatch ] = useReducer(filtersReducer, initialState)
+  const [state, dispatch] = useReducer(filtersReducer, initialState)
 
   return (
-    <FiltersContext.Provider value={{
-      ...state,
-      dispatch 
-    }}>
+    <FiltersContext.Provider
+      value={{
+        ...state,
+        dispatch,
+      }}
+    >
       {children}
     </FiltersContext.Provider>
   )
@@ -141,7 +139,9 @@ export function useFilters(): FiltersContextType {
   const context = useContext(FiltersContext)
 
   if (context === undefined) {
-    throw new Error('useFilters must be called from a child component of FiltersContext')
+    throw new Error(
+      'useFilters must be called from a child component of FiltersContext',
+    )
   }
 
   return context

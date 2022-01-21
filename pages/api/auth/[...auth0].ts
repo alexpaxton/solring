@@ -1,11 +1,6 @@
-import {
-  handleAuth,
-  handleCallback, Session
-} from '@auth0/nextjs-auth0'
+import { handleAuth, handleCallback, Session } from '@auth0/nextjs-auth0'
 import { prisma } from 'data_utils'
-import {
-  NextApiRequest, NextApiResponse
-} from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 interface TransientStore {
   [key: string]: any
@@ -15,15 +10,10 @@ type AfterCallback = (
   req: NextApiRequest,
   res: NextApiResponse,
   session: Session,
-  state: TransientStore
+  state: TransientStore,
 ) => Promise<Session>
 
-const afterCallback: AfterCallback = async (
-  req,
-  res,
-  session,
-  state
-) => {
+const afterCallback: AfterCallback = async (req, res, session, state) => {
   const email = session.user.email
   const user = await prisma.user.findUnique({ where: { email } })
   if (user && user.handle) {
@@ -34,10 +24,12 @@ const afterCallback: AfterCallback = async (
   return session
 }
 
-export default handleAuth({ async callback(req, res) {
-  try {
-    await handleCallback(req, res, { afterCallback })
-  } catch (error: any) {
-    res.status(error.status || 500).end(error.message)
-  }
-}, })
+export default handleAuth({
+  async callback(req, res) {
+    try {
+      await handleCallback(req, res, { afterCallback })
+    } catch (error: any) {
+      res.status(error.status || 500).end(error.message)
+    }
+  },
+})

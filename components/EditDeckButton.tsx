@@ -8,9 +8,7 @@ interface Props {
   deckId: string
 }
 
-export const EditDeckButton: FC<Props> = ({
-  creatorId, deckId 
-}) => {
+export const EditDeckButton: FC<Props> = ({ creatorId, deckId }) => {
   const { id } = useMe()
 
   if (creatorId === id) {

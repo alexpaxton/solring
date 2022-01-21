@@ -6,14 +6,12 @@ import { FC } from 'react'
 import styled from 'styled-components'
 
 export const SearchResults: FC = () => {
-  const {
-    results, loading, error
-  } = useSearchResults()
-  
+  const { results, loading, error } = useSearchResults()
+
   if (loading) {
     return (
       <ResultsContainer>
-        <p>Loading...</p>
+        <MessageText>Loading...</MessageText>
       </ResultsContainer>
     )
   }
@@ -21,25 +19,43 @@ export const SearchResults: FC = () => {
   if (error) {
     return (
       <ResultsContainer>
-        <p>{error}</p>
+        <MessageText>{error}</MessageText>
       </ResultsContainer>
     )
   }
 
-  return <ResultsContainer>
-    <MainPanel>
-      <CardGrid>
-        {results.map(card => <SearchResultCard key={card.id} card={card} />)}
-      </CardGrid>
-    </MainPanel>
-    <FocusPanel />
-  </ResultsContainer>
+  if (!results.length) {
+    return (
+      <ResultsContainer>
+        <MessageText>
+          Fill out some of the fields above and click <strong>Search</strong>
+        </MessageText>
+      </ResultsContainer>
+    )
+  }
+
+  return (
+    <ResultsContainer>
+      <MainPanel>
+        <CardGrid>
+          {results.map((card) => (
+            <SearchResultCard key={card.id} card={card} />
+          ))}
+        </CardGrid>
+      </MainPanel>
+      <FocusPanel />
+    </ResultsContainer>
+  )
 }
+
+const MessageText = styled.p`
+  padding: 80px 0;
+`
 
 const ResultsContainer = styled.div`
   width: 100%;
   flex: 1 0 0;
-  display: flex; 
+  display: flex;
   flex-direction: row;
   justify-content: center;
   position: relative;

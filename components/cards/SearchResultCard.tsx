@@ -9,9 +9,7 @@ interface Props {
 }
 
 export const SearchResultCard: FC<Props> = ({ card }) => {
-  const {
-    focusedCard, setFocusedCard 
-  } = useSearchResults()
+  const { focusedCard, setFocusedCard } = useSearchResults()
 
   const isFocused = focusedCard && focusedCard.id === card.id
 
@@ -21,7 +19,10 @@ export const SearchResultCard: FC<Props> = ({ card }) => {
 
   return (
     <MagicCard {...card}>
-      <ClickArea className={isFocused ? 'focused' : undefined} onClick={handleClick} />
+      <ClickArea
+        className={isFocused ? 'focused' : undefined}
+        onClick={handleClick}
+      />
     </MagicCard>
   )
 }

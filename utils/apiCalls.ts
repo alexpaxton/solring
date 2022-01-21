@@ -1,12 +1,13 @@
-import {
-  Deck, DeckRequest, Me, User
-} from 'types'
-type CreateUser = (data: { handle: string; email: string }, callback?: () => void) => Promise<User>
+import { Deck, DeckRequest, Me, User } from 'types'
+type CreateUser = (
+  data: { handle: string; email: string },
+  callback?: () => void,
+) => Promise<User>
 
 export const createUser: CreateUser = async (data, callback) => {
   const resp = await fetch('/api/users/create', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   })
 
@@ -22,8 +23,8 @@ export const getMe: GetMe = async (callback) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Cache-Control': 's-maxage=1, stale-while-revalidate=59' 
-    }
+      'Cache-Control': 's-maxage=1, stale-while-revalidate=59',
+    },
   })
 
   const user = await resp.json()
@@ -38,7 +39,7 @@ export const updateDeck: UpdateDeck = async (data, callback) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Cache-Control': 's-maxage=1, stale-while-revalidate=59' 
+      'Cache-Control': 's-maxage=1, stale-while-revalidate=59',
     },
     body: JSON.stringify(data),
   })

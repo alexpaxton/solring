@@ -1,21 +1,17 @@
+import { colors, LinkButton } from 'components/ui'
 import Link from 'next/link'
-import {
-  FC, useEffect
-} from 'react'
+import { FC, useEffect } from 'react'
 import styled from 'styled-components'
 import { useMe } from 'utils'
 
-
 export const NavBar: FC = () => {
-  const {
-    user, handle, forceRefresh 
-  } = useMe()
+  const { user, handle, forceRefresh } = useMe()
 
   useEffect(() => {
     forceRefresh()
   }, [])
 
-  let actions = <a href="/api/auth/login">Login</a>
+  let actions = <LinkButton href="/api/auth/login">Login</LinkButton>
 
   if (user && handle) {
     actions = (
@@ -53,7 +49,8 @@ const Header = styled.header`
   flex: 0 0 80px;
   display: flex;
   align-items: center;
-  background-color: #ccc;
+  background-color: ${colors.n1};
+  color: ${colors.n7};
   padding: 0 30px;
   justify-content: space-between;
 `
@@ -72,6 +69,8 @@ const Logo = styled.h1`
   font-weight: bold;
   margin: 0;
   line-height: 1em;
+  text-transform: uppercase;
+  margin-right: 16px;
 `
 
 const Actions = styled.div`

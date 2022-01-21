@@ -1,9 +1,9 @@
-import { FC } from 'react'
 import Link from 'next/link'
+import { FC } from 'react'
 import styled from 'styled-components'
 
 interface Props {
-    children: string
+  children: string
 }
 
 export const Username: FC<Props> = ({ children }) => (
@@ -13,13 +13,14 @@ export const Username: FC<Props> = ({ children }) => (
 )
 
 const UsernameLink = styled.span`
-    font-size: inherit;
-    font-weight: bold;
-    color: #0000ff;
-    text-decoration: none;
-    cursor: pointer;
+  font-size: inherit;
+  font-weight: bold;
+  color: rgb(114, 101, 255);
+  text-decoration: none;
+  cursor: pointer;
 
-    &:hover {
-        text-decoration: underline;
-    }
+  &:hover {
+    color: rgb(152, 147, 250);
+    text-decoration: underline;
+  }
 `

@@ -1,17 +1,14 @@
-import {
-  ChangeEvent, FC, useState 
-} from 'react'
-import { createUser } from 'utils'
-import { sanitizeHandleInput } from 'utils'
-import styled from 'styled-components'
-import { useRouter } from 'next/router'
 import { useUser } from '@auth0/nextjs-auth0'
+import { useRouter } from 'next/router'
+import { ChangeEvent, FC, useState } from 'react'
+import styled from 'styled-components'
+import { createUser, sanitizeHandleInput } from 'utils'
 
 export const CreateHandleForm: FC = () => {
   const { push } = useRouter()
   const { user } = useUser()
-  const [ draftHandle, setDraftHandle ] = useState<string>('')
-  const [ error, setError ] = useState<string>('')
+  const [draftHandle, setDraftHandle] = useState<string>('')
+  const [error, setError] = useState<string>('')
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const sanitizedInput = sanitizeHandleInput(e.target.value)
@@ -22,7 +19,7 @@ export const CreateHandleForm: FC = () => {
     let errors = 0
 
     if (draftHandle.length === 0) {
-      errors +=1
+      errors += 1
       setError('Cannot be blank')
     }
 
@@ -31,7 +28,7 @@ export const CreateHandleForm: FC = () => {
       setError('Not logged in, no email detected')
     }
 
-    return errors === 0 
+    return errors === 0
   }
 
   function handleSuccess() {
@@ -42,12 +39,14 @@ export const CreateHandleForm: FC = () => {
     const isValid = validateForm()
 
     if (isValid && user && user.email) {
-      createUser({
-        email: user.email,
-        handle: draftHandle 
-      }, handleSuccess)
+      createUser(
+        {
+          email: user.email,
+          handle: draftHandle,
+        },
+        handleSuccess,
+      )
     }
-
   }
 
   return (
@@ -69,20 +68,20 @@ const ErrorMessage = styled.div`
 `
 
 const Form = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
 
-    input {
-      margin-top: 30px;
-      margin-bottom: 30px;
-    }
+  input {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
 
-    button {
-      display: inline-block;
-      width: auto;
-    }
+  button {
+    display: inline-block;
+    width: auto;
+  }
 `

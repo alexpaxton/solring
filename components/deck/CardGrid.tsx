@@ -8,7 +8,7 @@ export const CardGrid = styled.div`
   grid-gap: 8px;
 
   &:before {
-    content: "";
+    content: '';
     width: 0;
     padding-bottom: calc(680 / 488 * 100%);
     grid-row: 1 / 1;

@@ -7,7 +7,7 @@ import { FC } from 'react'
 import { DeckWithHandle } from 'types'
 
 interface Props {
-  deck: DeckWithHandle;
+  deck: DeckWithHandle
 }
 
 export const DeckEditor: FC<Props> = ({ deck }) => {
@@ -16,7 +16,7 @@ export const DeckEditor: FC<Props> = ({ deck }) => {
     <CardsContextProvider cardIds={cardIds}>
       <DeckContextProvider deck={deck}>
         <DeckMeta deckId={deck.id} />
-        <SearchWidget/>
+        <SearchWidget />
         <DeckPreview />
       </DeckContextProvider>
     </CardsContextProvider>

@@ -1,0 +1,23 @@
+export const p0 = '#3B36FF'
+export const p1 = '#615CFF'
+export const p2 = '#8783FF'
+export const p3 = '#ADA9FF'
+
+export const g0 = '#009AAA'
+export const g1 = '#1CBCB5'
+export const g2 = '#39DDBF'
+export const g3 = '#55FFCA'
+
+export const r0 = '#B5008A'
+export const r1 = '#CE2981'
+export const r2 = '#E65377'
+export const r3 = '#FF7C6E'
+
+export const n0 = '#0C0C1E'
+export const n1 = '#242847'
+export const n2 = '#363B63'
+export const n3 = '#545D87'
+export const n4 = '#888EA4'
+export const n5 = '#B7BBCA'
+export const n6 = '#E6E8EF'
+export const n7 = '#FFFFFF'

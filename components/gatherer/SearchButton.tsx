@@ -1,17 +1,13 @@
 import { useSearchResults } from 'components/gatherer/SearchContext'
+import { Button } from 'components/ui'
 import { FC } from 'react'
-import styled from 'styled-components'
 
 export const SearchButton: FC = () => {
-  const {
-    search, loading 
-  } = useSearchResults()
+  const { search, loading } = useSearchResults()
 
   return (
-    <Button onClick={search} disabled={loading}>Search</Button>
+    <Button onClick={search} disabled={loading} variant="primary">
+      Search
+    </Button>
   )
 }
-
-const Button = styled.button`
-  height: 40px;
-`

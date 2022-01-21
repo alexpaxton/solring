@@ -1,12 +1,8 @@
 import { useCards } from 'components/deck/CardsContext'
 import { useRouter } from 'next/router'
-import {
-  ChangeEvent, createContext, FC, useContext, useState
-} from 'react'
+import { ChangeEvent, createContext, FC, useContext, useState } from 'react'
 import { DeckWithHandle } from 'types'
-import {
-  scryfallToData, updateDeck
-} from 'utils'
+import { scryfallToData, updateDeck } from 'utils'
 
 interface DeckContextType {
   title: string
@@ -24,20 +20,16 @@ interface Props {
 
 const DeckContext = createContext<DeckContextType | undefined>(undefined)
 
-export const DeckContextProvider: FC<Props> = ({
-  children, deck 
-}) => {
+export const DeckContextProvider: FC<Props> = ({ children, deck }) => {
   const { push } = useRouter()
-  const [ title, setTitle ] = useState<string>(deck.title)
-  const [ description, setDescription ] = useState<string>(deck.description)
-  const [ error, setError ] = useState<string>('')
-  const [ loading, setLoading ] = useState<boolean>(false)
+  const [title, setTitle] = useState<string>(deck.title)
+  const [description, setDescription] = useState<string>(deck.description)
+  const [error, setError] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
   const { cards } = useCards()
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
-    const {
-      name, value 
-    } = e.target
+    const { name, value } = e.target
 
     if (name === 'title') {
       setTitle(value)
@@ -86,14 +78,16 @@ export const DeckContextProvider: FC<Props> = ({
   }
 
   return (
-    <DeckContext.Provider value={{
-      title,
-      description,
-      error,
-      updateField: handleInputChange,
-      submit: handleSave,
-      loading,
-    }}>
+    <DeckContext.Provider
+      value={{
+        title,
+        description,
+        error,
+        updateField: handleInputChange,
+        submit: handleSave,
+        loading,
+      }}
+    >
       {children}
     </DeckContext.Provider>
   )

@@ -1,10 +1,5 @@
-import {
-  RefObject,
-  useEffect, useState
-} from 'react'
-import {
-  Card, CardIdentifier, Cards
-} from 'scryfall-sdk'
+import { RefObject, useEffect, useState } from 'react'
+import { Card, CardIdentifier, Cards } from 'scryfall-sdk'
 import { Me } from 'types'
 import { getMe } from 'utils'
 
@@ -13,8 +8,8 @@ interface UseMe extends Me {
 }
 
 export const useMe = (): UseMe => {
-  const [ isLoading, setLoading ] = useState<boolean>(true)
-  const [ me, updateMe ] = useState<Me>({ isLoading: true })
+  const [isLoading, setLoading] = useState<boolean>(true)
+  const [me, updateMe] = useState<Me>({ isLoading: true })
 
   useEffect(() => {
     getCurrentUser()
@@ -44,11 +39,14 @@ export const useMe = (): UseMe => {
   return {
     ...me,
     isLoading,
-    forceRefresh: getCurrentUser 
+    forceRefresh: getCurrentUser,
   }
 }
 
-type UseOnClickOutside = (ref: RefObject<HTMLElement>, handler: (e: MouseEvent) => void) => void
+type UseOnClickOutside = (
+  ref: RefObject<HTMLElement>,
+  handler: (e: MouseEvent) => void,
+) => void
 
 export const useOnClickOutside: UseOnClickOutside = (ref, handler) => {
   useEffect(
@@ -72,7 +70,7 @@ export const useOnClickOutside: UseOnClickOutside = (ref, handler) => {
     // ... callback/cleanup to run every render. It's not a big deal ...
     // ... but to optimize you can wrap handler in useCallback before ...
     // ... passing it into this hook.
-    [ ref, handler ]
+    [ref, handler],
   )
 }
 
@@ -80,19 +78,22 @@ interface UseScryfallCards {
   loading: boolean
 }
 
-export const useScryfallCards = (ids: string[], callback: (cards: Card[]) => void): UseScryfallCards => {
-  const [ loading, setLoading ] = useState<boolean>(true)
+export const useScryfallCards = (
+  ids: string[],
+  callback: (cards: Card[]) => void,
+): UseScryfallCards => {
+  const [loading, setLoading] = useState<boolean>(true)
 
   // Not recommended to use an async function inside useEffect, could cause race conditions
   // https://stackoverflow.com/questions/53332321/react-hook-warnings-for-async-function-in-useeffect-useeffect-function-must-ret
   useEffect(() => {
     async function fetchScryfallCards() {
-      const query: CardIdentifier[] = ids.map(id => {
+      const query: CardIdentifier[] = ids.map((id) => {
         return { id }
       })
       const response = await Cards.collection(...query)
       const data = await response.waitForAll()
-      const onlyCards = data.filter(card => 'id' in card)
+      const onlyCards = data.filter((card) => 'id' in card)
       callback(onlyCards)
       setLoading(false)
     }
@@ -102,7 +103,7 @@ export const useScryfallCards = (ids: string[], callback: (cards: Card[]) => voi
     } else {
       setLoading(false)
     }
-  }, [ ids ])
+  }, [ids])
 
   return { loading }
 }

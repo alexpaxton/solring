@@ -8,9 +8,7 @@ interface Props {
 }
 
 export const DeckMeta: FC<Props> = ({ deckId }) => {
-  const {
-    title, description, error, loading, updateField, submit 
-  } = useDeck()
+  const { title, description, error, loading, updateField, submit } = useDeck()
   return (
     <Container>
       {error && <Error>{error}</Error>}
@@ -27,7 +25,9 @@ export const DeckMeta: FC<Props> = ({ deckId }) => {
           <Link href={`/decks/${deckId}`}>
             <button disabled={loading}>Cancel</button>
           </Link>
-          <button onClick={submit} disabled={loading}>Save</button>
+          <button onClick={submit} disabled={loading}>
+            Save
+          </button>
         </div>
       </TitleBar>
       <input
@@ -35,7 +35,7 @@ export const DeckMeta: FC<Props> = ({ deckId }) => {
         name="description"
         value={description}
         onChange={updateField}
-        placeholder='Describe your deck'
+        placeholder="Describe your deck"
         disabled={loading}
       />
     </Container>
