@@ -16,10 +16,20 @@ export const Input = styled.input`
   transition: border-color 0.25s ease, color 0.25s ease,
     background-color 0.25s ease, box-shadow 0.25s ease;
 
+  &::placeholder {
+    color: ${colors.n3};
+    font-style: italic;
+    transition: color 0.25s ease;
+  }
+
   &:hover {
     border-color: ${colors.p1};
     color: ${colors.n7};
     z-index: 2;
+  }
+
+  &:hover::placeholder {
+    color: ${colors.n4};
   }
 
   &:focus {
@@ -29,12 +39,6 @@ export const Input = styled.input`
     background-color: ${colors.n0};
     box-shadow: 0 0 7px 1px ${colors.p0}, 0 0 3px 0 ${colors.p1};
     text-shadow: 0 0 4px ${colors.p1};
-  }
-
-  &::placeholder {
-    color: ${colors.n3};
-    font-style: italic;
-    transition: color 0.25s ease;
   }
 
   &:focus::placeholder {

@@ -49,8 +49,7 @@ const Box = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.25s ease;
+    transition: opacity 0.25s ease, transform 0.25s ease;
   }
 
   &:after {
@@ -61,9 +60,11 @@ const Box = styled.div`
     border-radius: 50%;
     opacity: 0;
     z-index: 1;
+    transform: translate(-50%, -50%) scale(1.5);
   }
 
   & > svg {
+    transform: translate(-50%, -50%);
     opacity: 0.28;
     z-index: 2;
   }
@@ -74,6 +75,7 @@ const Box = styled.div`
 
   &:hover:after {
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
 
   &.active > svg {
