@@ -1,4 +1,4 @@
-import { NavBar } from 'components/NavBar'
+import { NavBar } from 'components/layout/NavBar'
 import { useRouter } from 'next/router'
 import { FC, ReactNode } from 'react'
 import styled from 'styled-components'

@@ -1,3 +1,4 @@
+import { colors } from 'components/ui'
 import Link from 'next/link'
 import { FC, useEffect } from 'react'
 import styled from 'styled-components'
@@ -48,8 +49,8 @@ const Header = styled.header`
   flex: 0 0 80px;
   display: flex;
   align-items: center;
-  background-color: #333;
-  color: #fff;
+  background-color: ${colors.n1};
+  color: ${colors.n7};
   padding: 0 30px;
   justify-content: space-between;
 `
