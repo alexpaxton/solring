@@ -18,7 +18,7 @@ export const PreviewCard: FC<Props> = ({ card }) => {
   }
 
   return (
-    <MagicCard {...card}>
+    <MagicCard card={card}>
       {!loading && <DeleteButton onClick={handleClick}>X</DeleteButton>}
     </MagicCard>
   )
