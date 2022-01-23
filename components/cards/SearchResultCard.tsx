@@ -1,5 +1,5 @@
 import { MagicCard } from 'components/cards/MagicCard'
-import { useSearchResults } from 'components/gatherer/SearchContext'
+import { useFocusedCard } from 'contexts'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const SearchResultCard: FC<Props> = ({ card }) => {
-  const { focusedCard, setFocusedCard } = useSearchResults()
+  const { focusedCard, setFocusedCard } = useFocusedCard()
 
   const isFocused = focusedCard && focusedCard.id === card.id
 

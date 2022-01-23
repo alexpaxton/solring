@@ -1,7 +1,6 @@
-import { FiltersContextProvider } from 'components/gatherer/FiltersContext'
 import { SearchBar } from 'components/gatherer/SearchBar'
-import { SearchContextProvider } from 'components/gatherer/SearchContext'
 import { SearchResults } from 'components/gatherer/SearchResults'
+import { FiltersContextProvider, SearchContextProvider } from 'contexts'
 import { NextPage } from 'next'
 import Head from 'next/head'
 

@@ -1,7 +1,7 @@
 import { SearchResultCard } from 'components/cards/SearchResultCard'
 import { CardGrid } from 'components/deck/CardGrid'
 import { FocusPanel } from 'components/gatherer/FocusPanel'
-import { useSearchResults } from 'components/gatherer/SearchContext'
+import { useSearchResults } from 'contexts'
 import { FC } from 'react'
 import styled from 'styled-components'
 

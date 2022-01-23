@@ -1,5 +1,5 @@
-import { useSearchResults } from 'components/gatherer/SearchContext'
 import { Button } from 'components/ui'
+import { useSearchResults } from 'contexts'
 import { FC } from 'react'
 
 export const SearchButton: FC = () => {

@@ -1,17 +1,13 @@
-import {
-  FiltersContextType,
-  useFilters,
-} from 'components/gatherer/FiltersContext'
 import { createContext, FC, useContext, useState } from 'react'
 import { Card, Cards } from 'scryfall-sdk'
+import { FiltersContextType, useFilters } from './FiltersContext'
+import { useFocusedCard } from './FocusContext'
 
 interface SearchContextType {
   results: Card[]
   loading: boolean
   search: () => Promise<void>
   error: null | string
-  focusedCard: Card | null
-  setFocusedCard: (card: Card | null) => void
 }
 const SearchContext = createContext<SearchContextType | undefined>(undefined)
 
@@ -19,7 +15,7 @@ export const SearchContextProvider: FC = ({ children }) => {
   const [results, updateResults] = useState<Card[]>([])
   const [loading, updateLoading] = useState<boolean>(false)
   const [error, updateError] = useState<string | null>(null)
-  const [focusedCard, setFocusedCard] = useState<Card | null>(null)
+  const { setFocusedCard } = useFocusedCard()
   const filters = useFilters()
 
   async function search() {
@@ -47,8 +43,6 @@ export const SearchContextProvider: FC = ({ children }) => {
         loading,
         search,
         error,
-        focusedCard,
-        setFocusedCard,
       }}
     >
       {children}
