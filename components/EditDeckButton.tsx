@@ -1,6 +1,6 @@
+import { Button } from 'components/ui'
 import Link from 'next/link'
 import { FC } from 'react'
-import styled from 'styled-components'
 import { useMe } from 'utils'
 
 interface Props {
@@ -9,20 +9,15 @@ interface Props {
 }
 
 export const EditDeckButton: FC<Props> = ({ creatorId, deckId }) => {
-  const { id } = useMe()
+  const { me, isError } = useMe()
 
-  if (creatorId === id) {
+  if (!isError && me && creatorId === me.id) {
     return (
       <Link href={`/decks/${deckId}/edit`}>
-        <Button>Edit Deck</Button>
+        <Button variant="primary">Edit Deck</Button>
       </Link>
     )
   }
 
   return null
 }
-
-const Button = styled.button`
-  width: 100px;
-  height: 40px;
-`
