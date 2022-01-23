@@ -1,4 +1,3 @@
-import { UserProfile } from '@auth0/nextjs-auth0'
 import { Deck as PrismaDeck, User as PrismaUser } from '@prisma/client'
 import { CSSProperties } from 'react'
 
@@ -9,12 +8,13 @@ export interface StandardProps {
 
 export type User = PrismaUser
 
-export interface Me {
-  id?: string
-  handle?: string
-  user?: UserProfile
-  error?: Error
-  isLoading: boolean
+interface DeckLite {
+  id: string
+  title: string
+}
+
+export interface Me extends PrismaUser {
+  decks: DeckLite[]
 }
 
 export interface Deck extends Omit<PrismaDeck, 'cards'> {
@@ -36,3 +36,9 @@ export interface DeckRequest {
 
 export type ColorMode = 'include' | 'exclude' | 'exactly'
 export type CMCMode = 'atLeast' | 'atMost' | 'exactly' | 'between'
+
+// API response types
+export type APIMeData = {
+  data?: Me
+  error?: string
+}

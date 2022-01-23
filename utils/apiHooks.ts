@@ -1,5 +1,5 @@
 import useSWR, { Fetcher } from 'swr'
-import { DeckWithHandle } from 'types'
+import { APIMeData, DeckWithHandle } from 'types'
 
 const fetchDecksWithHandles: Fetcher<DeckWithHandle[], string> = (url) =>
   fetch(url).then((res) => res.json())
@@ -9,6 +9,7 @@ interface UseDecksWithHandles {
   isLoading: boolean
   isError: Error
 }
+
 export const useDecksWithHandles = (): UseDecksWithHandles => {
   const { data, error } = useSWR('/api/decks/all', fetchDecksWithHandles)
 
@@ -19,6 +20,17 @@ export const useDecksWithHandles = (): UseDecksWithHandles => {
   }
 }
 
+const fetchMe = async (url: string) => fetch(url).then((res) => res.json())
+export const useMe = () => {
+  const { data, error } = useSWR<APIMeData>('/api/me', fetchMe)
+  return {
+    me: data?.data,
+    isLoading: !error && !data,
+    isError: !!error || !!data?.error,
+  }
+}
+
+// Deprecated
 const cardSearchFetcher = async (url: string, query: string) =>
   fetch(`${url}${query}`).then((res) => res.json())
 

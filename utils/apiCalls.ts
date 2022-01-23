@@ -1,4 +1,4 @@
-import { Deck, DeckRequest, Me, User } from 'types'
+import { Deck, DeckResponse, User } from 'types'
 type CreateUser = (
   data: { handle: string; email: string },
   callback?: () => void,
@@ -14,22 +14,6 @@ export const createUser: CreateUser = async (data, callback) => {
   const { newUser } = await resp.json()
   callback && callback()
   return newUser
-}
-
-type GetMe = (callback?: () => void) => Promise<Me>
-
-export const getMe: GetMe = async (callback) => {
-  const resp = await fetch('/api/users/get_me', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Cache-Control': 's-maxage=1, stale-while-revalidate=59',
-    },
-  })
-
-  const user = await resp.json()
-  callback && callback()
-  return user
 }
 
 type UpdateDeck = (data: Deck, callback?: () => void) => Promise<DeckRequest>

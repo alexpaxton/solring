@@ -1,23 +1,27 @@
 import { colors, LinkButton } from 'components/ui'
 import Link from 'next/link'
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import styled from 'styled-components'
 import { useMe } from 'utils'
 
 export const NavBar: FC = () => {
-  const { user, handle, forceRefresh } = useMe()
-
-  useEffect(() => {
-    forceRefresh()
-  }, [])
+  const { me, isLoading, isError } = useMe()
 
   let actions = <LinkButton href="/api/auth/login">Login</LinkButton>
 
-  if (user && handle) {
+  if (isLoading) {
+    actions = <span>Loading...</span>
+  }
+
+  if (isError) {
+    actions = <LinkButton href="/api/auth/login">Login</LinkButton>
+  }
+
+  if (me) {
     actions = (
       <>
         <p>
-          Logged in as <strong>{`@${handle}`}</strong>
+          Logged in as <strong>{`@${me.handle}`}</strong>
         </p>
         <Link href="/decks/create">
           <button type="button">Create Deck</button>
