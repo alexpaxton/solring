@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { StandardProps } from 'types'
 
 interface ButtonProps extends StandardProps {
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void
   id?: string
   disabled?: boolean
   type?: 'button' | 'submit' | 'reset'
