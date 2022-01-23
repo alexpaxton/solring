@@ -37,8 +37,20 @@ export interface DeckRequest {
 export type ColorMode = 'include' | 'exclude' | 'exactly'
 export type CMCMode = 'atLeast' | 'atMost' | 'exactly' | 'between'
 
-// API response types
-export type APIMeData = {
+// API Response Types
+export interface APIMeData {
   data?: Me
   error?: string
+}
+
+export interface APICardsData {
+  data?: number
+  error?: string
+}
+
+// API Request Types
+export interface AddCardsData {
+  type: 'deck'
+  id: string
+  cards: string[]
 }
