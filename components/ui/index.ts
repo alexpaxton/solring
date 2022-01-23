@@ -1,5 +1,6 @@
 export { Button } from './Button'
 export * as colors from './colors'
+export { Dialog } from './Dialog'
 export { Input } from './Input'
 export { InputGroup } from './InputGroup'
 export { LinkButton } from './LinkButton'
