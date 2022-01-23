@@ -1,4 +1,4 @@
-import { Deck, DeckResponse, User } from 'types'
+import { Deck, DeckRequest, User } from 'types'
 type CreateUser = (
   data: { handle: string; email: string },
   callback?: () => void,
