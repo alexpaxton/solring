@@ -20,20 +20,20 @@ export const Modal: FC<ModalProps> = ({
   style,
 }) => {
   return (
-    <Transition
-      mountOnEnter={true}
-      unmountOnExit={true}
-      in={isVisible}
-      timeout={MODAL_TRANSITION_MS}
-    >
-      {(state) => (
-        <Portal>
+    <Portal>
+      <Transition
+        mountOnEnter={true}
+        unmountOnExit={true}
+        in={isVisible}
+        timeout={MODAL_TRANSITION_MS}
+      >
+        {(state) => (
           <Mask className={`${state} ${className}`} style={style}>
             <Content>{children}</Content>
           </Mask>
-        </Portal>
-      )}
-    </Transition>
+        )}
+      </Transition>
+    </Portal>
   )
 }
 
