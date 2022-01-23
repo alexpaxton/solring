@@ -1,6 +1,6 @@
-import { useFilters } from 'components/gatherer/FiltersContext'
 import { Toggle } from 'components/gatherer/Toggle'
 import { InputGroup, Select } from 'components/ui'
+import { useFilters } from 'contexts'
 import { ChangeEvent, FC } from 'react'
 import styled from 'styled-components'
 import { ColorMode } from 'types'

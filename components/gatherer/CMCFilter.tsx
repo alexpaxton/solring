@@ -1,5 +1,5 @@
-import { useFilters } from 'components/gatherer/FiltersContext'
 import { Input, InputGroup, Select } from 'components/ui'
+import { useFilters } from 'contexts'
 import { ChangeEvent, FC } from 'react'
 import styled from 'styled-components'
 import { CMCMode } from 'types'

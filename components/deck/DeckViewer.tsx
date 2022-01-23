@@ -35,7 +35,7 @@ export const DeckViewer: FC<Props> = ({ deck }) => {
         {!!cards.length && (
           <CardGrid>
             {cards.map((card) => (
-              <MagicCard key={card.id} {...card} />
+              <MagicCard key={card.id} card={card} />
             ))}
           </CardGrid>
         )}

@@ -12,3 +12,13 @@ export function pluralizer(
 export function scryfallToData(cards: Card[]): string[] {
   return cards.map((card) => card.id)
 }
+
+export function classnames(
+  base: string | undefined,
+  names: Record<string, boolean>,
+) {
+  const list = base ? [base] : []
+  const optionalNames = Object.entries(names)
+  optionalNames.forEach(([key, included]) => included && list.push(key))
+  return list.join(' ')
+}

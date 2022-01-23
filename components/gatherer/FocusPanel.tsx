@@ -1,10 +1,10 @@
 import { MagicCard } from 'components/cards/MagicCard'
-import { useSearchResults } from 'components/gatherer/SearchContext'
+import { useFocusedCard } from 'contexts'
 import { FC } from 'react'
 import styled from 'styled-components'
 
 export const FocusPanel: FC = () => {
-  const { focusedCard, setFocusedCard } = useSearchResults()
+  const { focusedCard, setFocusedCard } = useFocusedCard()
 
   if (focusedCard === null) {
     return null
@@ -15,7 +15,7 @@ export const FocusPanel: FC = () => {
   return (
     <SidePanel>
       <X onClick={() => setFocusedCard(null)} />
-      <StyledMagicCard {...focusedCard} highRes={true} />
+      <StyledMagicCard card={focusedCard} highRes={true} />
       <p>{name}</p>
       <p>{oracle_text}</p>
     </SidePanel>
