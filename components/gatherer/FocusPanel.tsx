@@ -26,6 +26,7 @@ export const FocusPanel: FC = () => {
             deckId={deck.id}
             deckTitle={deck.title}
             cardId={focusedCard.id}
+            cardTitle={focusedCard.name}
           />
         ))}
       </Actions>
