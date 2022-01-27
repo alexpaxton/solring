@@ -7,7 +7,7 @@ import { classnames } from 'utils'
 interface ButtonProps extends StandardProps {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void
   id?: string
-  disabled: boolean
+  disabled?: boolean
   type?: 'button' | 'submit' | 'reset'
   variant?: 'primary' | 'secondary' | 'danger' | 'neutral'
 }
