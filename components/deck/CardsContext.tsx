@@ -5,6 +5,7 @@ import { useScryfallCards } from 'utils'
 interface CardsContextType {
   cards: Card[]
   addCard: (cardName: string) => Promise<void>
+  addCards: (list: Card[]) => void
   removeCard: (card: Card) => void
   isCardInDeck: (cardName: string) => boolean
   loading: boolean
@@ -27,6 +28,12 @@ export const CardsContextProvider: FC<Props> = ({ children, cardIds }) => {
     }
   }
 
+  function addCards(list: Card[]) {
+    if (list.length) {
+      setCards([...cards, ...list])
+    }
+  }
+
   function removeCard(card: Card) {
     const updatedCards = cards.filter((c) => c.id !== card.id)
     setCards(updatedCards)
@@ -41,6 +48,7 @@ export const CardsContextProvider: FC<Props> = ({ children, cardIds }) => {
       value={{
         cards,
         addCard,
+        addCards,
         removeCard,
         isCardInDeck,
         loading,
