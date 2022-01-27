@@ -1,3 +1,4 @@
+import { BulkAddButton } from 'components/BulkAddButton'
 import { useCards } from 'components/deck/CardsContext'
 import { useDeck } from 'components/deck/DeckContext'
 import throttle from 'lodash.throttle'
@@ -166,6 +167,7 @@ export const SearchWidget: FC = () => {
           </Results>
         )}
       </Search>
+      <BulkAddButton />
     </Container>
   )
 }
@@ -183,6 +185,7 @@ const Search = styled.div`
   align-items: center;
   position: relative;
   z-index: 100;
+  margin-right: 30px;
 
   input {
     height: 40px;
