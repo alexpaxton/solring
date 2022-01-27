@@ -9,7 +9,7 @@ export const Textarea = styled.textarea`
   background-color: ${colors.n0};
   border: 2px solid ${colors.n2};
   font-size: 14px;
-  line-height: 16px;
+  line-height: 18px;
   font-weight: 500;
   padding: 16px;
   outline: none;
