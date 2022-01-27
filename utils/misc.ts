@@ -1,4 +1,4 @@
-import { Card } from 'scryfall-sdk'
+import { Card, CardIdentifier } from 'scryfall-sdk'
 
 export function pluralizer(
   string: string,
@@ -94,4 +94,10 @@ export function hex2rgb(hexcode: string): RGBAColor {
 export function dedupe<T>(arr: T[]): T[] {
   const set = new Set(arr)
   return Array.from(set)
+}
+
+export function getCardsFromResults(
+  results: Card[] & { not_found: CardIdentifier[] },
+): Card[] {
+  return results.map((c) => c)
 }
