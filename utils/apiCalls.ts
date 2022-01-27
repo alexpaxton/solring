@@ -46,7 +46,7 @@ type AddCards = (
 
 export const addCards: AddCards = async (data, callback) => {
   const resp = await fetch('/api/cards', {
-    method: 'Put',
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
