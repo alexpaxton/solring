@@ -1,4 +1,4 @@
-import { Deck, DeckRequest, User } from 'types'
+import { APICardsData, Deck, DeckRequest, User } from 'types'
 type CreateUser = (
   data: { handle: string; email: string },
   callback?: () => void,
@@ -24,6 +24,31 @@ export const updateDeck: UpdateDeck = async (data, callback) => {
     headers: {
       'Content-Type': 'application/json',
       'Cache-Control': 's-maxage=1, stale-while-revalidate=59',
+    },
+    body: JSON.stringify(data),
+  })
+
+  const respData = await resp.json()
+  callback && callback()
+  return respData
+}
+
+export interface AddCardsData {
+  type: 'deck'
+  id: string
+  cards: string[]
+}
+
+type AddCards = (
+  data: AddCardsData,
+  callback?: () => void,
+) => Promise<APICardsData>
+
+export const addCards: AddCards = async (data, callback) => {
+  const resp = await fetch('/api/cards', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   })

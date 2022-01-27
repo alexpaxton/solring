@@ -1,13 +1,36 @@
 import { MagicCard } from 'components/cards/MagicCard'
+import { AddCardToDeckButton } from 'components/gatherer/AddCardToDeckButton'
+import { colors } from 'components/ui'
 import { useFocusedCard } from 'contexts'
 import { FC } from 'react'
 import styled from 'styled-components'
+import { useMe } from 'utils'
 
 export const FocusPanel: FC = () => {
   const { focusedCard, setFocusedCard } = useFocusedCard()
+  const { me, isError } = useMe()
+
+  let actions = <></>
 
   if (focusedCard === null) {
     return null
+  }
+
+  if (!isError && me) {
+    actions = (
+      <Actions>
+        <p>Add card to:</p>
+        {me.decks.map((deck) => (
+          <AddCardToDeckButton
+            key={`add-to_${deck.id}`}
+            deckId={deck.id}
+            deckTitle={deck.title}
+            cardId={focusedCard.id}
+            cardTitle={focusedCard.name}
+          />
+        ))}
+      </Actions>
+    )
   }
 
   const { name, oracle_text } = focusedCard
@@ -18,6 +41,7 @@ export const FocusPanel: FC = () => {
       <StyledMagicCard card={focusedCard} highRes={true} />
       <p>{name}</p>
       <p>{oracle_text}</p>
+      {actions}
     </SidePanel>
   )
 }
@@ -32,7 +56,7 @@ const SidePanel = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  border-left: 1px solid #eee;
+  border-left: 2px solid ${colors.n1};
 `
 
 const StyledMagicCard = styled(MagicCard)`
@@ -69,5 +93,18 @@ const X = styled.button`
 
   &:after {
     transform: translate(-50%, -50%) rotate(-45deg);
+  }
+`
+
+const Actions = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid ${colors.n1};
+  margin-top: 32px;
+  padding-top: 32px;
+  text-align: center;
+
+  > * {
+    margin-bottom: 4px;
   }
 `

@@ -90,3 +90,8 @@ export function hex2rgb(hexcode: string): RGBAColor {
 
   throw new Error(`Unable to parse hex color: ${hex}`)
 }
+
+export function dedupe<T>(arr: T[]): T[] {
+  const set = new Set(arr)
+  return Array.from(set)
+}
