@@ -47,8 +47,12 @@ const DialogBox = styled.article`
     align-items: center;
     justify-content: flex-end;
 
-    > * {
+    button {
       margin-left: 12px;
+    }
+
+    button:first-child {
+      margin-left: 0;
     }
   }
 `

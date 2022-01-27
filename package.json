@@ -20,6 +20,7 @@
     "react-transition-group": "^4.4.2",
     "scryfall-sdk": "^2.1.1",
     "styled-components": "^5.3.3",
+    "styled-icons": "^10.45.0",
     "superjson": "^1.8.0",
     "swr": "^1.1.2"
   },
