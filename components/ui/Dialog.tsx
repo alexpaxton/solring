@@ -31,7 +31,7 @@ export const Dialog: FC<DialogProps> = ({
 const DialogBox = styled.article`
   border-radius: 6px;
   background-color: ${colors.n1};
-  box-shadow: 0 0 3px ${colors.p1}, 0 0 16px ${colors.p0};
+  box-shadow: 0 0 3px ${colors.p2}, 0 0 16px ${colors.p0};
   display: flex;
   flex-direction: column;
   align-items: stretch;

@@ -99,26 +99,26 @@ const BaseButton = styled.button`
 `
 
 export const PrimaryButton = styled(BaseButton)`
-  background-color: ${colors.p0};
+  background-color: ${colors.p1};
 
   &:not(.disabled):hover {
-    background-color: ${colors.p1};
+    background-color: ${colors.p2};
   }
 `
 
 export const SecondaryButton = styled(BaseButton)`
-  background-color: ${colors.g0};
+  background-color: ${colors.g1};
 
   &:not(.disabled):hover {
-    background-color: ${colors.g1};
+    background-color: ${colors.g2};
   }
 `
 
 export const DangerButton = styled(BaseButton)`
-  background-color: ${colors.r0};
+  background-color: ${colors.r1};
 
   &:not(.disabled):hover {
-    background-color: ${colors.r1};
+    background-color: ${colors.r2};
   }
 `
 

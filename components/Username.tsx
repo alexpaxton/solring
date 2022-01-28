@@ -1,3 +1,4 @@
+import { colors } from 'components/ui'
 import Link from 'next/link'
 import { FC } from 'react'
 import styled from 'styled-components'
@@ -15,12 +16,12 @@ export const Username: FC<Props> = ({ children }) => (
 const UsernameLink = styled.span`
   font-size: inherit;
   font-weight: bold;
-  color: rgb(114, 101, 255);
+  color: ${colors.p2};
   text-decoration: none;
   cursor: pointer;
 
   &:hover {
-    color: rgb(152, 147, 250);
+    color: ${colors.p3};
     text-decoration: underline;
   }
 `
