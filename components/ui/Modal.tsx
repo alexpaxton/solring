@@ -9,12 +9,14 @@ import { Portal } from './Portal'
 interface ModalProps extends StandardProps {
   children: React.ReactNode
   isVisible: boolean
+  onMaskClick?: () => void
 }
 
 const MODAL_TRANSITION_MS = 270
 
 export const Modal: FC<ModalProps> = ({
   isVisible,
+  onMaskClick,
   children,
   className = '',
   style,
@@ -28,7 +30,11 @@ export const Modal: FC<ModalProps> = ({
         timeout={MODAL_TRANSITION_MS}
       >
         {(state) => (
-          <Mask className={`${state} ${className}`} style={style}>
+          <Mask
+            className={`${state} ${className}`}
+            style={style}
+            onClick={onMaskClick}
+          >
             <Content>{children}</Content>
           </Mask>
         )}
