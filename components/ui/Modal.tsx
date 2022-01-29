@@ -10,6 +10,7 @@ interface ModalProps extends StandardProps {
   children: React.ReactNode
   isVisible: boolean
   onMaskClick?: () => void
+  onDismiss?: () => void
 }
 
 const MODAL_TRANSITION_MS = 200
@@ -17,6 +18,7 @@ const MODAL_TRANSITION_MS = 200
 export const Modal: FC<ModalProps> = ({
   isVisible,
   onMaskClick,
+  onDismiss,
   children,
   className = '',
   style,
@@ -35,6 +37,7 @@ export const Modal: FC<ModalProps> = ({
             style={style}
             onClick={onMaskClick}
           >
+            {onDismiss && <DismissButton onClick={onDismiss} />}
             <Content>{children}</Content>
           </Mask>
         )}
@@ -53,7 +56,7 @@ const Mask = styled.div`
   height: 100vh;
   top: 0;
   left: 0;
-  background-color: ${rgba(colors.p0, 0.666)};
+  background-color: ${rgba(colors.n0, 0.8)};
   overflow-x: hidden;
   overflow-y: auto;
   padding: 36px;
@@ -94,6 +97,35 @@ const Content = styled.div`
   .exiting &,
   .exited & {
     transform: translateY(28px);
+  }
+`
+
+const DismissButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  background-color: transparent;
+  border: 0;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: #fff;
+  }
+
+  &::before {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  &::after {
+    transform: translate(-50%, -50%) rotate(45deg);
   }
 `
 
