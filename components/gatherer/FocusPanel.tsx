@@ -7,12 +7,12 @@ import styled from 'styled-components'
 import { useMe } from 'utils'
 
 export const FocusPanel: FC = () => {
-  const { focusedCard, setFocusedCard } = useInspector()
+  const { inspectedCard, inspectCard } = useInspector()
   const { me, isError } = useMe()
 
   let actions = <></>
 
-  if (focusedCard === null) {
+  if (inspectedCard === null) {
     return null
   }
 
@@ -25,20 +25,20 @@ export const FocusPanel: FC = () => {
             key={`add-to_${deck.id}`}
             deckId={deck.id}
             deckTitle={deck.title}
-            cardId={focusedCard.id}
-            cardTitle={focusedCard.name}
+            cardId={inspectedCard.id}
+            cardTitle={inspectedCard.name}
           />
         ))}
       </Actions>
     )
   }
 
-  const { name, oracle_text } = focusedCard
+  const { name, oracle_text } = inspectedCard
 
   return (
     <SidePanel>
-      <X onClick={() => setFocusedCard(null)} />
-      <StyledMagicCard card={focusedCard} highRes={true} />
+      <X onClick={() => inspectCard(null)} />
+      <StyledMagicCard card={inspectedCard} highRes={true} />
       <p>{name}</p>
       <p>{oracle_text}</p>
       {actions}
