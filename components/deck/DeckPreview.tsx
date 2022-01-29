@@ -1,4 +1,4 @@
-import { PreviewCard } from 'components/cards/PreviewCard'
+import { EditorCard } from 'components/cards/EditorCard'
 import { CardGrid } from 'components/deck/CardGrid'
 import { useCards } from 'components/deck/CardsContext'
 import { FC } from 'react'
@@ -11,7 +11,7 @@ export const DeckPreview: FC = () => {
     <Container>
       <CardGrid>
         {cards.map((card) => (
-          <PreviewCard key={card.id} card={card} />
+          <EditorCard key={card.id} card={card} />
         ))}
       </CardGrid>
     </Container>

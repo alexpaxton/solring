@@ -1,6 +1,6 @@
 import { colors } from 'components/ui'
 import { FC } from 'react'
-import { Card } from 'scryfall-sdk'
+import { Card as ScryfallCard } from 'scryfall-sdk'
 import styled from 'styled-components'
 import { StyledIcon } from 'styled-icons/types'
 import { StandardProps } from 'types'
@@ -9,17 +9,17 @@ import { classnames } from 'utils'
 interface CardMenuItem {
   icon: StyledIcon
   name: string
-  onClick: (card: Card) => void
+  onClick: (card: ScryfallCard) => void
 }
 
 interface Props extends StandardProps {
   highRes?: boolean
-  card: Card
+  card: ScryfallCard
   menuItems?: CardMenuItem[]
   selected?: boolean
 }
 
-export const MagicCard: FC<Props> = ({
+export const Card: FC<Props> = ({
   card,
   children,
   highRes,

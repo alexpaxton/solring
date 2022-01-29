@@ -1,4 +1,4 @@
-import { MagicCard } from 'components/cards/MagicCard'
+import { Card as BaseCard } from 'components/cards/Card'
 import { useInspector } from 'contexts'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
@@ -21,5 +21,5 @@ export const SearchResultCard: FC<Props> = ({ card }) => {
     },
   ]
 
-  return <MagicCard card={card} selected={isSelected} menuItems={menuItems} />
+  return <BaseCard card={card} selected={isSelected} menuItems={menuItems} />
 }

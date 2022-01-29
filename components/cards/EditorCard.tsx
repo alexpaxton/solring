@@ -1,4 +1,4 @@
-import { MagicCard } from 'components/cards/MagicCard'
+import { Card as BaseCard } from 'components/cards/Card'
 import { useCards } from 'components/deck/CardsContext'
 import { useInspector } from 'contexts'
 import { FC } from 'react'
@@ -9,7 +9,7 @@ interface Props {
   card: Card
 }
 
-export const PreviewCard: FC<Props> = ({ card }) => {
+export const EditorCard: FC<Props> = ({ card }) => {
   const { inspectedCard, inspectCard } = useInspector()
   const { removeCard } = useCards()
   // const { loading } = useDeck()
@@ -29,5 +29,5 @@ export const PreviewCard: FC<Props> = ({ card }) => {
     },
   ]
 
-  return <MagicCard card={card} selected={isSelected} menuItems={menuItems} />
+  return <BaseCard card={card} selected={isSelected} menuItems={menuItems} />
 }
