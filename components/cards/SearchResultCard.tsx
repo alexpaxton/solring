@@ -2,19 +2,24 @@ import { MagicCard } from 'components/cards/MagicCard'
 import { useInspector } from 'contexts'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
+import { Search } from 'styled-icons/boxicons-regular'
 
 interface Props {
   card: Card
 }
 
 export const SearchResultCard: FC<Props> = ({ card }) => {
-  const { focusedCard, setFocusedCard } = useInspector()
+  const { inspectedCard, inspectCard } = useInspector()
 
-  const isSelected = !!focusedCard && focusedCard.id === card.id
+  const isSelected = !!inspectedCard && inspectedCard.id === card.id
 
-  function handleClick() {
-    isSelected ? setFocusedCard(null) : setFocusedCard(card)
-  }
+  const menuItems = [
+    {
+      icon: Search,
+      name: 'inspect',
+      onClick: inspectCard,
+    },
+  ]
 
-  return <MagicCard card={card} selected={isSelected} onClick={handleClick} />
+  return <MagicCard card={card} selected={isSelected} menuItems={menuItems} />
 }

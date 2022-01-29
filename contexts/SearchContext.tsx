@@ -15,12 +15,12 @@ export const SearchContextProvider: FC = ({ children }) => {
   const [results, updateResults] = useState<Card[]>([])
   const [loading, updateLoading] = useState<boolean>(false)
   const [error, updateError] = useState<string | null>(null)
-  const { setFocusedCard } = useInspector()
+  const { inspectCard } = useInspector()
   const filters = useFilters()
 
   async function search() {
     updateLoading(true)
-    setFocusedCard(null)
+    inspectCard(null)
     const query = getQuery(filters)
     console.log(`%cQuery: ${query}`, 'color: #766cff')
     const data = await Cards.search(query)

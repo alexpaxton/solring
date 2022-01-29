@@ -1,37 +1,33 @@
 import { MagicCard } from 'components/cards/MagicCard'
 import { useCards } from 'components/deck/CardsContext'
-import { useDeck } from 'components/deck/DeckContext'
+import { useInspector } from 'contexts'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
-import styled from 'styled-components'
+import { Search, X } from 'styled-icons/boxicons-regular'
 
 interface Props {
   card: Card
 }
 
 export const PreviewCard: FC<Props> = ({ card }) => {
+  const { inspectedCard, inspectCard } = useInspector()
   const { removeCard } = useCards()
-  const { loading } = useDeck()
+  // const { loading } = useDeck()
 
-  function handleClick() {
-    removeCard(card)
-  }
+  const isSelected = !!inspectedCard && inspectedCard.id === card.id
 
-  return (
-    <MagicCard card={card}>
-      {!loading && <DeleteButton onClick={handleClick}>X</DeleteButton>}
-    </MagicCard>
-  )
+  const menuItems = [
+    {
+      icon: Search,
+      name: 'inspect',
+      onClick: inspectCard,
+    },
+    {
+      icon: X,
+      name: 'remove',
+      onClick: removeCard,
+    },
+  ]
+
+  return <MagicCard card={card} selected={isSelected} menuItems={menuItems} />
 }
-
-const DeleteButton = styled.button`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 30px;
-  height: 30px;
-  border: 0;
-  background-color: #000;
-  color: #fff;
-  font-size: 14px;
-`

@@ -2,8 +2,9 @@ import { createContext, FC, useContext, useState } from 'react'
 import { Card } from 'scryfall-sdk'
 
 interface InspectorContextType {
-  focusedCard: Card | null
-  setFocusedCard: (card: Card | null) => void
+  inspectedCard: Card | null
+  inspectCard: (card: Card) => void
+  dismissInspector: () => void
 }
 
 const InspectorContext = createContext<InspectorContextType | undefined>(
@@ -11,13 +12,22 @@ const InspectorContext = createContext<InspectorContextType | undefined>(
 )
 
 export const InspectorContextProvider: FC = ({ children }) => {
-  const [focusedCard, setFocusedCard] = useState<Card | null>(null)
+  const [card, setCard] = useState<Card | null>(null)
+
+  function dismissInspector() {
+    setCard(null)
+  }
+
+  function inspectCard(card: Card) {
+    setCard(card)
+  }
 
   return (
     <InspectorContext.Provider
       value={{
-        focusedCard,
-        setFocusedCard,
+        inspectedCard: card,
+        inspectCard,
+        dismissInspector,
       }}
     >
       {children}

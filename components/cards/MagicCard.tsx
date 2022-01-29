@@ -2,13 +2,20 @@ import { colors } from 'components/ui'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
+import { StyledIcon } from 'styled-icons/types'
 import { StandardProps } from 'types'
 import { classnames } from 'utils'
+
+interface CardMenuItem {
+  icon: StyledIcon
+  name: string
+  onClick: (card: Card) => void
+}
 
 interface Props extends StandardProps {
   highRes?: boolean
   card: Card
-  onClick?: (card: Card) => void
+  menuItems?: CardMenuItem[]
   selected?: boolean
 }
 
@@ -16,7 +23,7 @@ export const MagicCard: FC<Props> = ({
   card,
   children,
   highRes,
-  onClick,
+  menuItems,
   selected = false,
   style,
   className,
@@ -32,25 +39,56 @@ export const MagicCard: FC<Props> = ({
 
   const url = image?.split('?')[0]
   const containerClass = classnames(className, {
-    clickable: !!onClick,
     selected,
   })
-
-  function handleClick() {
-    onClick && onClick(card)
-  }
 
   return (
     <Container
       style={{ ...style, backgroundImage: `url(${url})` }}
       className={containerClass}
-      onClick={handleClick}
     >
       <Border />
+      {menuItems && (
+        <Menu>
+          {menuItems.map((item) => (
+            <MenuButton
+              key={`${card.id}${item.name}`}
+              onClick={() => item.onClick(card)}
+            >
+              <item.icon />
+            </MenuButton>
+          ))}
+        </Menu>
+      )}
       {children}
     </Container>
   )
 }
+
+const Border = styled.div`
+  border: 2px solid transparent;
+  width: 100%;
+  height: 100%;
+  border-radius: 5% / 4%;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+
+  .selected &,
+  .selected:hover & {
+    border-color: ${colors.p2};
+    box-shadow: 0 2px 4px ${colors.p1}, 0 3px 8px ${colors.p0};
+  }
+`
+
+const Menu = styled.div`
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+`
 
 const Container = styled.div`
   width: 100%;
@@ -63,8 +101,12 @@ const Container = styled.div`
   background-color: #000;
   transition: box-shadow 0.25s ease;
 
-  &.clickable {
-    cursor: pointer;
+  &:hover ${Border} {
+    border-color: ${colors.p1};
+  }
+
+  &:hover ${Menu}, &.selected ${Menu} {
+    opacity: 1;
   }
 
   &.selected,
@@ -73,20 +115,21 @@ const Container = styled.div`
   }
 `
 
-const Border = styled.div`
-  border: 2px solid transparent;
-  width: 100%;
-  height: 100%;
-  border-radius: 5% / 4%;
-  transition: border-color 0.25s ease, background-color 0.25s ease;
+const MenuButton = styled.div`
+  width: 32px;
+  height: 32px;
+  background-color: #ff0054;
+  border-radius: 5px;
+  margin: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 
-  .clickable:hover & {
-    border-color: ${colors.p1};
-  }
-
-  .selected &,
-  .selected:hover & {
-    border-color: ${colors.p2};
-    box-shadow: 0 2px 4px ${colors.p1}, 0 3px 8px ${colors.p0};
+  > svg {
+    fill: #fff;
+    width: 1em;
+    height: 1em;
+    font-size: 22px;
   }
 `
