@@ -12,7 +12,7 @@ interface ModalProps extends StandardProps {
   onMaskClick?: () => void
 }
 
-const MODAL_TRANSITION_MS = 270
+const MODAL_TRANSITION_MS = 200
 
 export const Modal: FC<ModalProps> = ({
   isVisible,
