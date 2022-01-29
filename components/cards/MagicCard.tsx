@@ -81,11 +81,12 @@ const Border = styled.div`
 
 const Menu = styled.div`
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 24%;
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   opacity: 0;
   transition: opacity 0.25s ease;
 `
@@ -118,18 +119,24 @@ const Container = styled.div`
 const MenuButton = styled.div`
   width: 32px;
   height: 32px;
-  background-color: #ff0054;
+  background-color: ${colors.n0};
+  border: 2px solid ${colors.p1};
   border-radius: 5px;
   margin: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: background-color 0.25s ease;
 
   > svg {
-    fill: #fff;
+    fill: ${colors.n7};
     width: 1em;
     height: 1em;
     font-size: 22px;
+  }
+
+  &:hover {
+    background-color: ${colors.p1};
   }
 `
