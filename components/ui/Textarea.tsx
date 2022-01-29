@@ -35,10 +35,10 @@ export const Textarea = styled.textarea`
 
   &:focus {
     z-index: 2;
-    border-color: ${colors.p1};
+    border-color: ${colors.p2};
     color: ${colors.n7};
     background-color: ${colors.n0};
-    box-shadow: 0 0 7px 1px ${colors.p0}, 0 0 3px 0 ${colors.p1};
+    box-shadow: 0 0 7px 1px ${colors.p1}, 0 0 3px 0 ${colors.p2};
     text-shadow: 0 0 4px ${colors.p1};
   }
 

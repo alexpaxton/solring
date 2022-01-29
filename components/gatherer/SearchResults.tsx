@@ -1,6 +1,7 @@
 import { SearchResultCard } from 'components/cards/SearchResultCard'
 import { CardGrid } from 'components/deck/CardGrid'
 import { FocusPanel } from 'components/gatherer/FocusPanel'
+import { colors } from 'components/ui'
 import { useSearchResults } from 'contexts'
 import { FC } from 'react'
 import styled from 'styled-components'
@@ -50,6 +51,8 @@ export const SearchResults: FC = () => {
 
 const MessageText = styled.p`
   padding: 80px 0;
+  color: ${colors.n4};
+  font-size: 18px;
 `
 
 const ResultsContainer = styled.div`
