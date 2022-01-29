@@ -1,13 +1,13 @@
 import { MagicCard } from 'components/cards/MagicCard'
 import { AddCardToDeckButton } from 'components/gatherer/AddCardToDeckButton'
 import { colors } from 'components/ui'
-import { useFocusedCard } from 'contexts'
+import { useInspector } from 'contexts'
 import { FC } from 'react'
 import styled from 'styled-components'
 import { useMe } from 'utils'
 
 export const FocusPanel: FC = () => {
-  const { focusedCard, setFocusedCard } = useFocusedCard()
+  const { focusedCard, setFocusedCard } = useInspector()
   const { me, isError } = useMe()
 
   let actions = <></>

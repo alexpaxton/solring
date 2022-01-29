@@ -1,5 +1,5 @@
 import { MagicCard } from 'components/cards/MagicCard'
-import { useFocusedCard } from 'contexts'
+import { useInspector } from 'contexts'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
 
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const SearchResultCard: FC<Props> = ({ card }) => {
-  const { focusedCard, setFocusedCard } = useFocusedCard()
+  const { focusedCard, setFocusedCard } = useInspector()
 
   const isSelected = !!focusedCard && focusedCard.id === card.id
 
