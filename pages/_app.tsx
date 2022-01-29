@@ -1,4 +1,5 @@
 import { UserProvider } from '@auth0/nextjs-auth0'
+import { Inspector } from 'components/inspector/Inspector'
 import { AppWrapper } from 'components/layout'
 import { InspectorContextProvider, PortalContextProvider } from 'contexts'
 import type { AppProps } from 'next/app'
@@ -11,6 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <InspectorContextProvider>
         <UserProvider>
           <AppWrapper>
+            <Inspector />
             <Component {...pageProps} />
           </AppWrapper>
         </UserProvider>
