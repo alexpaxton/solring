@@ -69,6 +69,8 @@ const BigCard = styled(CardBase)`
   width: 400px;
   border-radius: ${Math.round(400 * 0.0628571)}px;
   height: ${Math.round(400 * 1.39666)}px;
+  border: 2px solid ${colors.p2};
+  box-shadow: 0 0 4px ${colors.p1}, 0 0 8px ${colors.p0};
 `
 
 const SmallCard = styled(CardBase)`
