@@ -31,7 +31,7 @@ export const AddCardToDeckButton: FC<Props> = ({
   }
 
   return (
-    <Button disabled={loading} onClick={handleClick}>
+    <Button disabled={loading} onClick={handleClick} variant="neutral">
       {loading ? 'Loading...' : deckTitle}
     </Button>
   )

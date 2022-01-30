@@ -1,20 +1,28 @@
-import { colors, LinkButton } from 'components/ui'
+import { CreateDeckButton } from 'components/CreateDeckButton'
+import { Button, colors } from 'components/ui'
 import Link from 'next/link'
 import { FC } from 'react'
 import styled from 'styled-components'
 import { useMe } from 'utils'
-
 export const NavBar: FC = () => {
   const { me, isLoading, isError } = useMe()
 
-  let actions = <LinkButton href="/api/auth/login">Login</LinkButton>
+  let actions = (
+    <Button href="/api/auth/login" as="a" variant="neutral">
+      Login
+    </Button>
+  )
 
   if (isLoading) {
     actions = <span>Loading...</span>
   }
 
   if (isError) {
-    actions = <LinkButton href="/api/auth/login">Login</LinkButton>
+    actions = (
+      <Button href="/api/auth/login" as="a" variant="neutral">
+        Login
+      </Button>
+    )
   }
 
   if (me) {
@@ -23,10 +31,9 @@ export const NavBar: FC = () => {
         <p>
           Logged in as <strong>{`@${me.handle}`}</strong>
         </p>
-        <Link href="/decks/create">
-          <button type="button">Create Deck</button>
-        </Link>
-        <a href="/api/auth/logout">Logout</a>
+        <Button href="/api/auth/logout" as="a" variant="primary">
+          Logout
+        </Button>
       </>
     )
   }
@@ -38,11 +45,16 @@ export const NavBar: FC = () => {
           <Logo>Sol Ring</Logo>
         </Link>
         <Link href="/decks">
-          <button>Decks</button>
+          <Button as="a" variant="neutral">
+            Decks
+          </Button>
         </Link>
         <Link href="/gatherer">
-          <button>Gatherer</button>
+          <Button as="a" variant="neutral">
+            Gatherer
+          </Button>
         </Link>
+        <CreateDeckButton />
       </Left>
       <Actions>{actions}</Actions>
     </Header>
@@ -63,7 +75,8 @@ const Left = styled.div`
   display: flex;
   align-items: center;
 
-  & > button {
+  & > button,
+  & > a {
     margin-left: 16px;
   }
 `
