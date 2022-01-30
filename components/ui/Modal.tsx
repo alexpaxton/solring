@@ -101,7 +101,7 @@ const Content = styled.div`
 `
 
 const DismissButton = styled.button`
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 80px;
