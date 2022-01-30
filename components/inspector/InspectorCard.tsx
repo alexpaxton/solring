@@ -2,6 +2,7 @@ import { colors } from 'components/ui'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
+import { Refresh } from 'styled-icons/boxicons-regular'
 
 interface Props {
   card: Card | null
@@ -14,12 +15,23 @@ export const InspectorCard: FC<Props> = ({ card, cardFace, setCardFace }) => {
     return null
   }
 
+  function handleFlip() {
+    if (cardFace === 'front') {
+      setCardFace('back')
+    } else {
+      setCardFace('front')
+    }
+  }
+
   if (card.card_faces) {
     const frontImage = card?.card_faces[0].image_uris?.large
     const backImage = card?.card_faces[1].image_uris?.large
 
     return (
       <CardContainer className={cardFace}>
+        <FlipButton onClick={handleFlip}>
+          <Refresh />
+        </FlipButton>
         <SmallCard
           className="front"
           style={{ backgroundImage: `url(${frontImage})` }}
@@ -92,5 +104,37 @@ const SmallCard = styled(CardBase)`
   .front &.back,
   .back &.front {
     cursor: pointer;
+  }
+`
+
+const FlipButton = styled.button`
+  background-color: transparent;
+  border: 0;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 50%;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+
+  .front & {
+    transform: rotate(0deg);
+  }
+
+  .back & {
+    transform: rotate(180deg);
+  }
+
+  &:hover {
+    cursor: pointer;
+    opacity: 1;
+  }
+
+  > svg {
+    fill: ${colors.n7};
+    width: 1em;
+    height: 1em;
+    font-size: 26px;
   }
 `
