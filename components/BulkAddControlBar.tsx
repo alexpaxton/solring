@@ -38,7 +38,11 @@ export const BulkAddControlBar: FC<Props> = ({
           Search
         </Button>
       )}
-      {showResetButton && <Button onClick={onReset}>Go back</Button>}
+      {showResetButton && (
+        <Button onClick={onReset} variant="neutral">
+          Go back
+        </Button>
+      )}
     </ControlBar>
   )
 }

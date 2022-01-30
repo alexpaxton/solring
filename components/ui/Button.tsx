@@ -1,67 +1,9 @@
 import * as colors from 'components/ui/colors'
-import { FC, MouseEvent } from 'react'
-import styled from 'styled-components'
-import { StandardProps } from 'types'
-import { classnames } from 'utils'
+import styled, { css } from 'styled-components'
 
-interface ButtonProps extends StandardProps {
-  onClick?: (e: MouseEvent<HTMLButtonElement>) => void
-  id?: string
-  disabled?: boolean
-  type?: 'button' | 'submit' | 'reset'
-  variant?: 'primary' | 'secondary' | 'danger' | 'neutral'
-}
-
-export const Button: FC<ButtonProps> = ({
-  variant = 'neutral',
-  className,
-  disabled = false,
-  type = 'button',
-  ...props
-}) => {
-  const buttonClass = classnames(className, { disabled })
-  switch (variant) {
-    case 'primary':
-      return (
-        <PrimaryButton
-          className={buttonClass}
-          disabled={disabled}
-          type={type}
-          {...props}
-        />
-      )
-    case 'secondary':
-      return (
-        <SecondaryButton
-          className={buttonClass}
-          disabled={disabled}
-          type={type}
-          {...props}
-        />
-      )
-    case 'danger':
-      return (
-        <DangerButton
-          className={buttonClass}
-          disabled={disabled}
-          type={type}
-          {...props}
-        />
-      )
-    case 'neutral':
-    default:
-      return (
-        <NeutralButton
-          className={buttonClass}
-          disabled={disabled}
-          type={type}
-          {...props}
-        />
-      )
-  }
-}
-
-const BaseButton = styled.button`
+export const Button = styled.button<{
+  variant: 'primary' | 'secondary' | 'danger' | 'neutral'
+}>`
   border-radius: 4px;
   height: 32px;
   line-height: 32px;
@@ -96,36 +38,35 @@ const BaseButton = styled.button`
     cursor: default;
     opacity: 0.5;
   }
+
+  ${({ variant }) =>
+    variant &&
+    variants[variant] &&
+    css`
+      background-color: ${variants[variant].bg};
+      &:not(.disabled):hover {
+        background-color: ${variants[variant].bgHover};
+      }
+    `}
 `
 
-export const PrimaryButton = styled(BaseButton)`
-  background-color: ${colors.p1};
+Button.displayName = 'Button'
 
-  &:not(.disabled):hover {
-    background-color: ${colors.p2};
-  }
-`
-
-export const SecondaryButton = styled(BaseButton)`
-  background-color: ${colors.g1};
-
-  &:not(.disabled):hover {
-    background-color: ${colors.g2};
-  }
-`
-
-export const DangerButton = styled(BaseButton)`
-  background-color: ${colors.r1};
-
-  &:not(.disabled):hover {
-    background-color: ${colors.r2};
-  }
-`
-
-export const NeutralButton = styled(BaseButton)`
-  background-color: ${colors.n3};
-
-  &:not(.disabled):hover {
-    background-color: ${colors.n4};
-  }
-`
+const variants = {
+  primary: {
+    bg: colors.p1,
+    bgHover: colors.p2,
+  },
+  secondary: {
+    bg: colors.g1,
+    bgHover: colors.g2,
+  },
+  danger: {
+    bg: colors.r2,
+    bgHover: colors.r3,
+  },
+  neutral: {
+    bg: colors.n3,
+    bgHover: colors.n4,
+  },
+}
