@@ -1,7 +1,6 @@
 import { createContext, FC, useContext, useState } from 'react'
 import { Card, Cards } from 'scryfall-sdk'
 import { FiltersContextType, useFilters } from './FiltersContext'
-import { useInspector } from './InspectorContext'
 
 interface SearchContextType {
   results: Card[]
@@ -15,12 +14,10 @@ export const SearchContextProvider: FC = ({ children }) => {
   const [results, updateResults] = useState<Card[]>([])
   const [loading, updateLoading] = useState<boolean>(false)
   const [error, updateError] = useState<string | null>(null)
-  const { inspectCard } = useInspector()
   const filters = useFilters()
 
   async function search() {
     updateLoading(true)
-    inspectCard(null)
     const query = getQuery(filters)
     console.log(`%cQuery: ${query}`, 'color: #766cff')
     const data = await Cards.search(query)
