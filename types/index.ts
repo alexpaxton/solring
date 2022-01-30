@@ -23,6 +23,11 @@ export interface Deck extends Omit<PrismaDeck, 'cards'> {
   cards: string[]
 }
 
+export interface DraftDeck {
+  title: string
+  description: string
+}
+
 export interface DeckWithHandle extends PrismaDeck {
   creator: {
     handle: string
