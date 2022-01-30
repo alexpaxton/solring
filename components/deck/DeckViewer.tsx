@@ -1,4 +1,4 @@
-import { MagicCard } from 'components/cards/MagicCard'
+import { SearchResultCard } from 'components/cards/SearchResultCard'
 import { CardGrid } from 'components/deck/CardGrid'
 import { EditDeckButton } from 'components/EditDeckButton'
 import { PageHeader } from 'components/layout'
@@ -35,7 +35,7 @@ export const DeckViewer: FC<Props> = ({ deck }) => {
         {!!cards.length && (
           <CardGrid>
             {cards.map((card) => (
-              <MagicCard key={card.id} card={card} />
+              <SearchResultCard key={card.id} card={card} />
             ))}
           </CardGrid>
         )}

@@ -1,4 +1,4 @@
 export { FiltersContextProvider, useFilters } from './FiltersContext'
-export { FocusContextProvider, useFocusedCard } from './FocusContext'
+export { InspectorContextProvider, useInspector } from './InspectorContext'
 export { PortalContextProvider, usePortal } from './PortalContext'
 export { SearchContextProvider, useSearchResults } from './SearchContext'
