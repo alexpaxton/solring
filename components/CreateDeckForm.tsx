@@ -1,16 +1,14 @@
+import { Button, colors, Dialog, Input } from 'components/ui'
 import { ChangeEvent, FC, useState } from 'react'
 import styled from 'styled-components'
-
-export interface DraftDeck {
-  title: string
-  description: string
-}
+import { DraftDeck } from 'types'
 
 interface Props {
   onSubmit: (Draft: DraftDeck) => void
+  onDismiss: () => void
 }
 
-export const CreateDeckForm: FC<Props> = ({ onSubmit }) => {
+export const CreateDeckForm: FC<Props> = ({ onSubmit, onDismiss }) => {
   const [title, updateTitle] = useState<string>('')
   const [description, updateDescription] = useState<string>('')
   const [error, setError] = useState<string>('')
@@ -29,7 +27,7 @@ export const CreateDeckForm: FC<Props> = ({ onSubmit }) => {
 
   function validate() {
     if (title === '' || description === '') {
-      setError('Name & Description are required')
+      setError('Name & Description are required!')
       return false
     } else {
       setError('')
@@ -48,35 +46,57 @@ export const CreateDeckForm: FC<Props> = ({ onSubmit }) => {
   }
 
   return (
-    <Wrapper>
-      {error && <ErrorMessage>{error}</ErrorMessage>}
-      <input
-        placeholder="Name"
-        type="text"
-        name="title"
-        value={title}
-        onChange={handleInputChange}
-      />
-      <input
-        placeholder="Description"
-        type="text"
-        name="description"
-        value={description}
-        onChange={handleInputChange}
-      />
-      <button onClick={handleSubmit}>Create</button>
-    </Wrapper>
+    <Dialog title="Create a deck" onDismiss={onDismiss}>
+      <Main>
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+        <BigInput
+          placeholder="Name"
+          type="text"
+          name="title"
+          value={title}
+          onChange={handleInputChange}
+          spellCheck={false}
+          autoFocus={true}
+        />
+        <BigInput
+          placeholder="Description"
+          type="text"
+          name="description"
+          value={description}
+          onChange={handleInputChange}
+          spellCheck={false}
+        />
+      </Main>
+      <footer>
+        <Button onClick={onDismiss} variant="neutral">
+          Cancel
+        </Button>
+        <Button onClick={handleSubmit} variant="primary">
+          Create
+        </Button>
+      </footer>
+    </Dialog>
   )
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: #ddd;
-  padding: 30px;
-  margin: 30px;
+const BigInput = styled(Input)`
+  width: 100%;
+  height: 62px;
+  font-size: 18px;
+  padding: 0 24px;
+  border-radius: 6px;
+
+  &:first-of-type {
+    margin-bottom: 12px;
+  }
 `
 
 const ErrorMessage = styled.p`
-  color: #ff0000;
+  color: ${colors.r2};
+  margin-bottom: 12px;
+  padding: 0 24px;
+`
+
+const Main = styled.main`
+  flex-direction: column;
 `
