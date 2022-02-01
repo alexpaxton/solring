@@ -5,12 +5,21 @@ import { ColorFilter } from 'components/gatherer/ColorFilter'
 import { RuleTextFilter } from 'components/gatherer/RuleTextFilter'
 import { SearchButton } from 'components/gatherer/SearchButton'
 import { PageHeader } from 'components/layout'
-import { FC } from 'react'
+import { useSearchResults } from 'contexts'
+import { FC, KeyboardEvent } from 'react'
 import styled from 'styled-components'
 
 export const SearchBar: FC = () => {
+  const { search, loading } = useSearchResults()
+
+  function handleSubmit(e: KeyboardEvent) {
+    if (loading === false && e.key === 'Enter') {
+      search()
+    }
+  }
+
   return (
-    <PageHeader>
+    <PageHeader onKeyUp={handleSubmit}>
       <SearchRows>
         <SearchRow>
           <CardNameFilter />
