@@ -1,6 +1,13 @@
-import { createContext, FC, useContext, useState } from 'react'
+import { useRouter } from 'next/router'
+import { createContext, FC, useContext, useEffect, useState } from 'react'
 import { Card, Cards } from 'scryfall-sdk'
-import { FiltersContextType, useFilters } from './FiltersContext'
+import {
+  extractFilters,
+  getQueryString,
+  getScryfallQuery,
+  parseQueryString,
+} from 'utils'
+import { FiltersState, useFilters } from './FiltersContext'
 
 interface SearchContextType {
   results: Card[]
@@ -11,15 +18,30 @@ interface SearchContextType {
 const SearchContext = createContext<SearchContextType | undefined>(undefined)
 
 export const SearchContextProvider: FC = ({ children }) => {
+  const { pathname, push } = useRouter()
   const [results, updateResults] = useState<Card[]>([])
   const [loading, updateLoading] = useState<boolean>(false)
   const [error, updateError] = useState<string | null>(null)
-  const filters = useFilters()
+  const filtersContext = useFilters()
 
-  async function search() {
+  useEffect(() => {
+    const rehydratedFilters = parseQueryString(window.location.search)
+    if (rehydratedFilters) {
+      filtersContext.dispatch({
+        type: 'rehydrateFilters',
+        payload: rehydratedFilters,
+      })
+      executeSearch(rehydratedFilters)
+    }
+  }, [])
+
+  async function executeSearch(params?: FiltersState) {
+    const filters = params || extractFilters(filtersContext)
     updateLoading(true)
-    const query = getQuery(filters)
+    const query = getScryfallQuery(filters)
+    const qs = getQueryString(filters)
     console.log(`%cQuery: ${query}`, 'color: #766cff')
+    push(`${pathname}?${qs}`, undefined, { shallow: true })
     const data = await Cards.search(query)
     const cards = await data.waitForAll()
     const onlyCards = cards.slice(0, cards.length - 1)
@@ -31,6 +53,10 @@ export const SearchContextProvider: FC = ({ children }) => {
       updateError(null)
     }
     updateLoading(false)
+  }
+
+  async function search() {
+    await executeSearch()
   }
 
   return (
@@ -57,71 +83,4 @@ export const useSearchResults = (): SearchContextType => {
   }
 
   return context
-}
-
-const allColors = ['w', 'u', 'b', 'r', 'g']
-
-function getQuery({
-  cardName,
-  ruleText,
-  cmc,
-  cmcAlt,
-  cmcMode,
-  cardType,
-  colors,
-  colorMode,
-}: FiltersContextType): string {
-  const query = ['-is:funny']
-
-  cardName.length && query.push(`name:${cardName}`)
-
-  if (cardType.length && cardType.includes(' ')) {
-    const cardTypes = cardType.split(' ')
-    cardTypes.forEach((type) => query.push(`type:${type}`))
-  } else if (cardType.length) {
-    query.push(`type:${cardType}`)
-  }
-
-  if (ruleText.length && ruleText.startsWith('"') && ruleText.endsWith('"')) {
-    query.push(`oracle:${ruleText}`)
-  } else if (ruleText.length && ruleText.includes(' ')) {
-    const ruleTextWords = ruleText.split(' ')
-    ruleTextWords.forEach((word) => query.push(`o:${word}`))
-  } else if (ruleText.length) {
-    query.push(`o:${ruleText}`)
-  }
-
-  switch (cmcMode) {
-    case 'exactly':
-      query.push(`cmc:${cmc}`)
-      break
-    case 'atLeast':
-      query.push(`cmc>=${cmc}`)
-      break
-    case 'atMost':
-      query.push(`cmc<=${cmc}`)
-      break
-    case 'between':
-      query.push(`cmc>=${cmc} cmc<=${cmcAlt}`)
-      break
-  }
-
-  if (colors.length) {
-    const colorsExcluded = allColors.filter((c) => !colors.includes(c))
-
-    switch (colorMode) {
-      case 'exactly':
-        query.push(`c:${colors.join('')}`)
-        colorsExcluded.forEach((color) => query.push(`-c:${color}`))
-        break
-      case 'exclude':
-        colors.forEach((color) => query.push(`-c:${color}`))
-        break
-      case 'include':
-        query.push(`c:${colors.join('')}`)
-        break
-    }
-  }
-
-  return query.join(' ')
 }
