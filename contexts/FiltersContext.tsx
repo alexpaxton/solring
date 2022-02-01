@@ -58,6 +58,11 @@ interface UpdateCMCAction {
   payload: Partial<CMCPayload>
 }
 
+interface RehydrateFiltersAction {
+  type: 'rehydrateFilters'
+  payload: FiltersState
+}
+
 type FiltersAction =
   | UpdateNameAction
   | UpdateTypeAction
@@ -65,8 +70,9 @@ type FiltersAction =
   | UpdateColorModeAction
   | UpdateRuleTextAction
   | UpdateCMCAction
+  | RehydrateFiltersAction
 
-const initialState: FiltersState = {
+export const initialFiltersState: FiltersState = {
   cardName: '',
   cardType: '',
   ruleText: '',
@@ -109,6 +115,11 @@ const filtersReducer = (state: FiltersState, action: FiltersAction) => {
         ...state,
         ...action.payload,
       }
+    case 'rehydrateFilters':
+      return {
+        ...state,
+        ...action.payload,
+      }
     default:
       throw new Error()
   }
@@ -121,7 +132,7 @@ export interface FiltersContextType extends FiltersState {
 const FiltersContext = createContext<FiltersContextType | undefined>(undefined)
 
 export const FiltersContextProvider: FC = ({ children }) => {
-  const [state, dispatch] = useReducer(filtersReducer, initialState)
+  const [state, dispatch] = useReducer(filtersReducer, initialFiltersState)
 
   return (
     <FiltersContext.Provider
