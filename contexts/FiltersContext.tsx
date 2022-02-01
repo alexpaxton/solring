@@ -63,6 +63,10 @@ interface RehydrateFiltersAction {
   payload: FiltersState
 }
 
+interface ResetAction {
+  type: 'reset'
+}
+
 type FiltersAction =
   | UpdateNameAction
   | UpdateTypeAction
@@ -71,6 +75,7 @@ type FiltersAction =
   | UpdateRuleTextAction
   | UpdateCMCAction
   | RehydrateFiltersAction
+  | ResetAction
 
 export const initialFiltersState: FiltersState = {
   cardName: '',
@@ -119,6 +124,13 @@ const filtersReducer = (state: FiltersState, action: FiltersAction) => {
       return {
         ...state,
         ...action.payload,
+      }
+    case 'reset':
+      return {
+        ...initialFiltersState,
+        ruleText: '',
+        cardType: '',
+        cardName: '',
       }
     default:
       throw new Error()
