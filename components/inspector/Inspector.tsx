@@ -23,7 +23,11 @@ export const Inspector: FC = () => {
   }
 
   return (
-    <Modal isVisible={!!inspectedCard} onDismiss={dismissInspector}>
+    <Modal
+      isVisible={!!inspectedCard}
+      onDismiss={dismissInspector}
+      onEscapeKey={dismissInspector}
+    >
       <Container onClick={handleClick}>
         <InspectorCard
           card={cardRef.current}

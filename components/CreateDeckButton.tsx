@@ -26,7 +26,11 @@ export const CreateDeckButton = () => {
       <Button onClick={openModal} variant="neutral">
         Create Deck
       </Button>
-      <Modal isVisible={modalState}>
+      <Modal
+        isVisible={modalState}
+        onMaskClick={closeModal}
+        onEscapeKey={closeModal}
+      >
         <CreateDeckForm onSubmit={handleSubmit} onDismiss={closeModal} />
       </Modal>
     </>
