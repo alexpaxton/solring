@@ -56,7 +56,7 @@ export const BulkAddButton: FC = () => {
       <Button variant="secondary" onClick={handleButtonClick}>
         Add from list
       </Button>
-      <Modal isVisible={modalState}>
+      <Modal isVisible={modalState} onEscapeKey={closeModal}>
         <Dialog title="Add cards from list" onDismiss={closeModal}>
           <Main>
             <BulkAddControlBar
