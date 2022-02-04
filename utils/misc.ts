@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react'
 import { Card, CardIdentifier } from 'scryfall-sdk'
 
 export function pluralizer(
@@ -100,4 +101,28 @@ export function getCardsFromResults(
   results: Card[] & { not_found: CardIdentifier[] },
 ): Card[] {
   return results.map((c) => c)
+}
+
+/** Converts the string returned from getAttribute('style') into an object */
+export function parseCSS(css: string): CSSProperties {
+  const _css = `{"${css
+    .replace(/\s/g, '')
+    .replace(/;/g, '", "')
+    .replace(/:/g, '": "')}"}`
+  const obj = JSON.parse(_css)
+  const keyValues = Object.keys(obj).map((key) => {
+    const camelCased = key.replace(/-[a-z]/g, (g) => g[1].toUpperCase())
+    return { [camelCased]: obj[key] }
+  })
+
+  const style = Object.assign({}, ...keyValues) as CSSProperties
+  return style
+}
+
+/** Converts a style object into a string ready for setAttribute('style') */
+export function compileCSS(css: CSSProperties): string {
+  const styles = Object.entries(css)
+  const result: string[] = []
+  styles.forEach(([k, v]) => result.push(`${k}: ${v}`))
+  return result.join('; ')
 }
