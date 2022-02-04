@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useLayoutEffect, useState } from 'react'
 import { Transition } from 'react-transition-group'
 import styled from 'styled-components'
 import { StandardProps } from 'types'
@@ -11,6 +11,7 @@ interface ModalProps extends StandardProps {
   isVisible: boolean
   onMaskClick?: () => void
   onDismiss?: () => void
+  onEscapeKey?: () => void
 }
 
 const MODAL_TRANSITION_MS = 200
@@ -19,10 +20,23 @@ export const Modal: FC<ModalProps> = ({
   isVisible,
   onMaskClick,
   onDismiss,
+  onEscapeKey,
   children,
   className = '',
   style,
 }) => {
+  useLayoutEffect(() => {
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [onEscapeKey])
+
+  function handleKeyDown(e: KeyboardEvent) {
+    e.key === 'Escape' && onEscapeKey && onEscapeKey()
+  }
+
   return (
     <Portal>
       <Transition
