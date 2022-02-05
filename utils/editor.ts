@@ -1,5 +1,18 @@
-import { Card } from 'scryfall-sdk'
-import { DeckSlice, Layout, LayoutCard, LayoutHeading } from 'types'
+import { Card, Color } from 'scryfall-sdk'
+import { DeckSlice, Layout, LayoutCard, LayoutHeading, LayoutMode } from 'types'
+
+export function sliceDeck(mode: LayoutMode, cards: Card[]) {
+  switch (mode) {
+    case 'type':
+      return sliceDeckByType(cards)
+    case 'color':
+      return sliceDeckByColor(cards)
+    case 'cmc':
+      return sliceDeckByCMC(cards)
+    default:
+      throw new Error(`${mode} is not a valid mode for slicing a deck`)
+  }
+}
 
 export function getCardType(cardType: string): string {
   let type = cardType
@@ -12,7 +25,35 @@ export function getCardType(cardType: string): string {
   return type
 }
 
-export function sliceDeckByType(cards: Card[]) {
+const humanFriendlyColors: Record<Color, string> = {
+  W: 'White',
+  U: 'Blue',
+  B: 'Black',
+  R: 'Red',
+  G: 'Green',
+}
+
+export function getCardColor(colors: Color[]): string {
+  const results = colors.map((color) => humanFriendlyColors[color])
+  return results.length ? results.join(' / ') : 'Colorless'
+}
+
+export function sliceDeckByCMC(cards: Card[]): DeckSlice {
+  const deckByCMC: DeckSlice = {}
+  cards.forEach((card) => {
+    const cmc = card.cmc
+
+    if (typeof deckByCMC[cmc] === 'undefined') {
+      deckByCMC[cmc] = []
+    }
+
+    deckByCMC[cmc].push(card)
+  })
+
+  return deckByCMC
+}
+
+export function sliceDeckByType(cards: Card[]): DeckSlice {
   const deckByType: DeckSlice = {}
   cards.forEach((card) => {
     const type = getCardType(card.type_line)
@@ -27,13 +68,28 @@ export function sliceDeckByType(cards: Card[]) {
   return deckByType
 }
 
+export function sliceDeckByColor(cards: Card[]): DeckSlice {
+  const deckByColor: DeckSlice = {}
+  cards.forEach((card) => {
+    const color = getCardColor(card.color_identity || [])
+
+    if (typeof deckByColor[color] === 'undefined') {
+      deckByColor[color] = []
+    }
+
+    deckByColor[color].push(card)
+  })
+
+  return deckByColor
+}
+
 export const layoutProportions = {
   cardSize: {
     width: 180,
     height: 250,
   },
-  columnGap: 16,
-  cardGap: 32,
+  columnGap: 20,
+  cardGap: 34,
   headingHeight: 60,
   gutter: 30,
 }

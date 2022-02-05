@@ -3,21 +3,22 @@ import { colors } from 'components/ui'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
-import { LayoutCard } from 'types'
-import { layoutCards, layoutProportions, sliceDeckByType } from 'utils'
+import { LayoutCard, LayoutMode } from 'types'
+import { layoutCards, layoutProportions, sliceDeck } from 'utils'
 
 interface Props {
   cards: Card[]
   children: (cards: LayoutCard[]) => React.ReactNode
+  mode: LayoutMode
 }
 
-export const Layout: FC<Props> = (props) => {
-  const deckSlice = sliceDeckByType(props.cards)
+export const Layout: FC<Props> = ({ children, mode, ...props }) => {
+  const deckSlice = sliceDeck(mode, props.cards)
   const { board, cards, headings } = layoutCards(deckSlice)
 
   return (
     <Plane width={board.width} height={board.height}>
-      {props.children(cards)}
+      {children(cards)}
       {headings.map((heading) => (
         <Heading
           key={heading.text}

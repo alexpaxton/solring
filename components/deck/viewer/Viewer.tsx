@@ -6,7 +6,7 @@ import { Username } from 'components/Username'
 import { FC, useState } from 'react'
 import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
-import { DeckWithHandle } from 'types'
+import { DeckWithHandle, LayoutMode } from 'types'
 import { useScryfallCards } from 'utils'
 
 interface Props {
@@ -15,6 +15,7 @@ interface Props {
 
 export const Viewer: FC<Props> = ({ deck }) => {
   const [cards, setCards] = useState<Card[]>([])
+  const [mode, setMode] = useState<LayoutMode>('type')
   const cardIds = deck.cards as string[]
   const { loading } = useScryfallCards(cardIds, (c) => setCards(c))
 
@@ -23,7 +24,7 @@ export const Viewer: FC<Props> = ({ deck }) => {
       <p>Loading...</p>
     </Loading>
   ) : (
-    <Layout cards={cards}>
+    <Layout cards={cards} mode={mode}>
       {(items) =>
         items.map((item) => (
           <ViewerCard key={item.card.id} card={item.card} {...item.pos} />
@@ -39,6 +40,11 @@ export const Viewer: FC<Props> = ({ deck }) => {
           <h1>{deck.title}</h1>
           <EditDeckButton creatorId={deck.creatorId} deckId={deck.id} />
         </TitleBar>
+        <span>
+          <button onClick={() => setMode('type')}>Type</button>
+          <button onClick={() => setMode('color')}>Color</button>
+          <button onClick={() => setMode('cmc')}>CMC</button>
+        </span>
         <p>
           Created by <Username>{deck.creator.handle}</Username>
         </p>

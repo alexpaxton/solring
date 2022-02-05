@@ -45,6 +45,8 @@ const StyledCard = styled(BaseCard)`
   width: ${layoutProportions.cardSize.width}px;
   height: ${layoutProportions.cardSize.height}px;
   border-radius: 9px;
+  transition: top 0.4s cubic-bezier(0, 0.55, 0.45, 1),
+    left 0.4s cubic-bezier(0, 0.55, 0.45, 1);
 
   &:hover {
     z-index: 100 !important;
