@@ -1,6 +1,6 @@
-import { BulkAddButton } from 'components/BulkAddButton'
-import { useCards } from 'components/deck/CardsContext'
-import { useDeck } from 'components/deck/DeckContext'
+import { BulkAddButton } from 'components/deck/editor/BulkAddButton'
+import { useCards } from 'components/deck/editor/CardsContext'
+import { useDeck } from 'components/deck/editor/DeckContext'
 import throttle from 'lodash.throttle'
 import {
   ChangeEvent,

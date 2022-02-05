@@ -3,7 +3,7 @@ import {
   ErrorCircle,
   QuestionMark,
 } from '@styled-icons/boxicons-regular'
-import { useCards } from 'components/deck/CardsContext'
+import { useCards } from 'components/deck/editor/CardsContext'
 import { colors } from 'components/ui'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'

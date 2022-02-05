@@ -1,5 +1,5 @@
 import { getSession } from '@auth0/nextjs-auth0'
-import { DeckEditor } from 'components/deck/DeckEditor'
+import { Editor } from 'components/deck/editor/Editor'
 import { prisma } from 'data_utils'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
@@ -15,7 +15,7 @@ const EditDeckPage: NextPage<Props> = ({ deck }: Props) => {
 
   if (deck) {
     title = `Editing ${deck.title}`
-    body = <DeckEditor deck={deck} />
+    body = <Editor deck={deck} />
   }
 
   return (

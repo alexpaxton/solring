@@ -1,6 +1,6 @@
-import { EditorCard } from 'components/cards/EditorCard'
 import { CardGrid } from 'components/deck/CardGrid'
-import { useCards } from 'components/deck/CardsContext'
+import { useCards } from 'components/deck/editor/CardsContext'
+import { EditorCard } from 'components/deck/editor/EditorCard'
 import { FC } from 'react'
 import styled from 'styled-components'
 

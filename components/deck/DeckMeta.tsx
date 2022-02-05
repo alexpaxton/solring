@@ -1,4 +1,4 @@
-import { useDeck } from 'components/deck/DeckContext'
+import { useDeck } from 'components/deck/editor/DeckContext'
 import Link from 'next/link'
 import { FC } from 'react'
 import styled from 'styled-components'

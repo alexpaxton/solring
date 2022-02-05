@@ -1,5 +1,5 @@
 import { Card as BaseCard } from 'components/cards/Card'
-import { useCards } from 'components/deck/CardsContext'
+import { useCards } from 'components/deck/editor/CardsContext'
 import { useInspector } from 'contexts'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'

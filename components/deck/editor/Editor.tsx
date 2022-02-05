@@ -1,7 +1,7 @@
-import { CardsContextProvider } from 'components/deck/CardsContext'
-import { DeckContextProvider } from 'components/deck/DeckContext'
 import { DeckMeta } from 'components/deck/DeckMeta'
 import { DeckPreview } from 'components/deck/DeckPreview'
+import { CardsContextProvider } from 'components/deck/editor/CardsContext'
+import { DeckContextProvider } from 'components/deck/editor/DeckContext'
 import { SearchWidget } from 'components/SearchWidget'
 import { FC } from 'react'
 import { DeckWithHandle } from 'types'
@@ -10,7 +10,7 @@ interface Props {
   deck: DeckWithHandle
 }
 
-export const DeckEditor: FC<Props> = ({ deck }) => {
+export const Editor: FC<Props> = ({ deck }) => {
   const cardIds = deck.cards as string[]
   return (
     <CardsContextProvider cardIds={cardIds}>

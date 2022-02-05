@@ -1,4 +1,4 @@
-import { useCards } from 'components/deck/CardsContext'
+import { useCards } from 'components/deck/editor/CardsContext'
 import { useRouter } from 'next/router'
 import { ChangeEvent, createContext, FC, useContext, useState } from 'react'
 import { DeckWithHandle } from 'types'
