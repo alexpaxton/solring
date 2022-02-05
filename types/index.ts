@@ -1,6 +1,7 @@
 import { Deck as PrismaDeck, User as PrismaUser } from '@prisma/client'
 import { CSSProperties } from 'react'
 
+export * from './editor'
 export * from './gatherer'
 export * from './http'
 
