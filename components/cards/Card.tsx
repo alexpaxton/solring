@@ -66,10 +66,10 @@ export const Card: FC<Props> = ({
 }
 
 const Border = styled.div`
-  border: 2px solid transparent;
+  border: 2px solid ${colors.n2};
   width: 100%;
   height: 100%;
-  border-radius: 5% / 4%;
+  border-radius: inherit;
   transition: border-color 0.25s ease, background-color 0.25s ease;
 
   .selected &,
