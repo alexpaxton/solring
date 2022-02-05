@@ -101,6 +101,7 @@ const Container = styled.div`
   z-index: 1;
   background-color: #000;
   transition: box-shadow 0.25s ease;
+  box-shadow: 0 0 5px 2px ${colors.n0};
 
   &:hover ${Border} {
     border-color: ${colors.p1};
