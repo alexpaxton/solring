@@ -1,20 +1,25 @@
 import { FC, MouseEvent as SyntheticMouseEvent, useEffect, useRef } from 'react'
-import styled, { createGlobalStyle } from 'styled-components'
-import { compileCSS, parseCSS } from 'utils'
+import styled, { createGlobalStyle, CSSProperties } from 'styled-components'
+import { Coords } from 'types'
+import { compileCSS } from 'utils'
 
-interface Coords {
-  x: number
-  y: number
+interface Props {
+  width: number
+  height: number
+  children?: React.ReactNode
 }
 
-const PLANE_PADDING = 32
-
-export const Plane: FC = ({ children }) => {
+export const Plane: FC<Props> = ({ width, height, children }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const planeRef = useRef<HTMLDivElement>(null)
   const dragState = useRef<boolean>(false)
   const dragStartCoords = useRef<Coords>({ x: 0, y: 0 })
   const transform = useRef<Coords>({ x: 0, y: 0 })
+  const planeStyle = useRef<CSSProperties>({
+    width: `${width}px`,
+    height: `${height}px`,
+    transform: 'translate(0px, 0px)',
+  })
 
   useEffect(() => {
     window.addEventListener('mousemove', handleDrag)
@@ -24,16 +29,26 @@ export const Plane: FC = ({ children }) => {
     }
   }, [])
 
+  useEffect(() => {
+    updatePlaneDimensions(width, height)
+  }, [width, height])
+
+  function updatePlaneDimensions(width: number, height: number) {
+    const updatedStyle = {
+      ...planeStyle.current,
+      width: `${width}px`,
+      height: `${height}px`,
+    }
+    planeStyle.current = updatedStyle
+    const style = compileCSS(updatedStyle)
+    planeRef.current?.setAttribute('style', style)
+  }
+
   function handleDrag(e: MouseEvent) {
     if (!dragState.current || !containerRef.current || !planeRef.current) {
       return
     }
 
-    const planeCSS = planeRef.current.getAttribute('style')
-    if (!planeCSS) {
-      throw new Error('planeRef has no style')
-    }
-    const planeStyle = parseCSS(planeCSS)
     const containerRect = containerRef.current.getBoundingClientRect()
     const planeRect = planeRef.current.getBoundingClientRect()
 
@@ -52,23 +67,20 @@ export const Plane: FC = ({ children }) => {
     const clampedY = Math.min(Math.max(minY, y), maxY)
 
     const newPlaneStyle = {
-      ...planeStyle,
+      ...planeStyle.current,
       transform: `translate(${clampedX}px, ${clampedY}px)`,
     }
 
     const style = compileCSS(newPlaneStyle)
     planeRef.current.setAttribute('style', style)
+    planeStyle.current = newPlaneStyle
   }
 
   function handleStartDrag(e: SyntheticMouseEvent<HTMLDivElement>) {
     if (!planeRef.current || !containerRef.current) {
       return
     }
-    const planeStyle = planeRef.current.getAttribute('style')
-    if (!planeStyle) {
-      return
-    }
-    const planeCoords = extractCoordsFromStyle(planeStyle)
+    const planeCoords = extractCoordsFromStyle(planeStyle.current)
     const { top } = containerRef.current.getBoundingClientRect()
     dragState.current = true
     transform.current = { ...planeCoords, y: planeCoords.y + top }
@@ -89,14 +101,7 @@ export const Plane: FC = ({ children }) => {
       onMouseUp={handleStopDrag}
       ref={containerRef}
     >
-      <Window
-        ref={planeRef}
-        style={{
-          transform: 'translate(0px, 0px)',
-          width: '800px',
-          height: '2000px',
-        }}
-      >
+      <Window ref={planeRef} style={planeStyle.current}>
         {children}
       </Window>
       <GlobalStyle />
@@ -112,8 +117,7 @@ const GlobalStyle = createGlobalStyle`
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
-  background-color: #ff0054;
+  flex: 1 0 0;
   position: relative;
   overflow: hidden;
 
@@ -128,18 +132,11 @@ const Window = styled.div`
   left: 0px;
   width: 1600px;
   height: 2000px;
-  padding: ${PLANE_PADDING}px;
-  background-color: #226666;
-  border: 10px solid #fff;
+  padding: 32px;
 `
 
-function extractCoordsFromStyle(css: string | null): Coords {
-  if (!css) {
-    throw new Error('extractCoordsFromStyle cannot parse "null"')
-  }
-
-  const style = parseCSS(css)
-  const matches = `${style.transform}`
+function extractCoordsFromStyle(css: CSSProperties): Coords {
+  const matches = `${css.transform}`
     .replace(/\s/g, '')
     .match(/[(]([-\d])+px,([-\d])+px[)]/g)
 
@@ -148,7 +145,9 @@ function extractCoordsFromStyle(css: string | null): Coords {
   }
   const coords = matches[0].replace(/[px()]/g, '').split(',')
   if (coords.length !== 2) {
-    throw new Error('String passed to extractCoordsFromStyle cannot be parsed')
+    throw new Error(
+      `Argument passed to extractCoordsFromStyle cannot be parsed: ${css.transform}`,
+    )
   }
 
   return {
