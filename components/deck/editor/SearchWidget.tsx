@@ -174,7 +174,6 @@ const Search = styled.div`
   align-items: center;
   position: relative;
   z-index: 100;
-  margin-right: 30px;
 
   input {
     height: 40px;
