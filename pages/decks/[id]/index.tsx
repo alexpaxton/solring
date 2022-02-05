@@ -1,4 +1,4 @@
-import { DeckViewer } from 'components/deck/DeckViewer'
+import { Viewer } from 'components/deck/viewer/Viewer'
 import { prisma } from 'data_utils'
 import { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
@@ -14,7 +14,7 @@ const DeckPage: NextPage<Props> = ({ deck }: Props) => {
 
   if (deck) {
     title = deck.title
-    body = <DeckViewer deck={deck} />
+    body = <Viewer deck={deck} />
   }
 
   return (
