@@ -1,4 +1,3 @@
-import { BulkAddButton } from 'components/deck/editor/BulkAddButton'
 import { useCards } from 'components/deck/editor/CardsContext'
 import { useDeck } from 'components/deck/editor/DeckContext'
 import throttle from 'lodash.throttle'
@@ -132,52 +131,42 @@ export const SearchWidget: FC = () => {
   }
 
   return (
-    <Container>
-      <Search ref={containerRef}>
-        <input
-          type="text"
-          value={inputValue}
-          placeholder="Add a card..."
-          onChange={handleInputChange}
-          maxLength={1000}
-          ref={inputRef}
-          onKeyUp={handleKeyUp}
-          onFocus={handleFocus}
-          disabled={loading}
-        />
-        {isSuggesting && (
-          <Results>
-            {pending && <p>Loading...</p>}
-            {!pending &&
-              results.map((result) => (
-                <Result
-                  key={result}
-                  className={getResultClassName(result)}
-                  onMouseOver={handleResultHover}
-                  onClick={handleSubmit}
-                >
-                  {result}
-                </Result>
-              ))}
-            {!pending && !results.length && inputValue.length >= 2 && (
-              <Result>
-                No cards match <strong>{inputValue}</strong>
+    <Search ref={containerRef}>
+      <input
+        type="text"
+        value={inputValue}
+        placeholder="Add a card..."
+        onChange={handleInputChange}
+        maxLength={1000}
+        ref={inputRef}
+        onKeyUp={handleKeyUp}
+        onFocus={handleFocus}
+        disabled={loading}
+      />
+      {isSuggesting && (
+        <Results>
+          {pending && <p>Loading...</p>}
+          {!pending &&
+            results.map((result) => (
+              <Result
+                key={result}
+                className={getResultClassName(result)}
+                onMouseOver={handleResultHover}
+                onClick={handleSubmit}
+              >
+                {result}
               </Result>
-            )}
-          </Results>
-        )}
-      </Search>
-      <BulkAddButton />
-    </Container>
+            ))}
+          {!pending && !results.length && inputValue.length >= 2 && (
+            <Result>
+              No cards match <strong>{inputValue}</strong>
+            </Result>
+          )}
+        </Results>
+      )}
+    </Search>
   )
 }
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 30px;
-  border-bottom: 1px solid #eee;
-`
 
 const Search = styled.div`
   flex: 1 0 0;

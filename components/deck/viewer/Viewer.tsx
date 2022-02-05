@@ -1,6 +1,6 @@
 import { Layout } from 'components/deck/Layout'
+import { EditDeckButton } from 'components/deck/viewer/EditDeckButton'
 import { ViewerCard } from 'components/deck/viewer/ViewerCard'
-import { EditDeckButton } from 'components/EditDeckButton'
 import { PageHeader } from 'components/layout'
 import { Username } from 'components/Username'
 import { FC, useState } from 'react'
