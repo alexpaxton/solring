@@ -8,9 +8,9 @@ import styled from 'styled-components'
 export const EditorControlbar: FC = () => {
   return (
     <Container>
-      <SearchWidget />
-      <BulkAddButton />
       <LayoutModeToggle />
+      <BulkAddButton />
+      <SearchWidget />
     </Container>
   )
 }
