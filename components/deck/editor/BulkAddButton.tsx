@@ -6,7 +6,7 @@ import { Button, colors, Dialog, Modal, useModalState } from 'components/ui'
 import { FC, useState } from 'react'
 import { Card, Cards } from 'scryfall-sdk'
 import styled from 'styled-components'
-import { getCardsFromResults, pluralizer } from 'utils'
+import { getCardsFromResults, parseBulkAddInput, pluralizer } from 'utils'
 
 export const BulkAddButton: FC = () => {
   const [inputValue, setInputValue] = useState<string>('')
@@ -36,7 +36,7 @@ export const BulkAddButton: FC = () => {
 
   async function fetchCards() {
     setMode('fetching')
-    const list = inputValue.split('\n').map((name) => ({ name }))
+    const list = parseBulkAddInput(inputValue)
     const resp = Cards.collection(...list)
     const cards = await resp.waitForAll()
     const onlyCards = getCardsFromResults(cards)
@@ -76,7 +76,7 @@ export const BulkAddButton: FC = () => {
             )}
             {mode === 'done' && (
               <BulkAddPreview
-                searchList={inputValue.split('\n')}
+                searchList={parseBulkAddInput(inputValue)}
                 foundList={cardsList}
               />
             )}
