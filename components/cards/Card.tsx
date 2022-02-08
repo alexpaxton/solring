@@ -126,6 +126,8 @@ const Container = styled.div`
   background-color: #000;
   transition: box-shadow 0.25s ease;
   box-shadow: 0 0 5px 2px ${colors.n0};
+  user-select: none;
+  transform: translate3d(0, 0, 0);
 
   &:hover ${Border} {
     border-color: ${colors.p1};

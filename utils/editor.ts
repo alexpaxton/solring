@@ -97,7 +97,7 @@ export const layoutProportions = {
   },
   columnGap: 24,
   cardGap: 34,
-  headingHeight: 60,
+  headingHeight: 68,
   gutter: 30,
 }
 
