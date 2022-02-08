@@ -36,7 +36,7 @@ export const BulkAddButton: FC = () => {
 
   async function fetchCards() {
     setMode('fetching')
-    const list = inputValue.split('\n').map((name) => ({ name }))
+    const list = parseBulkAddInput(inputValue)
     const resp = Cards.collection(...list)
     const cards = await resp.waitForAll()
     const onlyCards = getCardsFromResults(cards)
@@ -76,7 +76,7 @@ export const BulkAddButton: FC = () => {
             )}
             {mode === 'done' && (
               <BulkAddPreview
-                searchList={inputValue.split('\n')}
+                searchList={parseBulkAddInput(inputValue)}
                 foundList={cardsList}
               />
             )}
@@ -113,3 +113,27 @@ const SpinnerContainer = styled.div`
 const Main = styled.main`
   flex-direction: column;
 `
+
+interface CardId {
+  name: string
+}
+
+export function parseBulkAddInput(input: string) {
+  const entries = input.split('\n').filter((e) => e !== '')
+  const cards: CardId[] = []
+  entries.forEach((entry) => {
+    const parsed = entry.replace(/([\dx])\s([\w\s',/]+)/g, '$1~$2').split('~')
+    let qty = 1
+    let name = parsed[0]
+    if (parsed.length === 2) {
+      qty = parseInt(parsed[0]) || 1
+      name = parsed[1]
+    }
+
+    for (let i = 0; i < qty; i++) {
+      cards.push({ name })
+    }
+  })
+
+  return cards
+}

@@ -9,8 +9,12 @@ import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
 
+interface CardId {
+  name: string
+}
+
 interface Props {
-  searchList: string[]
+  searchList: CardId[]
   foundList: Card[]
 }
 
@@ -24,21 +28,21 @@ export const BulkAddPreview: FC<Props> = ({ searchList, foundList }) => {
         let text = 'Not found'
         let icon = <IconNotFound />
 
-        if (foundList.find((c) => c.name === card)) {
+        if (foundList.find((c) => c.name === card.name)) {
           className = 'add'
           text = ''
           icon = <IconAdd />
         }
-        if (isCardInDeck(card)) {
+        if (isCardInDeck(card.name)) {
           className = 'reject'
           text = 'Already in deck'
           icon = <IconReject />
         }
 
         return (
-          <li key={`found-${card}`} className={className}>
+          <li key={`preview-${card.name}`} className={className}>
             {icon}
-            <strong>{card}</strong>
+            <strong>{card.name}</strong>
             <span>{text}</span>
           </li>
         )
