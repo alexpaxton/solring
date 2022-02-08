@@ -95,7 +95,7 @@ export const layoutProportions = {
     width: 180,
     height: 250,
   },
-  columnGap: 20,
+  columnGap: 24,
   cardGap: 34,
   headingHeight: 60,
   gutter: 30,
@@ -128,13 +128,16 @@ export function layoutCards(deck: DeckSlice): Layout {
       largestColumn = columnCards.length
     }
 
-    columnCards.forEach((card, cardIndex) => {
+    const uniques = countUniques(columnCards)
+
+    uniques.forEach((card, cardIndex) => {
       const y =
         layoutProportions.headingHeight + cardIndex * layoutProportions.cardGap
       const z = cardIndex + 1
 
       cards.push({
         card,
+        count: card.count,
         pos: {
           x: x + layoutProportions.gutter,
           y: y + layoutProportions.gutter,
@@ -189,4 +192,45 @@ export function parseBulkAddInput(input: string) {
   })
 
   return cards
+}
+
+/** Sort Function */
+function byCardName(a: Card, b: Card) {
+  if (a.name.toLowerCase() > b.name.toLowerCase()) {
+    return 1
+  }
+  if (a.name.toLowerCase() < b.name.toLowerCase()) {
+    return -1
+  }
+
+  return 0
+}
+
+type CardStack = Record<string, Card[]>
+
+interface CardWithCount extends Card {
+  count: number
+}
+
+function countUniques(cards: Card[]): CardWithCount[] {
+  const stacks: CardStack = {}
+
+  cards.forEach((card) => {
+    if (typeof stacks[card.name] !== 'object') {
+      stacks[card.name] = []
+    }
+
+    stacks[card.name].push(card)
+  })
+
+  const uniques = Object.entries(stacks)
+
+  const countedCards = uniques.map(([_, stack]) => {
+    const count = stack.length
+    const card = stack[0]
+
+    return { ...card, count }
+  })
+
+  return countedCards.sort(byCardName)
 }
