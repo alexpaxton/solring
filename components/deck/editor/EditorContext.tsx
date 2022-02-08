@@ -4,13 +4,14 @@ import { ChangeEvent, createContext, FC, useContext, useState } from 'react'
 import { DeckWithHandle } from 'types'
 import { scryfallToData, updateDeck } from 'utils'
 
-interface DeckContextType {
+interface EditorContextType {
   title: string
   description: string
   error: string
   updateField: (e: ChangeEvent<HTMLInputElement>) => void
   submit: () => Promise<void>
   loading: boolean
+  deckId: string
 }
 
 interface Props {
@@ -18,9 +19,9 @@ interface Props {
   deck: DeckWithHandle
 }
 
-const DeckContext = createContext<DeckContextType | undefined>(undefined)
+const EditorContext = createContext<EditorContextType | undefined>(undefined)
 
-export const DeckContextProvider: FC<Props> = ({ children, deck }) => {
+export const EditorContextProvider: FC<Props> = ({ children, deck }) => {
   const { push } = useRouter()
   const [title, setTitle] = useState<string>(deck.title)
   const [description, setDescription] = useState<string>(deck.description)
@@ -41,7 +42,7 @@ export const DeckContextProvider: FC<Props> = ({ children, deck }) => {
 
   function validateForm(): boolean {
     if (title === '') {
-      setError('Name cannot be empty')
+      setError('Name cannot be empty!')
       return false
     }
 
@@ -78,7 +79,7 @@ export const DeckContextProvider: FC<Props> = ({ children, deck }) => {
   }
 
   return (
-    <DeckContext.Provider
+    <EditorContext.Provider
       value={{
         title,
         description,
@@ -86,18 +87,21 @@ export const DeckContextProvider: FC<Props> = ({ children, deck }) => {
         updateField: handleInputChange,
         submit: handleSave,
         loading,
+        deckId: deck.id,
       }}
     >
       {children}
-    </DeckContext.Provider>
+    </EditorContext.Provider>
   )
 }
 
-export const useDeck = (): DeckContextType => {
-  const context = useContext(DeckContext)
+export const useDeckEditor = (): EditorContextType => {
+  const context = useContext(EditorContext)
 
   if (!context) {
-    throw new Error('useDeck must be used as a child of DeckContextProvider')
+    throw new Error(
+      'useDeckEditor must be used as a child of EditorContextProvider',
+    )
   }
 
   return context

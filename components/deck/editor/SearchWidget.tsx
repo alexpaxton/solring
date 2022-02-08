@@ -1,6 +1,6 @@
-import { BulkAddButton } from 'components/BulkAddButton'
 import { useCards } from 'components/deck/CardsContext'
-import { useDeck } from 'components/deck/DeckContext'
+import { useDeckEditor } from 'components/deck/editor/EditorContext'
+import { colors, Input } from 'components/ui'
 import throttle from 'lodash.throttle'
 import {
   ChangeEvent,
@@ -24,7 +24,7 @@ export const SearchWidget: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const [selected, setSelected] = useState<string>('')
-  const { loading } = useDeck()
+  const { loading } = useDeckEditor()
   const { addCard, isCardInDeck } = useCards()
 
   const nothingIsSelected = selected === '' && results.length
@@ -132,52 +132,43 @@ export const SearchWidget: FC = () => {
   }
 
   return (
-    <Container>
-      <Search ref={containerRef}>
-        <input
-          type="text"
-          value={inputValue}
-          placeholder="Add a card..."
-          onChange={handleInputChange}
-          maxLength={1000}
-          ref={inputRef}
-          onKeyUp={handleKeyUp}
-          onFocus={handleFocus}
-          disabled={loading}
-        />
-        {isSuggesting && (
-          <Results>
-            {pending && <p>Loading...</p>}
-            {!pending &&
-              results.map((result) => (
-                <Result
-                  key={result}
-                  className={getResultClassName(result)}
-                  onMouseOver={handleResultHover}
-                  onClick={handleSubmit}
-                >
-                  {result}
-                </Result>
-              ))}
-            {!pending && !results.length && inputValue.length >= 2 && (
-              <Result>
-                No cards match <strong>{inputValue}</strong>
+    <Search ref={containerRef}>
+      <StyledInput
+        type="text"
+        value={inputValue}
+        placeholder="Add a card..."
+        onChange={handleInputChange}
+        maxLength={1000}
+        ref={inputRef}
+        onKeyUp={handleKeyUp}
+        onFocus={handleFocus}
+        disabled={loading}
+        spellCheck={false}
+      />
+      {isSuggesting && (
+        <Results>
+          {pending && <Result>Loading...</Result>}
+          {!pending &&
+            results.map((result) => (
+              <Result
+                key={result}
+                className={getResultClassName(result)}
+                onMouseOver={handleResultHover}
+                onClick={handleSubmit}
+              >
+                {result}
               </Result>
-            )}
-          </Results>
-        )}
-      </Search>
-      <BulkAddButton />
-    </Container>
+            ))}
+          {!pending && !results.length && inputValue.length >= 2 && (
+            <Result>
+              No cards match <strong>{inputValue}</strong>
+            </Result>
+          )}
+        </Results>
+      )}
+    </Search>
   )
 }
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 30px;
-  border-bottom: 1px solid #eee;
-`
 
 const Search = styled.div`
   flex: 1 0 0;
@@ -185,49 +176,52 @@ const Search = styled.div`
   align-items: center;
   position: relative;
   z-index: 100;
-  margin-right: 30px;
+`
 
-  input {
-    height: 40px;
-    flex: 1 0 0;
-  }
-
-  button {
-    height: 40px;
-    margin-left: 8px;
-  }
+const StyledInput = styled(Input)`
+  flex: 1 0 0;
 `
 
 const Results = styled.div`
   position: absolute;
-  top: 40px;
+  z-index: 999;
+  top: 100%;
   left: 0;
   right: 0;
   display: flex;
   flex-direction: column;
-  background-color: #eee;
+  background-color: ${colors.n1};
+  border-radius: 4px;
+  overflow: auto;
+  max-height: 300px;
+  box-shadow: 0 1px 3px 0 ${colors.n0}, 0 3px 8px 1px ${colors.n0};
 `
 
 const Result = styled.div`
   padding: 0 12px;
-  height: 26px;
-  line-height: 26px;
+  flex: 0 0 30px;
+  font-size: 14px;
+  line-height: 30px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color 0.25s ease, background-color 0.25s ease;
+  color: ${colors.n5};
 
   &.selected {
-    background-color: #000;
-    color: #fff;
+    background-color: ${colors.p1};
+    color: ${colors.n7};
+    cursor: pointer;
   }
 
   &.disabled {
     font-style: italic;
-    color: #999;
+    color: ${colors.n4};
     cursor: default;
   }
 
   &.selected.disabled {
-    color: #999;
+    background-color: ${colors.n2};
+    color: ${colors.n4};
   }
 `

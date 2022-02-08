@@ -1,7 +1,7 @@
-import { BulkAddControlBar } from 'components/BulkAddControlBar'
-import { BulkAddInput } from 'components/BulkAddInput'
-import { BulkAddPreview } from 'components/BulkAddPreview'
 import { useCards } from 'components/deck/CardsContext'
+import { BulkAddControlBar } from 'components/deck/editor/BulkAddControlBar'
+import { BulkAddInput } from 'components/deck/editor/BulkAddInput'
+import { BulkAddPreview } from 'components/deck/editor/BulkAddPreview'
 import { Button, colors, Dialog, Modal, useModalState } from 'components/ui'
 import { FC, useState } from 'react'
 import { Card, Cards } from 'scryfall-sdk'
@@ -53,7 +53,7 @@ export const BulkAddButton: FC = () => {
 
   return (
     <>
-      <Button variant="secondary" onClick={handleButtonClick}>
+      <Button variant="primary" onClick={handleButtonClick}>
         Add from list
       </Button>
       <Modal isVisible={modalState} onEscapeKey={closeModal}>

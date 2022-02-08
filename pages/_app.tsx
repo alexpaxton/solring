@@ -1,7 +1,11 @@
 import { UserProvider } from '@auth0/nextjs-auth0'
 import { Inspector } from 'components/inspector/Inspector'
 import { AppWrapper } from 'components/layout'
-import { InspectorContextProvider, PortalContextProvider } from 'contexts'
+import {
+  InspectorContextProvider,
+  LayoutModeContextProvider,
+  PortalContextProvider,
+} from 'contexts'
 import type { AppProps } from 'next/app'
 import 'normalize.css'
 import 'styles/globals.css'
@@ -11,10 +15,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     <PortalContextProvider>
       <InspectorContextProvider>
         <UserProvider>
-          <AppWrapper>
-            <Inspector />
-            <Component {...pageProps} />
-          </AppWrapper>
+          <LayoutModeContextProvider>
+            <AppWrapper>
+              <Inspector />
+              <Component {...pageProps} />
+            </AppWrapper>
+          </LayoutModeContextProvider>
         </UserProvider>
       </InspectorContextProvider>
     </PortalContextProvider>
