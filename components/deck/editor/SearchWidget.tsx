@@ -1,5 +1,6 @@
 import { useCards } from 'components/deck/editor/CardsContext'
 import { useDeck } from 'components/deck/editor/DeckContext'
+import { colors, Input } from 'components/ui'
 import throttle from 'lodash.throttle'
 import {
   ChangeEvent,
@@ -132,7 +133,7 @@ export const SearchWidget: FC = () => {
 
   return (
     <Search ref={containerRef}>
-      <input
+      <StyledInput
         type="text"
         value={inputValue}
         placeholder="Add a card..."
@@ -142,10 +143,11 @@ export const SearchWidget: FC = () => {
         onKeyUp={handleKeyUp}
         onFocus={handleFocus}
         disabled={loading}
+        spellCheck={false}
       />
       {isSuggesting && (
         <Results>
-          {pending && <p>Loading...</p>}
+          {pending && <Result>Loading...</Result>}
           {!pending &&
             results.map((result) => (
               <Result
@@ -174,48 +176,52 @@ const Search = styled.div`
   align-items: center;
   position: relative;
   z-index: 100;
+`
 
-  input {
-    height: 40px;
-    flex: 1 0 0;
-  }
-
-  button {
-    height: 40px;
-    margin-left: 8px;
-  }
+const StyledInput = styled(Input)`
+  flex: 1 0 0;
 `
 
 const Results = styled.div`
   position: absolute;
-  top: 40px;
+  z-index: 999;
+  top: 100%;
   left: 0;
   right: 0;
   display: flex;
   flex-direction: column;
-  background-color: #eee;
+  background-color: ${colors.n1};
+  border-radius: 4px;
+  overflow: auto;
+  max-height: 300px;
+  box-shadow: 0 1px 3px 0 ${colors.n0}, 0 3px 8px 1px ${colors.n0};
 `
 
 const Result = styled.div`
   padding: 0 12px;
-  height: 26px;
-  line-height: 26px;
+  flex: 0 0 30px;
+  font-size: 14px;
+  line-height: 30px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color 0.25s ease, background-color 0.25s ease;
+  color: ${colors.n5};
 
   &.selected {
-    background-color: #000;
-    color: #fff;
+    background-color: ${colors.p1};
+    color: ${colors.n7};
+    cursor: pointer;
   }
 
   &.disabled {
     font-style: italic;
-    color: #999;
+    color: ${colors.n4};
     cursor: default;
   }
 
   &.selected.disabled {
-    color: #999;
+    background-color: ${colors.n2};
+    color: ${colors.n4};
   }
 `
