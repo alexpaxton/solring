@@ -1,5 +1,12 @@
 import { Card, Color } from 'scryfall-sdk'
-import { DeckSlice, Layout, LayoutCard, LayoutHeading, LayoutMode } from 'types'
+import {
+  CardId,
+  DeckSlice,
+  Layout,
+  LayoutCard,
+  LayoutHeading,
+  LayoutMode,
+} from 'types'
 
 export function sliceDeck(mode: LayoutMode, cards: Card[]) {
   switch (mode) {
@@ -162,4 +169,24 @@ function getLayoutHeight(cardCount: number): number {
     layoutProportions.headingHeight +
     gutters
   )
+}
+
+export function parseBulkAddInput(input: string) {
+  const entries = input.split('\n').filter((e) => e !== '')
+  const cards: CardId[] = []
+  entries.forEach((entry) => {
+    const parsed = entry.replace(/([\dx])\s([\w\s',/]+)/g, '$1~$2').split('~')
+    let qty = 1
+    let name = parsed[0]
+    if (parsed.length === 2) {
+      qty = parseInt(parsed[0]) || 1
+      name = parsed[1]
+    }
+
+    for (let i = 0; i < qty; i++) {
+      cards.push({ name })
+    }
+  })
+
+  return cards
 }

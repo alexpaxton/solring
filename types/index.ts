@@ -58,3 +58,7 @@ export interface AddCardsData {
   id: string
   cards: string[]
 }
+
+export interface CardId {
+  name: string
+}

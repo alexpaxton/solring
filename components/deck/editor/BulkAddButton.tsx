@@ -6,7 +6,7 @@ import { Button, colors, Dialog, Modal, useModalState } from 'components/ui'
 import { FC, useState } from 'react'
 import { Card, Cards } from 'scryfall-sdk'
 import styled from 'styled-components'
-import { getCardsFromResults, pluralizer } from 'utils'
+import { getCardsFromResults, parseBulkAddInput, pluralizer } from 'utils'
 
 export const BulkAddButton: FC = () => {
   const [inputValue, setInputValue] = useState<string>('')
@@ -113,27 +113,3 @@ const SpinnerContainer = styled.div`
 const Main = styled.main`
   flex-direction: column;
 `
-
-interface CardId {
-  name: string
-}
-
-export function parseBulkAddInput(input: string) {
-  const entries = input.split('\n').filter((e) => e !== '')
-  const cards: CardId[] = []
-  entries.forEach((entry) => {
-    const parsed = entry.replace(/([\dx])\s([\w\s',/]+)/g, '$1~$2').split('~')
-    let qty = 1
-    let name = parsed[0]
-    if (parsed.length === 2) {
-      qty = parseInt(parsed[0]) || 1
-      name = parsed[1]
-    }
-
-    for (let i = 0; i < qty; i++) {
-      cards.push({ name })
-    }
-  })
-
-  return cards
-}

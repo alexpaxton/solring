@@ -8,10 +8,7 @@ import { colors } from 'components/ui'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
-
-interface CardId {
-  name: string
-}
+import { CardId } from 'types'
 
 interface Props {
   searchList: CardId[]
