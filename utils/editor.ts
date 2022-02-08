@@ -8,17 +8,10 @@ import {
   LayoutMode,
 } from 'types'
 
-export function sliceDeck(mode: LayoutMode, cards: Card[]) {
-  switch (mode) {
-    case 'type':
-      return sliceDeckByType(cards)
-    case 'color':
-      return sliceDeckByColor(cards)
-    case 'cmc':
-      return sliceDeckByCMC(cards)
-    default:
-      throw new Error(`${mode} is not a valid mode for slicing a deck`)
-  }
+export const sliceDeckBy: Record<LayoutMode, (cards: Card[]) => DeckSlice> = {
+  type: sliceDeckByType,
+  color: sliceDeckByColor,
+  cmc: sliceDeckByCMC,
 }
 
 export function getCardType(cardType: string): string {

@@ -4,7 +4,7 @@ import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
 import { LayoutCard, LayoutMode } from 'types'
-import { layoutCards, layoutProportions, sliceDeck } from 'utils'
+import { layoutCards, layoutProportions, sliceDeckBy } from 'utils'
 
 interface Props {
   cards: Card[]
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const Layout: FC<Props> = ({ children, mode, ...props }) => {
-  const deckSlice = sliceDeck(mode, props.cards)
+  const deckSlice = sliceDeckBy[mode](props.cards)
   const { board, cards, headings } = layoutCards(deckSlice)
 
   return (
