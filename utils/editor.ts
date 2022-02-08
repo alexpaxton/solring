@@ -40,14 +40,20 @@ export function getCardColor(colors: Color[]): string {
 
 export function sliceDeckByCMC(cards: Card[]): DeckSlice {
   const deckByCMC: DeckSlice = {}
+
+  const largestCMC = cards.reduce((prev, current) => {
+    return current.cmc > prev ? current.cmc : prev
+  }, 0)
+
+  for (let i = 0; i <= largestCMC; i++) {
+    deckByCMC[i] = []
+  }
+
   cards.forEach((card) => {
     const cmc = card.cmc
-
-    if (typeof deckByCMC[cmc] === 'undefined') {
-      deckByCMC[cmc] = []
+    if (typeof deckByCMC[cmc] === 'object') {
+      deckByCMC[cmc].push(card)
     }
-
-    deckByCMC[cmc].push(card)
   })
 
   return deckByCMC
@@ -55,31 +61,42 @@ export function sliceDeckByCMC(cards: Card[]): DeckSlice {
 
 export function sliceDeckByType(cards: Card[]): DeckSlice {
   const deckByType: DeckSlice = {}
+  const draftDeckByType: DeckSlice = {}
   cards.forEach((card) => {
     const type = getCardType(card.type_line)
 
-    if (typeof deckByType[type] === 'undefined') {
-      deckByType[type] = []
+    if (typeof draftDeckByType[type] === 'undefined') {
+      draftDeckByType[type] = []
     }
 
-    deckByType[type].push(card)
+    draftDeckByType[type].push(card)
   })
+
+  const entries = Object.entries(draftDeckByType).sort(
+    (a, b) => b[1].length - a[1].length,
+  )
+  entries.forEach(([key, val]) => (deckByType[key] = val))
 
   return deckByType
 }
 
 export function sliceDeckByColor(cards: Card[]): DeckSlice {
+  const draftDeckSlice: DeckSlice = {}
   const deckByColor: DeckSlice = {}
   cards.forEach((card) => {
     const color = getCardColor(card.color_identity || [])
 
-    if (typeof deckByColor[color] === 'undefined') {
-      deckByColor[color] = []
+    if (typeof draftDeckSlice[color] === 'undefined') {
+      draftDeckSlice[color] = []
     }
 
-    deckByColor[color].push(card)
+    draftDeckSlice[color].push(card)
   })
 
+  const entries = Object.entries(draftDeckSlice).sort(
+    (a, b) => b[1].length - a[1].length,
+  )
+  entries.forEach(([key, val]) => (deckByColor[key] = val))
   return deckByColor
 }
 
