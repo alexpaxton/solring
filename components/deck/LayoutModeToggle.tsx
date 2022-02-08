@@ -36,7 +36,8 @@ const Container = styled.ul`
   height: 32px;
   list-style: none;
   padding: 2px;
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: 0;
   border-radius: 4px;
   background-color: ${colors.n1};
 `

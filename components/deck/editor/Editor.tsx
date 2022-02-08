@@ -1,8 +1,8 @@
-import { DeckMeta } from 'components/deck/DeckMeta'
-import { CardsContextProvider } from 'components/deck/editor/CardsContext'
-import { DeckContextProvider } from 'components/deck/editor/DeckContext'
+import { CardsContextProvider } from 'components/deck/CardsContext'
 import { EditorBody } from 'components/deck/editor/EditorBody'
+import { EditorContextProvider } from 'components/deck/editor/EditorContext'
 import { EditorControlbar } from 'components/deck/editor/EditorControlBar'
+import { EditorHeader } from 'components/deck/editor/EditorHeader'
 import { FC } from 'react'
 import { DeckWithHandle } from 'types'
 
@@ -15,11 +15,11 @@ export const Editor: FC<Props> = ({ deck }) => {
 
   return (
     <CardsContextProvider cardIds={cardIds}>
-      <DeckContextProvider deck={deck}>
-        <DeckMeta deckId={deck.id} />
+      <EditorContextProvider deck={deck}>
+        <EditorHeader />
         <EditorControlbar />
         <EditorBody />
-      </DeckContextProvider>
+      </EditorContextProvider>
     </CardsContextProvider>
   )
 }

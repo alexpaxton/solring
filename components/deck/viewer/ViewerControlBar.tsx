@@ -1,27 +1,16 @@
+import { ControlBar } from 'components/deck/DeckElements'
 import { LayoutModeToggle } from 'components/deck/LayoutModeToggle'
-import { colors } from 'components/ui'
 import { FC } from 'react'
 import styled from 'styled-components'
 
 export const ViewerControlBar: FC = () => {
   return (
-    <Container>
+    <StyledControlBar>
       <LayoutModeToggle />
-    </Container>
+    </StyledControlBar>
   )
 }
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 18px 30px;
-  border-bottom: 2px solid ${colors.n1};
-
-  > * {
-    margin-right: 16px;
-  }
-
-  > *:last-child {
-    margin-right: 0;
-  }
+const StyledControlBar = styled(ControlBar)`
+  justify-content: space-between;
 `

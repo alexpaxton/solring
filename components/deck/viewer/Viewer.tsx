@@ -1,11 +1,9 @@
-import { CardsContextProvider } from 'components/deck/editor/CardsContext'
-import { EditDeckButton } from 'components/deck/viewer/EditDeckButton'
+import { CardsContextProvider } from 'components/deck/CardsContext'
 import { ViewerBody } from 'components/deck/viewer/ViewerBody'
+import { ViewerContextProvider } from 'components/deck/viewer/ViewerContext'
 import { ViewerControlBar } from 'components/deck/viewer/ViewerControlBar'
-import { PageHeader } from 'components/layout'
-import { Username } from 'components/Username'
+import { ViewerHeader } from 'components/deck/viewer/ViewerHeader'
 import { FC } from 'react'
-import styled from 'styled-components'
 import { DeckWithHandle } from 'types'
 
 interface Props {
@@ -17,33 +15,11 @@ export const Viewer: FC<Props> = ({ deck }) => {
 
   return (
     <CardsContextProvider cardIds={cardIds}>
-      <StyledPageHeader>
-        <TitleBar>
-          <h1>{deck.title}</h1>
-          <EditDeckButton creatorId={deck.creatorId} deckId={deck.id} />
-        </TitleBar>
-        <p>
-          Created by <Username>{deck.creator.handle}</Username>
-        </p>
-        <Description>{deck.description || 'No description'}</Description>
-      </StyledPageHeader>
-      <ViewerControlBar />
-      <ViewerBody />
+      <ViewerContextProvider deck={deck}>
+        <ViewerHeader />
+        <ViewerControlBar />
+        <ViewerBody />
+      </ViewerContextProvider>
     </CardsContextProvider>
   )
 }
-
-const StyledPageHeader = styled(PageHeader)`
-  flex-direction: column;
-`
-
-const TitleBar = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`
-
-const Description = styled.p`
-  font-size: 13px;
-  margin-top: 24px;
-`

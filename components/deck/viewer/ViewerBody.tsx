@@ -1,4 +1,4 @@
-import { useCards } from 'components/deck/editor/CardsContext'
+import { useCards } from 'components/deck/CardsContext'
 import { Layout } from 'components/deck/Layout'
 import { ViewerCard } from 'components/deck/viewer/ViewerCard'
 import { useLayoutMode } from 'contexts'

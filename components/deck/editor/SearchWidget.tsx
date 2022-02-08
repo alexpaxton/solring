@@ -1,5 +1,5 @@
-import { useCards } from 'components/deck/editor/CardsContext'
-import { useDeck } from 'components/deck/editor/DeckContext'
+import { useCards } from 'components/deck/CardsContext'
+import { useDeckEditor } from 'components/deck/editor/EditorContext'
 import { colors, Input } from 'components/ui'
 import throttle from 'lodash.throttle'
 import {
@@ -24,7 +24,7 @@ export const SearchWidget: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const [selected, setSelected] = useState<string>('')
-  const { loading } = useDeck()
+  const { loading } = useDeckEditor()
   const { addCard, isCardInDeck } = useCards()
 
   const nothingIsSelected = selected === '' && results.length

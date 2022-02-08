@@ -1,5 +1,5 @@
 import { Card as BaseCard } from 'components/cards/Card'
-import { useCards } from 'components/deck/editor/CardsContext'
+import { useCards } from 'components/deck/CardsContext'
 import { useInspector } from 'contexts'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
@@ -17,7 +17,7 @@ interface Props {
 export const EditorCard: FC<Props> = ({ card, x, y, z }) => {
   const { inspectedCard, inspectCard } = useInspector()
   const { removeCard } = useCards()
-  // const { loading } = useDeck()
+  // const { loading } = useDeckEditor()
 
   const isSelected = !!inspectedCard && inspectedCard.id === card.id
 
