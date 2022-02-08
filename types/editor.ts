@@ -19,6 +19,7 @@ export interface LayoutHeading {
 
 export interface LayoutCard {
   card: Card
+  count: number
   pos: LayoutPos
 }
 

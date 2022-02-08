@@ -2,19 +2,16 @@ import { Card as BaseCard } from 'components/cards/Card'
 import { useCards } from 'components/deck/CardsContext'
 import { useInspector } from 'contexts'
 import { FC } from 'react'
-import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
 import { Search, X } from 'styled-icons/boxicons-regular'
+import { LayoutCard } from 'types'
 import { layoutProportions } from 'utils'
 
-interface Props {
-  card: Card
-  x: number
-  y: number
-  z: number
-}
-
-export const EditorCard: FC<Props> = ({ card, x, y, z }) => {
+export const EditorCard: FC<LayoutCard> = ({
+  card,
+  pos: { x, y, z },
+  count,
+}) => {
   const { inspectedCard, inspectCard } = useInspector()
   const { removeCard } = useCards()
   // const { loading } = useDeckEditor()
@@ -36,6 +33,7 @@ export const EditorCard: FC<Props> = ({ card, x, y, z }) => {
 
   return (
     <StyledCard
+      count={count}
       card={card}
       selected={isSelected}
       menuItems={menuItems}

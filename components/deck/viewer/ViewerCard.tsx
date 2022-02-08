@@ -1,19 +1,16 @@
 import { Card as BaseCard } from 'components/cards/Card'
 import { useInspector } from 'contexts'
 import { FC } from 'react'
-import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
 import { Search } from 'styled-icons/boxicons-regular'
+import { LayoutCard } from 'types'
 import { layoutProportions } from 'utils'
 
-interface Props {
-  card: Card
-  x: number
-  y: number
-  z: number
-}
-
-export const ViewerCard: FC<Props> = ({ card, x, y, z }) => {
+export const ViewerCard: FC<LayoutCard> = ({
+  card,
+  pos: { x, y, z },
+  count,
+}) => {
   const { inspectedCard, inspectCard } = useInspector()
 
   const isSelected = !!inspectedCard && inspectedCard.id === card.id
@@ -28,6 +25,7 @@ export const ViewerCard: FC<Props> = ({ card, x, y, z }) => {
 
   return (
     <StyledCard
+      count={count}
       card={card}
       selected={isSelected}
       menuItems={menuItems}

@@ -17,6 +17,7 @@ interface Props extends StandardProps {
   card: ScryfallCard
   menuItems?: CardMenuItem[]
   selected?: boolean
+  count?: number
 }
 
 export const Card: FC<Props> = ({
@@ -27,6 +28,7 @@ export const Card: FC<Props> = ({
   selected = false,
   style,
   className,
+  count = 1,
 }) => {
   const { image_uris, card_faces } = card
   let image = highRes ? image_uris?.large : image_uris?.small
@@ -47,6 +49,7 @@ export const Card: FC<Props> = ({
       style={{ ...style, backgroundImage: `url(${url})` }}
       className={containerClass}
     >
+      {count > 1 && <Count>{count}</Count>}
       <Border />
       {menuItems && (
         <Menu>
@@ -79,6 +82,27 @@ const Border = styled.div`
   }
 `
 
+const Count = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: ${colors.n2};
+  display: block;
+  padding: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  border-radius: inherit;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 0;
+  transition: background-color 0.25s ease;
+
+  .selected &,
+  .selected:hover & {
+    background-color: ${colors.p2};
+  }
+`
+
 const Menu = styled.div`
   position: absolute;
   top: 24%;
@@ -102,9 +126,15 @@ const Container = styled.div`
   background-color: #000;
   transition: box-shadow 0.25s ease;
   box-shadow: 0 0 5px 2px ${colors.n0};
+  user-select: none;
+  transform: translate3d(0, 0, 0);
 
   &:hover ${Border} {
     border-color: ${colors.p1};
+  }
+
+  &:hover ${Count} {
+    background-color: ${colors.p1};
   }
 
   &:hover ${Menu}, &.selected ${Menu} {

@@ -20,9 +20,7 @@ export const ViewerBody: FC = () => {
   return (
     <Layout cards={cards} mode={mode}>
       {(items) =>
-        items.map((item) => (
-          <ViewerCard key={item.card.id} card={item.card} {...item.pos} />
-        ))
+        items.map((item) => <ViewerCard key={item.card.id} {...item} />)
       }
     </Layout>
   )

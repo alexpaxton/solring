@@ -8,17 +8,10 @@ import {
   LayoutMode,
 } from 'types'
 
-export function sliceDeck(mode: LayoutMode, cards: Card[]) {
-  switch (mode) {
-    case 'type':
-      return sliceDeckByType(cards)
-    case 'color':
-      return sliceDeckByColor(cards)
-    case 'cmc':
-      return sliceDeckByCMC(cards)
-    default:
-      throw new Error(`${mode} is not a valid mode for slicing a deck`)
-  }
+export const sliceDeckBy: Record<LayoutMode, (cards: Card[]) => DeckSlice> = {
+  type: sliceDeckByType,
+  color: sliceDeckByColor,
+  cmc: sliceDeckByCMC,
 }
 
 export function getCardType(cardType: string): string {
@@ -47,14 +40,20 @@ export function getCardColor(colors: Color[]): string {
 
 export function sliceDeckByCMC(cards: Card[]): DeckSlice {
   const deckByCMC: DeckSlice = {}
+
+  const largestCMC = cards.reduce((prev, current) => {
+    return current.cmc > prev ? current.cmc : prev
+  }, 0)
+
+  for (let i = 0; i <= largestCMC; i++) {
+    deckByCMC[i] = []
+  }
+
   cards.forEach((card) => {
     const cmc = card.cmc
-
-    if (typeof deckByCMC[cmc] === 'undefined') {
-      deckByCMC[cmc] = []
+    if (typeof deckByCMC[cmc] === 'object') {
+      deckByCMC[cmc].push(card)
     }
-
-    deckByCMC[cmc].push(card)
   })
 
   return deckByCMC
@@ -62,31 +61,42 @@ export function sliceDeckByCMC(cards: Card[]): DeckSlice {
 
 export function sliceDeckByType(cards: Card[]): DeckSlice {
   const deckByType: DeckSlice = {}
+  const draftDeckByType: DeckSlice = {}
   cards.forEach((card) => {
     const type = getCardType(card.type_line)
 
-    if (typeof deckByType[type] === 'undefined') {
-      deckByType[type] = []
+    if (typeof draftDeckByType[type] === 'undefined') {
+      draftDeckByType[type] = []
     }
 
-    deckByType[type].push(card)
+    draftDeckByType[type].push(card)
   })
+
+  const entries = Object.entries(draftDeckByType).sort(
+    (a, b) => b[1].length - a[1].length,
+  )
+  entries.forEach(([key, val]) => (deckByType[key] = val))
 
   return deckByType
 }
 
 export function sliceDeckByColor(cards: Card[]): DeckSlice {
+  const draftDeckSlice: DeckSlice = {}
   const deckByColor: DeckSlice = {}
   cards.forEach((card) => {
     const color = getCardColor(card.color_identity || [])
 
-    if (typeof deckByColor[color] === 'undefined') {
-      deckByColor[color] = []
+    if (typeof draftDeckSlice[color] === 'undefined') {
+      draftDeckSlice[color] = []
     }
 
-    deckByColor[color].push(card)
+    draftDeckSlice[color].push(card)
   })
 
+  const entries = Object.entries(draftDeckSlice).sort(
+    (a, b) => b[1].length - a[1].length,
+  )
+  entries.forEach(([key, val]) => (deckByColor[key] = val))
   return deckByColor
 }
 
@@ -95,9 +105,9 @@ export const layoutProportions = {
     width: 180,
     height: 250,
   },
-  columnGap: 20,
+  columnGap: 24,
   cardGap: 34,
-  headingHeight: 60,
+  headingHeight: 68,
   gutter: 30,
 }
 
@@ -128,13 +138,16 @@ export function layoutCards(deck: DeckSlice): Layout {
       largestColumn = columnCards.length
     }
 
-    columnCards.forEach((card, cardIndex) => {
+    const uniques = countUniques(columnCards)
+
+    uniques.forEach((card, cardIndex) => {
       const y =
         layoutProportions.headingHeight + cardIndex * layoutProportions.cardGap
       const z = cardIndex + 1
 
       cards.push({
         card,
+        count: card.count,
         pos: {
           x: x + layoutProportions.gutter,
           y: y + layoutProportions.gutter,
@@ -189,4 +202,45 @@ export function parseBulkAddInput(input: string) {
   })
 
   return cards
+}
+
+/** Sort Function */
+function byCardName(a: Card, b: Card) {
+  if (a.name.toLowerCase() > b.name.toLowerCase()) {
+    return 1
+  }
+  if (a.name.toLowerCase() < b.name.toLowerCase()) {
+    return -1
+  }
+
+  return 0
+}
+
+type CardStack = Record<string, Card[]>
+
+interface CardWithCount extends Card {
+  count: number
+}
+
+function countUniques(cards: Card[]): CardWithCount[] {
+  const stacks: CardStack = {}
+
+  cards.forEach((card) => {
+    if (typeof stacks[card.name] !== 'object') {
+      stacks[card.name] = []
+    }
+
+    stacks[card.name].push(card)
+  })
+
+  const uniques = Object.entries(stacks)
+
+  const countedCards = uniques.map(([_, stack]) => {
+    const count = stack.length
+    const card = stack[0]
+
+    return { ...card, count }
+  })
+
+  return countedCards.sort(byCardName)
 }

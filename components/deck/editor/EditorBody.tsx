@@ -20,9 +20,7 @@ export const EditorBody: FC = () => {
   return (
     <Layout cards={cards} mode={mode}>
       {(items) =>
-        items.map((item) => (
-          <EditorCard key={item.card.id} card={item.card} {...item.pos} />
-        ))
+        items.map((item) => <EditorCard key={item.card.id} {...item} />)
       }
     </Layout>
   )
