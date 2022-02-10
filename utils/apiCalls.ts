@@ -1,4 +1,4 @@
-import { APICardsData, Deck, DeckRequest, DraftDeck, User } from 'types'
+import { APICardsData, Deck, DeckPostBody, DeckRequest, User } from 'types'
 
 type CreateUser = (
   data: { handle: string; email: string },
@@ -65,7 +65,7 @@ interface CreateDeckResponse {
 }
 
 type CreateDeck = (
-  deck: DraftDeck,
+  deck: DeckPostBody,
   callback?: () => void,
 ) => Promise<CreateDeckResponse>
 

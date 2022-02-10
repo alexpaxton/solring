@@ -1,6 +1,6 @@
 import { prisma } from 'data_utils'
 import { withUser } from 'middleware/api'
-import { DraftDeck, NextRouteWithUser } from 'types'
+import { DeckPostBody, NextRouteWithUser } from 'types'
 
 const handleDecks: NextRouteWithUser = async (req, res) => {
   const { method, user } = req
@@ -8,7 +8,7 @@ const handleDecks: NextRouteWithUser = async (req, res) => {
   switch (method) {
     case 'POST':
       try {
-        const body = req.body as DraftDeck
+        const body = req.body as DeckPostBody
 
         const data = {
           ...body,

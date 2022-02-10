@@ -1,6 +1,6 @@
 import { CreateDeckForm } from 'components/CreateDeckForm'
 import { Button, Modal, useModalState } from 'components/ui'
-import { DraftDeck } from 'types'
+import { DeckPostBody } from 'types'
 import { createDeck, useMe } from 'utils'
 
 export const CreateDeckButton = () => {
@@ -11,7 +11,7 @@ export const CreateDeckButton = () => {
     return null
   }
 
-  async function handleSubmit(draftDeck: DraftDeck) {
+  async function handleSubmit(draftDeck: DeckPostBody) {
     closeModal()
     const resp = await createDeck(draftDeck)
     if (resp.error) {

@@ -25,11 +25,6 @@ export interface Deck extends Omit<PrismaDeck, 'cards'> {
   cards: string[]
 }
 
-export interface DraftDeck {
-  title: string
-  description: string
-}
-
 export interface DeckWithHandle extends PrismaDeck {
   creator: {
     handle: string
@@ -61,4 +56,31 @@ export interface AddCardsData {
 
 export interface CardId {
   name: string
+}
+
+// api/deck POST
+export interface DeckPostBody {
+  title: string
+  description: string
+}
+
+export interface DeckPostResponse {
+  data?: Deck
+  error?: string
+}
+
+// api/deck GET
+export interface DeckGetResponse {
+  data?: DeckWithHandle[]
+  error?: string
+}
+
+// api/deck DELETE
+export interface DeckDeleteBody {
+  id: string
+}
+
+export interface DeckDeleteResponse {
+  data?: string
+  error?: string
 }
