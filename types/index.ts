@@ -1,6 +1,7 @@
 import { Deck as PrismaDeck, User as PrismaUser } from '@prisma/client'
 import { CSSProperties } from 'react'
 
+export * from './api'
 export * from './editor'
 export * from './gatherer'
 export * from './http'
@@ -56,31 +57,4 @@ export interface AddCardsData {
 
 export interface CardId {
   name: string
-}
-
-// api/deck POST
-export interface DeckPostBody {
-  title: string
-  description: string
-}
-
-export interface DeckPostResponse {
-  data?: Deck
-  error?: string
-}
-
-// api/deck GET
-export interface DeckGetResponse {
-  data?: DeckWithHandle[]
-  error?: string
-}
-
-// api/deck DELETE
-export interface DeckDeleteBody {
-  id: string
-}
-
-export interface DeckDeleteResponse {
-  data?: string
-  error?: string
 }
