@@ -3,11 +3,11 @@ import { DeckGetResponse, DeckWithHandle, NextRouteWithUser } from 'types'
 
 export type HandleDeckGet = NextRouteWithUser<null, DeckGetResponse>
 
+// TODO:
+// Accept an id param to get a specific deck
 export const handleDeckGet: HandleDeckGet = async (req, res) => {
   const query = req.query
-  console.log('query', query)
   const creatorId = getCreatorIdFromQuery(query)
-  console.log('creatorId', creatorId)
 
   let decks: DeckWithHandle[] = []
 

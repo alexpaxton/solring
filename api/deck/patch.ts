@@ -13,6 +13,10 @@ export const handleDeckPatch: HandleDeckPatch = async (req, res) => {
     return res.status(401).json({ error: 'No user is authorized' })
   }
 
+  if (!body.id) {
+    return res.status(401).json({ error: 'No deck ID found in request' })
+  }
+
   if (!user.decks.find((deck) => deck.id === body.id)) {
     return res.status(401).json({
       error: 'User does not have permission to update deck with that ID',
