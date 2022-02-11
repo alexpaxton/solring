@@ -14,17 +14,15 @@ export const handleDeckDelete: HandleDeckDelete = async (req, res) => {
   }
 
   if (!user.decks.find((deck) => deck.id === body.id)) {
-    return res
-      .status(401)
-      .json({
-        error: 'User does not have permission to delete deck with that ID',
-      })
+    return res.status(401).json({
+      error: 'User does not have permission to delete deck with that ID',
+    })
   }
 
   const deleteDeck = await prisma.deck.delete({ where: { id: body.id } })
 
   if (deleteDeck) {
-    return res.status(204).json({ data: 'Deck deleted successfully' })
+    return res.status(200).json({ data: 'Deck deleted successfully' })
   }
 
   return res.status(500).json({ error: 'Failed to delete deck' })
