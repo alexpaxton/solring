@@ -1,10 +1,10 @@
 import { Button, colors, Dialog, Input } from 'components/ui'
 import { ChangeEvent, FC, useState } from 'react'
 import styled from 'styled-components'
-import { DraftDeck } from 'types'
+import { DeckPostBody } from 'types'
 
 interface Props {
-  onSubmit: (Draft: DraftDeck) => void
+  onSubmit: (Draft: DeckPostBody) => void
   onDismiss: () => void
 }
 

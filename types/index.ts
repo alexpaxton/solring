@@ -1,6 +1,7 @@
 import { Deck as PrismaDeck, User as PrismaUser } from '@prisma/client'
 import { CSSProperties } from 'react'
 
+export * from './api'
 export * from './editor'
 export * from './gatherer'
 export * from './http'
@@ -23,11 +24,6 @@ export interface Me extends PrismaUser {
 
 export interface Deck extends Omit<PrismaDeck, 'cards'> {
   cards: string[]
-}
-
-export interface DraftDeck {
-  title: string
-  description: string
 }
 
 export interface DeckWithHandle extends PrismaDeck {

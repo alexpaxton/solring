@@ -1,7 +1,8 @@
+import { createDeck } from 'apiHelpers'
 import { CreateDeckForm } from 'components/CreateDeckForm'
 import { Button, Modal, useModalState } from 'components/ui'
-import { DraftDeck } from 'types'
-import { createDeck, useMe } from 'utils'
+import { DeckPostBody } from 'types'
+import { useMe } from 'utils'
 
 export const CreateDeckButton = () => {
   const { me, isLoading, isError } = useMe()
@@ -11,13 +12,13 @@ export const CreateDeckButton = () => {
     return null
   }
 
-  async function handleSubmit(draftDeck: DraftDeck) {
+  async function handleSubmit(draftDeck: DeckPostBody) {
     closeModal()
     const resp = await createDeck(draftDeck)
     if (resp.error) {
       window.alert(resp.error)
-    } else if (resp.deck) {
-      window.alert(`${resp.deck.title} created!`)
+    } else if (resp.data) {
+      window.alert(`${resp.data.title} created!`)
     }
   }
 
