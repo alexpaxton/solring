@@ -35,3 +35,4 @@ export interface Layout {
 export type DeckSlice = Record<string, Card[]>
 
 export type LayoutMode = 'type' | 'color' | 'cmc'
+export type LayoutDisplay = 'grid' | 'list'

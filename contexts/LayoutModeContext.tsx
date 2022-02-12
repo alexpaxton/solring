@@ -1,9 +1,11 @@
 import { createContext, FC, useContext, useState } from 'react'
-import { LayoutMode } from 'types'
+import { LayoutDisplay, LayoutMode } from 'types'
 
 interface LayoutModeContextType {
   mode: LayoutMode
   setMode: (mode: LayoutMode) => void
+  display: LayoutDisplay
+  setDisplay: (mode: LayoutDisplay) => void
 }
 
 const LayoutModeContext = createContext<LayoutModeContextType | undefined>(
@@ -12,9 +14,10 @@ const LayoutModeContext = createContext<LayoutModeContextType | undefined>(
 
 export const LayoutModeContextProvider: FC = ({ children }) => {
   const [mode, setMode] = useState<LayoutMode>('type')
+  const [display, setDisplay] = useState<LayoutDisplay>('grid')
 
   return (
-    <LayoutModeContext.Provider value={{ mode, setMode }}>
+    <LayoutModeContext.Provider value={{ mode, setMode, display, setDisplay }}>
       {children}
     </LayoutModeContext.Provider>
   )
