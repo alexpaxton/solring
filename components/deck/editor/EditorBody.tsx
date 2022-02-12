@@ -7,7 +7,7 @@ import styled from 'styled-components'
 
 export const EditorBody: FC = () => {
   const { cards, loading } = useCards()
-  const { mode } = useLayoutMode()
+  const { mode, display } = useLayoutMode()
 
   if (loading) {
     return (
@@ -17,13 +17,21 @@ export const EditorBody: FC = () => {
     )
   }
 
-  return (
-    <Layout cards={cards} mode={mode}>
-      {(items) =>
-        items.map((item) => <EditorCard key={item.card.id} {...item} />)
-      }
-    </Layout>
-  )
+  if (display === 'list') {
+    return <p>BOOP</p>
+  }
+
+  if (display === 'grid') {
+    return (
+      <Layout cards={cards} mode={mode}>
+        {(items) =>
+          items.map((item) => <EditorCard key={item.card.id} {...item} />)
+        }
+      </Layout>
+    )
+  }
+
+  return null
 }
 
 const Loading = styled.div`

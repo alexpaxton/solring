@@ -1,5 +1,6 @@
 import { useCards } from 'components/deck/CardsContext'
 import { Layout } from 'components/deck/Layout'
+import { List } from 'components/deck/List'
 import { ViewerCard } from 'components/deck/viewer/ViewerCard'
 import { useLayoutMode } from 'contexts'
 import { FC } from 'react'
@@ -7,7 +8,7 @@ import styled from 'styled-components'
 
 export const ViewerBody: FC = () => {
   const { cards, loading } = useCards()
-  const { mode } = useLayoutMode()
+  const { mode, display } = useLayoutMode()
 
   if (loading) {
     return (
@@ -17,13 +18,21 @@ export const ViewerBody: FC = () => {
     )
   }
 
-  return (
-    <Layout cards={cards} mode={mode}>
-      {(items) =>
-        items.map((item) => <ViewerCard key={item.card.id} {...item} />)
-      }
-    </Layout>
-  )
+  if (display === 'list') {
+    return <List cards={cards} mode={mode} />
+  }
+
+  if (display === 'grid') {
+    return (
+      <Layout cards={cards} mode={mode}>
+        {(items) =>
+          items.map((item) => <ViewerCard key={item.card.id} {...item} />)
+        }
+      </Layout>
+    )
+  }
+
+  return null
 }
 
 const Loading = styled.div`
