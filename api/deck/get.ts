@@ -13,11 +13,13 @@ export const handleDeckGet: HandleDeckGet = async (req, res) => {
 
   if (creatorId) {
     decks = await prisma.deck.findMany({
+      orderBy: { title: 'asc' },
       where: { creatorId },
       include: { creator: { select: { handle: true } } },
     })
   } else {
     decks = await prisma.deck.findMany({
+      orderBy: { title: 'asc' },
       include: { creator: { select: { handle: true } } },
     })
   }

@@ -1,3 +1,4 @@
+import { getDecks } from 'apiHelpers'
 import { DeckGrid } from 'components/DeckGrid'
 import { prisma } from 'data_utils'
 import { GetStaticProps, NextPage } from 'next'
@@ -6,33 +7,33 @@ import { FC } from 'react'
 import styled from 'styled-components'
 import { SWRConfig } from 'swr'
 import { DeckWithHandle } from 'types'
-import { pluralizer, useDecksWithHandles } from 'utils'
+import { pluralizer } from 'utils'
 
 interface Props {
   fallback: {
-    '/api/decks/all': DeckWithHandle[]
+    '/api/deck': { data: DeckWithHandle[] }
   }
 }
 
 const DecksIndexGrid: FC = () => {
-  const { decks, isError, isLoading } = useDecksWithHandles()
+  const { data, error } = getDecks()
 
-  if (isLoading) {
+  if (!data && !error) {
     return <p>Loading...</p>
   }
 
-  if (isError) {
-    return <p>Error fetching decks</p>
+  if (error) {
+    return <p>{error}</p>
   }
 
-  if (!decks || !decks.length) {
+  if (data === undefined || data.length === 0) {
     return <p>No decks exist yet</p>
   }
 
   return (
     <>
-      <p>{`${decks.length} ${pluralizer('Deck', decks.length)}`}</p>
-      <DeckGrid decks={decks} />
+      <p>{`${data.length} ${pluralizer('Deck', data.length)}`}</p>
+      <DeckGrid decks={data} />
     </>
   )
 }
@@ -58,7 +59,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     include: { creator: { select: { handle: true } } },
   })
 
-  return { props: { fallback: { '/api/decks/all': decks } } }
+  return { props: { fallback: { '/api/deck': { data: decks } } } }
 }
 
 const DecksPage = styled.div`

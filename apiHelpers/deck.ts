@@ -7,18 +7,23 @@ import {
   DeckPatchResponse,
   DeckPostBody,
   DeckPostResponse,
-  DeckWithHandle,
 } from 'types'
 
-const fetchDecksWithHandles: Fetcher<DeckWithHandle[], string> = (url) =>
+const fetchDecksWithHandles: Fetcher<DeckGetResponse, string> = (url) =>
   fetch(url).then((res) => res.json())
 
-// api/deck GET helper
-export const getDecks = async ({
-  creatorId,
-}: {
+interface GetDeckBody {
   creatorId?: string
-}): Promise<DeckGetResponse> => {
+}
+
+const getDecksDefaultProps = {
+  creatorId: undefined,
+}
+// api/deck GET helper
+export const getDecks = (
+  props: GetDeckBody = getDecksDefaultProps,
+): DeckGetResponse => {
+  const { creatorId } = props
   const params = creatorId ? new URLSearchParams({ creatorId }).toString() : ''
   let url = '/api/deck'
 
@@ -28,7 +33,7 @@ export const getDecks = async ({
 
   const { data, error } = useSWR(url, fetchDecksWithHandles)
 
-  return { data, error }
+  return { data: data?.data, error: error || data?.error }
 }
 
 // api/deck POST helper
