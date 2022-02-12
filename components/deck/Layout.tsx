@@ -1,5 +1,5 @@
 import { Plane } from 'components/deck/Plane'
-import { colors } from 'components/ui'
+import { colors, Pip } from 'components/ui'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
@@ -41,19 +41,4 @@ const Heading = styled.div`
   line-height: 24px;
   color: ${colors.n6};
   display: flex;
-`
-
-const Pip = styled.span`
-  display: inline-flex;
-  min-width: 24px;
-  height: 24px;
-  padding: 0 7px;
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  background-color: ${colors.n1};
-  margin-right: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  color: ${colors.n4};
 `
