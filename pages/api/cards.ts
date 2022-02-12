@@ -3,18 +3,21 @@ import { withUser } from 'middleware/api'
 import { AddCardsData, Deck, NextRouteWithUser } from 'types'
 import { dedupe } from 'utils'
 
-const handleCards: NextRouteWithUser = async (req, res) => {
-  const { method, user } = req
-  const data = req.body as AddCardsData
+const handleCards: NextRouteWithUser<AddCardsData> = async (req, res) => {
+  const { method, user, body } = req
 
   switch (method) {
     case 'PATCH':
       try {
+        if (user === null) {
+          res.status(401).json({ error: 'User not authorized' })
+          return
+        }
         // TODO:
         // Check data.type to determine which type of entry to update
         // deck or pile
         const deck = (await prisma.deck.findUnique({
-          where: { id: data.id },
+          where: { id: body.id },
         })) as Deck
 
         if (!deck) {
@@ -22,13 +25,14 @@ const handleCards: NextRouteWithUser = async (req, res) => {
           return
         }
 
-        if (!user.decks.find((d) => d.id === data.id)) {
+        if (!user.decks.find((d) => d.id === body.id)) {
           res
             .status(401)
             .json({ error: 'User does not permission to update this deck' })
+          return
         }
 
-        const cards = dedupe<string>([...deck.cards, ...data.cards])
+        const cards = dedupe<string>([...deck.cards, ...body.cards])
         await prisma.deck.update({
           where: { id: deck.id },
           data: {
