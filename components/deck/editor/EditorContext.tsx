@@ -1,8 +1,9 @@
+import { updateDeck } from 'apiHelpers'
 import { useCards } from 'components/deck/CardsContext'
 import { useRouter } from 'next/router'
 import { ChangeEvent, createContext, FC, useContext, useState } from 'react'
 import { DeckWithHandle } from 'types'
-import { scryfallToData, updateDeck } from 'utils'
+import { scryfallToData } from 'utils'
 
 interface EditorContextType {
   title: string
@@ -69,8 +70,9 @@ export const EditorContextProvider: FC<Props> = ({ children, deck }) => {
         if (updateResponse.error) {
           setError(updateResponse.error)
           setLoading(false)
-        } else if (updateResponse.deck) {
-          push(`/decks/${updateResponse.deck.id}`)
+        } else if (updateResponse.data) {
+          window.alert(updateResponse.data)
+          push(`/decks/${deck.id}`)
         }
       } catch (err) {
         console.log(err)
