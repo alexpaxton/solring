@@ -1,4 +1,4 @@
-import React, { FC, useLayoutEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Transition } from 'react-transition-group'
 import styled from 'styled-components'
 import { StandardProps } from 'types'
@@ -25,7 +25,7 @@ export const Modal: FC<ModalProps> = ({
   className = '',
   style,
 }) => {
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)
 
     return () => {
