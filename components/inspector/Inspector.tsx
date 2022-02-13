@@ -35,9 +35,7 @@ export const Inspector: FC = () => {
           setCardFace={setCardFace}
         />
         <CardDetails>
-          <CardName onClick={dismissInspector}>
-            {cardRef.current?.name}
-          </CardName>
+          <CardName>{cardRef.current?.name}</CardName>
           <OracleText cardFace={cardFace} card={cardRef.current} />
           <FlavorText cardFace={cardFace} card={cardRef.current} />
           <InspectorActions />
