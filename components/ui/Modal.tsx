@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, MouseEvent, useEffect, useState } from 'react'
 import { Transition } from 'react-transition-group'
 import styled from 'styled-components'
 import { StandardProps } from 'types'
@@ -37,6 +37,16 @@ export const Modal: FC<ModalProps> = ({
     e.key === 'Escape' && onEscapeKey && onEscapeKey()
   }
 
+  function handleMaskClick(e: MouseEvent<HTMLDivElement>) {
+    e.stopPropagation()
+    onMaskClick && onMaskClick()
+  }
+
+  function handleDismiss(e: MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation()
+    onDismiss && onDismiss()
+  }
+
   return (
     <Portal>
       <Transition
@@ -49,9 +59,9 @@ export const Modal: FC<ModalProps> = ({
           <Mask
             className={`${state} ${className}`}
             style={style}
-            onClick={onMaskClick}
+            onClick={handleMaskClick}
           >
-            {onDismiss && <DismissButton onClick={onDismiss} />}
+            {onDismiss && <DismissButton onClick={handleDismiss} />}
             <Content>{children}</Content>
           </Mask>
         )}
