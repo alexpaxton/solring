@@ -1,21 +1,15 @@
 import { CreateDeckButton } from 'components/CreateDeckButton'
 import { Button, colors } from 'components/ui'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { FC } from 'react'
 import styled from 'styled-components'
 import { useMe } from 'utils'
 
 export const NavBar: FC = () => {
   const { me, isLoading, isError } = useMe()
-  const { asPath } = useRouter()
-
-  function getUrl(url: string) {
-    return asPath === '/' ? url : `${url}?returnTo=${asPath}`
-  }
 
   let actions = (
-    <Button href={getUrl('/api/auth/login')} as="a" variant="neutral">
+    <Button href="api/auth/login" as="a" variant="neutral">
       Login
     </Button>
   )
@@ -26,7 +20,7 @@ export const NavBar: FC = () => {
 
   if (isError) {
     actions = (
-      <Button href={getUrl('/api/auth/login')} as="a" variant="neutral">
+      <Button href="/api/auth/login" as="a" variant="neutral">
         Login
       </Button>
     )
@@ -38,7 +32,7 @@ export const NavBar: FC = () => {
         <p>
           Logged in as <strong>{`@${me.handle}`}</strong>
         </p>
-        <Button href={getUrl('/api/auth/logout')} as="a" variant="primary">
+        <Button href="/api/auth/logout" as="a" variant="primary">
           Logout
         </Button>
       </>
