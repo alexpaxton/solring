@@ -1,10 +1,11 @@
 import { colors } from 'components/ui'
+import Image from 'next/image'
 import { FC } from 'react'
 import { Card as ScryfallCard } from 'scryfall-sdk'
 import styled from 'styled-components'
 import { StyledIcon } from 'styled-icons/types'
 import { StandardProps } from 'types'
-import { classnames } from 'utils'
+import { classnames, linearGradient } from 'utils'
 
 interface CardMenuItem {
   icon: StyledIcon
@@ -31,24 +32,21 @@ export const Card: FC<Props> = ({
   count = 1,
 }) => {
   const { image_uris, card_faces } = card
-  let image = highRes ? image_uris?.large : image_uris?.small
+  let image = highRes ? image_uris?.large : image_uris?.normal
 
   if (card_faces) {
     image = highRes
       ? card_faces[0].image_uris?.large
-      : card_faces[0].image_uris?.small
+      : card_faces[0].image_uris?.normal
   }
 
-  const url = image?.split('?')[0]
+  const url = image?.split('?')[0] || ''
   const containerClass = classnames(className, {
     selected,
   })
 
   return (
-    <Container
-      style={{ ...style, backgroundImage: `url(${url})` }}
-      className={containerClass}
-    >
+    <Container style={style} className={containerClass}>
       {count > 1 && <Count>{count}</Count>}
       <Border />
       {menuItems && (
@@ -64,6 +62,7 @@ export const Card: FC<Props> = ({
         </Menu>
       )}
       {children}
+      <Image src={url} layout="fill" priority={true} />
     </Container>
   )
 }
@@ -72,8 +71,11 @@ const Border = styled.div`
   border: 2px solid ${colors.n2};
   width: 100%;
   height: 100%;
+  position: absolute;
+  z-index: 4;
   border-radius: inherit;
   transition: border-color 0.25s ease, background-color 0.25s ease;
+  pointer-events: none;
 
   .selected &,
   .selected:hover & {
@@ -96,6 +98,7 @@ const Count = styled.div`
   border-top-left-radius: 0;
   border-bottom-right-radius: 0;
   transition: background-color 0.25s ease;
+  z-index: 3;
 
   .selected &,
   .selected:hover & {
@@ -113,6 +116,7 @@ const Menu = styled.div`
   justify-content: center;
   opacity: 0;
   transition: opacity 0.25s ease;
+  z-index: 3;
 `
 
 const Container = styled.div`
@@ -120,7 +124,6 @@ const Container = styled.div`
   font-size: 0;
   border-radius: 5% / 4%;
   display: flex;
-  background-size: cover;
   position: relative;
   z-index: 1;
   background-color: #000;
@@ -128,6 +131,7 @@ const Container = styled.div`
   box-shadow: 0 0 5px 2px ${colors.n0};
   user-select: none;
   transform: translate3d(0, 0, 0);
+  background: ${linearGradient(45, colors.p0, colors.p2)};
 
   &:hover ${Border} {
     border-color: ${colors.p1};
@@ -144,6 +148,15 @@ const Container = styled.div`
   &.selected,
   &.selected:hover {
     box-shadow: 0 0 4px ${colors.p1}, 0 0 8px ${colors.p0};
+  }
+
+  // Next image
+  & > span {
+    border-radius: inherit;
+    overflow: hidden !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 `
 
