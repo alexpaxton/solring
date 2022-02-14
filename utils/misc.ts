@@ -126,3 +126,12 @@ export function compileCSS(css: CSSProperties): string {
   styles.forEach(([k, v]) => result.push(`${k}: ${v}`))
   return result.join('; ')
 }
+
+export function capitalize(string: string): string {
+  if (string === '') {
+    return string
+  }
+  const chars = string.split('')
+  chars[0] = chars[0].toUpperCase()
+  return chars.join('')
+}
