@@ -89,7 +89,10 @@ const Border = styled.div`
     border-color: ${colors.r1};
   }
 
-  .illegal:hover &,
+  .illegal:hover & {
+    border-color: ${colors.r2};
+  }
+
   .illegal.selected &,
   .illegal.selected:hover & {
     border-color: ${colors.r2};
@@ -139,7 +142,6 @@ const Container = styled.div`
   display: flex;
   position: relative;
   z-index: 1;
-  background-color: #000;
   transition: box-shadow 0.25s ease;
   box-shadow: 0 0 5px 2px ${colors.n0};
   user-select: none;
@@ -163,7 +165,7 @@ const Container = styled.div`
   }
 
   &.illegal:hover ${Count} {
-    background-color: ${colors.r1};
+    background-color: ${colors.r2};
   }
 
   &:hover ${Menu}, &.selected ${Menu} {
