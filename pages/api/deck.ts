@@ -1,4 +1,4 @@
-import { handleDeck } from 'api'
+import { handleDeck } from 'apiLibrary'
 import { withUser } from 'middleware/api'
 import { NextRouteWithUser } from 'types'
 
