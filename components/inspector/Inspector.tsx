@@ -5,6 +5,7 @@ import { useInspector } from 'contexts'
 import { FC, MouseEvent, useRef, useState } from 'react'
 import { Card, Legalities } from 'scryfall-sdk'
 import styled from 'styled-components'
+import { CheckCircle, XCircle } from 'styled-icons/boxicons-regular'
 import { capitalize } from 'utils'
 
 // Assigning inspectedCard to a ref so that it will still be visible
@@ -99,6 +100,7 @@ const Legality: FC<LegalityProps> = ({ ruling }) => {
 
   return (
     <LegalityP className={className}>
+      {isIllegal ? <XCircle /> : <CheckCircle />}
       {`${capitalize(ruling.commander.replace(/_/g, ' '))} in commander format`}
     </LegalityP>
   )
@@ -134,7 +136,16 @@ const LegalityP = styled.p`
   font-size: 13px;
   line-height: 18px;
   font-weight: 400;
-  color: ${colors.n5};
+  color: ${colors.g2};
+  display: flex;
+  align-items: center;
+
+  svg {
+    font-size: 1.5em;
+    width: 1em;
+    height: 1em;
+    margin-right: 0.5em;
+  }
 
   &.illegal {
     color: ${colors.r2};
