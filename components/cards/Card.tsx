@@ -1,4 +1,5 @@
 import { colors } from 'components/ui'
+import Image from 'next/image'
 import { FC } from 'react'
 import { Card as ScryfallCard } from 'scryfall-sdk'
 import styled from 'styled-components'
@@ -31,24 +32,21 @@ export const Card: FC<Props> = ({
   count = 1,
 }) => {
   const { image_uris, card_faces } = card
-  let image = highRes ? image_uris?.large : image_uris?.small
+  let image = highRes ? image_uris?.large : image_uris?.normal
 
   if (card_faces) {
     image = highRes
       ? card_faces[0].image_uris?.large
-      : card_faces[0].image_uris?.small
+      : card_faces[0].image_uris?.normal
   }
 
-  const url = image?.split('?')[0]
+  const url = image?.split('?')[0] || ''
   const containerClass = classnames(className, {
     selected,
   })
 
   return (
-    <Container
-      style={{ ...style, backgroundImage: `url(${url})` }}
-      className={containerClass}
-    >
+    <Container style={style} className={containerClass}>
       {count > 1 && <Count>{count}</Count>}
       <Border />
       {menuItems && (
@@ -64,6 +62,7 @@ export const Card: FC<Props> = ({
         </Menu>
       )}
       {children}
+      <Image src={url} layout="fill" priority={true} />
     </Container>
   )
 }
@@ -72,8 +71,11 @@ const Border = styled.div`
   border: 2px solid ${colors.n2};
   width: 100%;
   height: 100%;
+  position: absolute;
+  z-index: 4;
   border-radius: inherit;
   transition: border-color 0.25s ease, background-color 0.25s ease;
+  pointer-events: none;
 
   .selected &,
   .selected:hover & {
@@ -96,6 +98,7 @@ const Count = styled.div`
   border-top-left-radius: 0;
   border-bottom-right-radius: 0;
   transition: background-color 0.25s ease;
+  z-index: 3;
 
   .selected &,
   .selected:hover & {
@@ -113,6 +116,7 @@ const Menu = styled.div`
   justify-content: center;
   opacity: 0;
   transition: opacity 0.25s ease;
+  z-index: 3;
 `
 
 const Container = styled.div`
@@ -145,6 +149,11 @@ const Container = styled.div`
   &.selected:hover {
     box-shadow: 0 0 4px ${colors.p1}, 0 0 8px ${colors.p0};
   }
+
+  & > span {
+    border-radius: inherit;
+    overflow: hidden;
+  }
 `
 
 const MenuButton = styled.div`
@@ -171,3 +180,15 @@ const MenuButton = styled.div`
     background-color: ${colors.p1};
   }
 `
+
+// const Image = styled.img`
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   top: 0;
+//   left: 0;
+//   z-index: 1;
+//   border-radius: 5% / 4%;
+//   pointer-events: none;
+//   content-visibility: auto;
+// `
