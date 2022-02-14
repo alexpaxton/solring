@@ -11,7 +11,7 @@ export const NavBar: FC = () => {
   const { asPath } = useRouter()
 
   function getUrl(url: string) {
-    return `${url}?returnTo=${asPath}`
+    return asPath === '/' ? url : `${url}?returnTo=${asPath}`
   }
 
   let actions = (
