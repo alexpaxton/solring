@@ -1,8 +1,10 @@
 import { colors } from 'components/ui'
+import Image from 'next/image'
 import { FC } from 'react'
 import { Card } from 'scryfall-sdk'
 import styled from 'styled-components'
 import { Refresh } from 'styled-icons/boxicons-regular'
+import { linearGradient } from 'utils'
 
 interface Props {
   card: Card | null
@@ -24,33 +26,31 @@ export const InspectorCard: FC<Props> = ({ card, cardFace, setCardFace }) => {
   }
 
   if (card.card_faces) {
-    const frontImage = card?.card_faces[0].image_uris?.large
-    const backImage = card?.card_faces[1].image_uris?.large
+    const frontImage = card?.card_faces[0].image_uris?.large || ''
+    const backImage = card?.card_faces[1].image_uris?.large || ''
 
     return (
       <CardContainer className={cardFace}>
         <FlipButton onClick={handleFlip}>
           <Refresh />
         </FlipButton>
-        <SmallCard
-          className="front"
-          style={{ backgroundImage: `url(${frontImage})` }}
-          onClick={() => setCardFace('front')}
-        />
-        <SmallCard
-          className="back"
-          style={{ backgroundImage: `url(${backImage})` }}
-          onClick={() => setCardFace('back')}
-        />
+        <SmallCard className="front" onClick={() => setCardFace('front')}>
+          <Image src={frontImage} layout="fill" priority={true} />
+        </SmallCard>
+        <SmallCard className="back" onClick={() => setCardFace('back')}>
+          <Image src={backImage} layout="fill" priority={true} />
+        </SmallCard>
       </CardContainer>
     )
   }
 
-  const img = card?.image_uris?.large
+  const img = card?.image_uris?.large || ''
 
   return (
     <CardContainer>
-      <BigCard style={{ backgroundImage: `url(${img})` }} />
+      <BigCard>
+        <Image src={img} layout="fill" priority={true} />
+      </BigCard>
     </CardContainer>
   )
 }
@@ -75,6 +75,16 @@ const CardBase = styled.div`
   position: relative;
   background-size: cover;
   background-position: center center;
+  background: ${linearGradient(45, colors.p0, colors.p2)};
+
+  // Next image
+  & > span {
+    border-radius: inherit;
+    overflow: hidden !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
 `
 
 const BigCard = styled(CardBase)`

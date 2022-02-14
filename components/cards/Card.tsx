@@ -5,7 +5,7 @@ import { Card as ScryfallCard } from 'scryfall-sdk'
 import styled from 'styled-components'
 import { StyledIcon } from 'styled-icons/types'
 import { StandardProps } from 'types'
-import { classnames } from 'utils'
+import { classnames, linearGradient } from 'utils'
 
 interface CardMenuItem {
   icon: StyledIcon
@@ -124,7 +124,6 @@ const Container = styled.div`
   font-size: 0;
   border-radius: 5% / 4%;
   display: flex;
-  background-size: cover;
   position: relative;
   z-index: 1;
   background-color: #000;
@@ -132,6 +131,7 @@ const Container = styled.div`
   box-shadow: 0 0 5px 2px ${colors.n0};
   user-select: none;
   transform: translate3d(0, 0, 0);
+  background: ${linearGradient(45, colors.p0, colors.p2)};
 
   &:hover ${Border} {
     border-color: ${colors.p1};
@@ -150,9 +150,13 @@ const Container = styled.div`
     box-shadow: 0 0 4px ${colors.p1}, 0 0 8px ${colors.p0};
   }
 
+  // Next image
   & > span {
     border-radius: inherit;
-    overflow: hidden;
+    overflow: hidden !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 `
 
@@ -180,15 +184,3 @@ const MenuButton = styled.div`
     background-color: ${colors.p1};
   }
 `
-
-// const Image = styled.img`
-//   position: absolute;
-//   width: 100%;
-//   height: 100%;
-//   top: 0;
-//   left: 0;
-//   z-index: 1;
-//   border-radius: 5% / 4%;
-//   pointer-events: none;
-//   content-visibility: auto;
-// `
