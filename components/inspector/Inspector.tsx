@@ -3,8 +3,10 @@ import { InspectorCard } from 'components/inspector/InspectorCard'
 import { colors, Modal } from 'components/ui'
 import { useInspector } from 'contexts'
 import { FC, MouseEvent, useRef, useState } from 'react'
-import { Card } from 'scryfall-sdk'
+import { Card, Legalities } from 'scryfall-sdk'
 import styled from 'styled-components'
+import { CheckCircle, XCircle } from 'styled-icons/boxicons-regular'
+import { capitalize } from 'utils'
 
 // Assigning inspectedCard to a ref so that it will still be visible
 // while the modal transitions out
@@ -38,6 +40,7 @@ export const Inspector: FC = () => {
           <CardName>{cardRef.current?.name}</CardName>
           <OracleText cardFace={cardFace} card={cardRef.current} />
           <FlavorText cardFace={cardFace} card={cardRef.current} />
+          <Legality ruling={inspectedCard?.legalities} />
           <InspectorActions />
         </CardDetails>
       </Container>
@@ -83,6 +86,26 @@ const FlavorText: FC<FlavorTextProps> = ({ card, cardFace }) => {
   return text ? <FlavorP>{text}</FlavorP> : null
 }
 
+interface LegalityProps {
+  ruling?: Legalities
+}
+
+const Legality: FC<LegalityProps> = ({ ruling }) => {
+  if (ruling === undefined) {
+    return null
+  }
+
+  const isIllegal = ruling.commander !== 'legal'
+  const className = isIllegal ? 'illegal' : 'legal'
+
+  return (
+    <LegalityP className={className}>
+      {isIllegal ? <XCircle /> : <CheckCircle />}
+      {`${capitalize(ruling.commander.replace(/_/g, ' '))} in commander format`}
+    </LegalityP>
+  )
+}
+
 const Container = styled.div`
   display: flex;
 `
@@ -106,6 +129,27 @@ const FlavorP = styled.p`
   line-height: 18px;
   font-weight: 400;
   font-style: italic;
+`
+
+const LegalityP = styled.p`
+  margin: 0 0 16px 0;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
+  color: ${colors.g2};
+  display: flex;
+  align-items: center;
+
+  svg {
+    font-size: 1.5em;
+    width: 1em;
+    height: 1em;
+    margin-right: 0.5em;
+  }
+
+  &.illegal {
+    color: ${colors.r2};
+  }
 `
 
 const CardDetails = styled.div`

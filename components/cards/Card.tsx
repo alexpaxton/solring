@@ -33,6 +33,7 @@ export const Card: FC<Props> = ({
 }) => {
   const { image_uris, card_faces } = card
   let image = highRes ? image_uris?.large : image_uris?.normal
+  const isIllegal = card.legalities.commander !== 'legal'
 
   if (card_faces) {
     image = highRes
@@ -43,6 +44,7 @@ export const Card: FC<Props> = ({
   const url = image?.split('?')[0] || ''
   const containerClass = classnames(className, {
     selected,
+    illegal: isIllegal,
   })
 
   return (
@@ -81,6 +83,20 @@ const Border = styled.div`
   .selected:hover & {
     border-color: ${colors.p2};
     box-shadow: 0 2px 4px ${colors.p1}, 0 3px 8px ${colors.p0};
+  }
+
+  .illegal & {
+    border-color: ${colors.r1};
+  }
+
+  .illegal:hover & {
+    border-color: ${colors.r2};
+  }
+
+  .illegal.selected &,
+  .illegal.selected:hover & {
+    border-color: ${colors.r2};
+    box-shadow: 0 2px 4px ${colors.r1}, 0 3px 8px ${colors.r0};
   }
 `
 
@@ -126,12 +142,15 @@ const Container = styled.div`
   display: flex;
   position: relative;
   z-index: 1;
-  background-color: #000;
   transition: box-shadow 0.25s ease;
   box-shadow: 0 0 5px 2px ${colors.n0};
   user-select: none;
   transform: translate3d(0, 0, 0);
   background: ${linearGradient(45, colors.p0, colors.p2)};
+
+  &.illegal {
+    background: ${linearGradient(45, colors.r0, colors.r2)};
+  }
 
   &:hover ${Border} {
     border-color: ${colors.p1};
@@ -139,6 +158,14 @@ const Container = styled.div`
 
   &:hover ${Count} {
     background-color: ${colors.p1};
+  }
+
+  &.illegal:hover ${Border} {
+    border-color: ${colors.r2};
+  }
+
+  &.illegal:hover ${Count} {
+    background-color: ${colors.r2};
   }
 
   &:hover ${Menu}, &.selected ${Menu} {
