@@ -2,6 +2,7 @@ import { CardNameFilter } from 'components/gatherer/CardNameFilter'
 import { CardTypeFilter } from 'components/gatherer/CardTypeFilter'
 import { CMCFilter } from 'components/gatherer/CMCFilter'
 import { ColorFilter } from 'components/gatherer/ColorFilter'
+import { QueryInput } from 'components/gatherer/QueryInput'
 import { RuleTextFilter } from 'components/gatherer/RuleTextFilter'
 import { SearchButton } from 'components/gatherer/SearchButton'
 import { PageHeader } from 'components/layout'
@@ -19,44 +20,38 @@ export const SearchBar: FC = () => {
   }
 
   return (
-    <PageHeader onKeyUp={handleSubmit}>
-      <SearchRows>
-        <SearchRow>
-          <CardNameFilter />
-          <RuleTextFilter />
-        </SearchRow>
-        <SearchRow>
-          <CardTypeFilter />
-          <CMCFilter />
-          <ColorFilter />
-        </SearchRow>
-      </SearchRows>
-      <SearchButton />
-    </PageHeader>
+    <StyledPageHeader onKeyUp={handleSubmit}>
+      <Container>
+        <QueryInput />
+        <SearchButton />
+      </Container>
+      <Filters>
+        <CardTypeFilter />
+        <ColorFilter />
+        <CMCFilter />
+        <RuleTextFilter />
+        <CardNameFilter />
+      </Filters>
+    </StyledPageHeader>
   )
 }
 
-const SearchRows = styled.div`
-  flex: 1 0 0;
-  margin-right: 30px;
-  display: flex;
+const StyledPageHeader = styled(PageHeader)`
   flex-direction: column;
 `
 
-const SearchRow = styled.div`
+const Filters = styled.div`
   display: flex;
-  align-items: center;
-  margin-bottom: 8px;
+  flex-wrap: wrap;
+  margin-left: -4px;
+  margin-right: -4px;
 
   & > * {
-    margin-right: 8px;
+    margin: 4px;
   }
+`
 
-  & > *:last-child {
-    margin-right: 0;
-  }
-
-  &:last-child {
-    margin-bottom: 0;
-  }
+const Container = styled.div`
+  display: flex;
+  margin-bottom: 4px;
 `
