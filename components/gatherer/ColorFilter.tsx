@@ -1,12 +1,34 @@
+import {
+  FilterBox,
+  FilterPill,
+  FilterX,
+} from 'components/gatherer/FilterElements'
 import { Toggle } from 'components/gatherer/Toggle'
-import { InputGroup, Select } from 'components/ui'
+import { Select } from 'components/ui'
 import { useFilters } from 'contexts'
 import { ChangeEvent, FC } from 'react'
 import styled from 'styled-components'
+import { X } from 'styled-icons/boxicons-regular'
 import { ColorMode } from 'types'
 
 export const ColorFilter: FC = () => {
-  const { colors, dispatch, colorMode } = useFilters()
+  const { colors, dispatch, colorMode, active } = useFilters()
+
+  function activateFilter() {
+    dispatch({ type: 'updateActiveFilter', payload: { colors: true } })
+  }
+
+  function removeFilter() {
+    dispatch({ type: 'updateActiveFilter', payload: { colors: false } })
+  }
+
+  if (!active.colors) {
+    return (
+      <FilterPill onClick={activateFilter}>
+        <span>Color</span>
+      </FilterPill>
+    )
+  }
 
   function handleColorToggle(color: string, active: boolean) {
     if (active) {
@@ -33,7 +55,8 @@ export const ColorFilter: FC = () => {
   }
 
   return (
-    <StyledInputGroup label="Color">
+    <FilterBox>
+      <span>Color</span>
       <ModeSelect value={colorMode} onChange={handleModeChange}>
         <option value="include">Include</option>
         <option value="exclude">Exclude</option>
@@ -64,14 +87,13 @@ export const ColorFilter: FC = () => {
         onToggle={(active) => handleColorToggle('g', active)}
         color="g"
       />
-    </StyledInputGroup>
+      <FilterX type="button" onClick={removeFilter}>
+        <X />
+      </FilterX>
+    </FilterBox>
   )
 }
 
 const ModeSelect = styled(Select)`
   margin-right: 8px;
-`
-
-const StyledInputGroup = styled(InputGroup)`
-  padding-right: 8px;
 `

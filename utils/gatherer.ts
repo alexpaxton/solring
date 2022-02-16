@@ -14,6 +14,8 @@ export function extractFilters({
   cmc,
   cmcAlt,
   cmcMode,
+  queryText,
+  active,
 }: FiltersContextType): FiltersState {
   return {
     cardName,
@@ -24,6 +26,8 @@ export function extractFilters({
     cmc,
     cmcAlt,
     cmcMode,
+    queryText,
+    active,
   }
 }
 
@@ -38,30 +42,51 @@ export function getScryfallQuery({
   cardType,
   colors,
   colorMode,
+  queryText,
+  active,
 }: FiltersState): string {
-  const query = ['-is:funny']
+  const query = [queryText, '-is:funny']
 
-  cardName && cardName.length && query.push(`name:${cardName}`)
+  addCardName(cardName, query, active.cardName)
+  addCardType(cardType, query, active.cardType)
+  addCMC(cmc, cmcAlt, cmcMode, query, active.cmc)
+  addRuleText(ruleText, query, active.ruleText)
+  addColors(colors, colorMode, query, active.colors)
 
-  if (cardType && cardType.length && cardType.includes(' ')) {
-    const cardTypes = cardType.split(' ')
-    cardTypes.forEach((type) => query.push(`type:${type}`))
-  } else if (cardType.length) {
-    query.push(`type:${cardType}`)
+  return query.join(' ')
+}
+
+function addCardName(cardName: string, query: string[], active: boolean) {
+  if (!active || !cardName) {
+    return
   }
 
-  if (
-    ruleText &&
-    ruleText.length &&
-    ruleText.startsWith('"') &&
-    ruleText.endsWith('"')
-  ) {
-    query.push(`oracle:${ruleText}`)
-  } else if (ruleText && ruleText.length && ruleText.includes(' ')) {
-    const ruleTextWords = ruleText.split(' ')
-    ruleTextWords.forEach((word) => query.push(`o:${word}`))
-  } else if (ruleText && ruleText.length) {
-    query.push(`o:${ruleText}`)
+  query.push(`name:${cardName}`)
+}
+
+function addCardType(cardType: string, query: string[], active: boolean) {
+  if (!active || !cardType) {
+    return
+  }
+
+  if (cardType.includes(' ')) {
+    const types = cardType.split(' ')
+    types.forEach((type) => query.push(`type:${type}`))
+    return
+  }
+
+  query.push(`type:${cardType}`)
+}
+
+function addCMC(
+  cmc: number,
+  cmcAlt: number,
+  cmcMode: CMCMode,
+  query: string[],
+  active: boolean,
+) {
+  if (!active) {
+    return
   }
 
   switch (cmcMode) {
@@ -78,25 +103,51 @@ export function getScryfallQuery({
       query.push(`cmc>=${cmc} cmc<=${cmcAlt}`)
       break
   }
+}
 
-  if (colors.length) {
-    const colorsExcluded = allColors.filter((c) => !colors.includes(c))
-
-    switch (colorMode) {
-      case 'exactly':
-        query.push(`c:${colors.join('')}`)
-        colorsExcluded.forEach((color) => query.push(`-c:${color}`))
-        break
-      case 'exclude':
-        colors.forEach((color) => query.push(`-c:${color}`))
-        break
-      case 'include':
-        query.push(`c:${colors.join('')}`)
-        break
-    }
+function addColors(
+  colors: string[],
+  colorMode: ColorMode,
+  query: string[],
+  active: boolean,
+) {
+  if (!active || !colors.length) {
+    return
   }
 
-  return query.join(' ')
+  const colorsExcluded = allColors.filter((c) => !colors.includes(c))
+
+  switch (colorMode) {
+    case 'exactly':
+      query.push(`c:${colors.join('')}`)
+      colorsExcluded.forEach((color) => query.push(`-c:${color}`))
+      break
+    case 'exclude':
+      colors.forEach((color) => query.push(`-c:${color}`))
+      break
+    case 'include':
+      query.push(`c:${colors.join('')}`)
+      break
+  }
+}
+
+function addRuleText(ruleText: string, query: string[], active: boolean) {
+  if (!active || !ruleText) {
+    return
+  }
+
+  if (ruleText.startsWith('"') && ruleText.endsWith('')) {
+    query.push(`o:${ruleText}`)
+    return
+  }
+
+  if (ruleText.includes(' ')) {
+    const texts = ruleText.split(' ')
+    texts.forEach((text) => query.push(`o:${text}`))
+    return
+  }
+
+  query.push(`o:${ruleText}`)
 }
 
 export function getQueryString({
@@ -108,32 +159,37 @@ export function getQueryString({
   cardType,
   colors,
   colorMode,
+  queryText,
+  active,
 }: FiltersState): string {
   const params: string[] = []
 
-  if (cardName) {
+  if (queryText) {
+    params.push(`queryText=${encodeURIComponent(queryText)}`)
+  }
+
+  if (active.cardName && cardName.length) {
     params.push(`cardName=${encodeURIComponent(cardName)}`)
   }
 
-  if (cardType) {
+  if (active.cardType && cardType.length) {
     params.push(`cardType=${encodeURIComponent(cardType)}`)
   }
 
-  if (ruleText) {
+  if (active.ruleText && ruleText.length) {
     params.push(`ruleText=${encodeURIComponent(ruleText)}`)
   }
 
-  if (colors && colors.length) {
+  if (active.colors && colors.length) {
     params.push(`colors=${encodeURIComponent(colors.join(''))}`)
-  }
-
-  if (colorMode) {
     params.push(`colorMode=${encodeURIComponent(colorMode)}`)
   }
 
-  params.push(`cmc=${encodeURIComponent(cmc)}`)
-  params.push(`cmcMode=${encodeURIComponent(cmcMode)}`)
-  cmcMode === 'between' && params.push(`cmcAlt=${encodeURIComponent(cmcAlt)}`)
+  if (active.cmc) {
+    params.push(`cmc=${encodeURIComponent(cmc)}`)
+    params.push(`cmcMode=${encodeURIComponent(cmcMode)}`)
+    cmcMode === 'between' && params.push(`cmcAlt=${encodeURIComponent(cmcAlt)}`)
+  }
 
   return params.join('&')
 }
@@ -152,10 +208,12 @@ export function parseQueryString(qs: string) {
 
     if (k === 'cardName' || k === 'ruleText' || k === 'cardType') {
       filters[k] = decodeURIComponent(v)
+      filters.active[k] = true
     }
 
     if (k === 'cmcMode') {
       filters[k] = decodeURIComponent(v) as CMCMode
+      filters.active.cmc = true
     }
 
     if (k === 'cmc' || k === 'cmcAlt') {
@@ -168,6 +226,11 @@ export function parseQueryString(qs: string) {
 
     if (k === 'colors') {
       filters[k] = decodeURIComponent(v).split('')
+      filters.active.colors = true
+    }
+
+    if (k === 'queryText') {
+      filters[k] = decodeURIComponent(v)
     }
   })
 

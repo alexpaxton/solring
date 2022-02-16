@@ -41,7 +41,7 @@ export const Card: FC<Props> = ({
       : card_faces[0].image_uris?.normal
   }
 
-  const url = image?.split('?')[0] || ''
+  const url = image?.split('?')[0]
   const containerClass = classnames(className, {
     selected,
     illegal: isIllegal,
@@ -64,7 +64,7 @@ export const Card: FC<Props> = ({
         </Menu>
       )}
       {children}
-      <Image src={url} layout="fill" priority={true} />
+      {url && <Image src={url} layout="fill" priority={true} />}
     </Container>
   )
 }

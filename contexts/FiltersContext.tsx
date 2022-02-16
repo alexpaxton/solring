@@ -2,6 +2,7 @@ import { createContext, Dispatch, FC, useContext, useReducer } from 'react'
 import { CMCMode, ColorMode } from 'types'
 
 export interface FiltersState {
+  queryText: string
   cardName: string
   cardType: string
   ruleText: string
@@ -10,6 +11,13 @@ export interface FiltersState {
   cmc: number
   cmcAlt: number
   cmcMode: CMCMode
+  active: {
+    cardName: boolean
+    cardType: boolean
+    ruleText: boolean
+    colors: boolean
+    cmc: boolean
+  }
 }
 
 interface UpdateNameAction {
@@ -67,6 +75,20 @@ interface ResetAction {
   type: 'reset'
 }
 
+interface UpdateQueryTextAction {
+  type: 'updateQueryText'
+  payload: {
+    queryText: string
+  }
+}
+
+interface UpdateActiveFilterAction {
+  type: 'updateActiveFilter'
+  payload: {
+    [key: string]: boolean
+  }
+}
+
 type FiltersAction =
   | UpdateNameAction
   | UpdateTypeAction
@@ -76,8 +98,11 @@ type FiltersAction =
   | UpdateCMCAction
   | RehydrateFiltersAction
   | ResetAction
+  | UpdateQueryTextAction
+  | UpdateActiveFilterAction
 
 export const initialFiltersState: FiltersState = {
+  queryText: '',
   cardName: '',
   cardType: '',
   ruleText: '',
@@ -86,6 +111,13 @@ export const initialFiltersState: FiltersState = {
   cmc: 0,
   cmcAlt: 0,
   cmcMode: 'atLeast',
+  active: {
+    cardName: false,
+    cardType: false,
+    ruleText: false,
+    colors: false,
+    cmc: false,
+  },
 }
 
 const filtersReducer = (state: FiltersState, action: FiltersAction) => {
@@ -120,6 +152,11 @@ const filtersReducer = (state: FiltersState, action: FiltersAction) => {
         ...state,
         ...action.payload,
       }
+    case 'updateQueryText':
+      return {
+        ...state,
+        ...action.payload,
+      }
     case 'rehydrateFilters':
       return {
         ...state,
@@ -131,6 +168,14 @@ const filtersReducer = (state: FiltersState, action: FiltersAction) => {
         ruleText: '',
         cardType: '',
         cardName: '',
+      }
+    case 'updateActiveFilter':
+      return {
+        ...state,
+        active: {
+          ...state.active,
+          ...action.payload,
+        },
       }
     default:
       throw new Error()
