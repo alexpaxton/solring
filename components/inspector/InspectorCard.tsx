@@ -26,8 +26,8 @@ export const InspectorCard: FC<Props> = ({ card, cardFace, setCardFace }) => {
   }
 
   if (card.card_faces) {
-    const frontImage = card?.card_faces[0].image_uris?.large || ''
-    const backImage = card?.card_faces[1].image_uris?.large || ''
+    const frontImage = card?.card_faces[0].image_uris?.large
+    const backImage = card?.card_faces[1].image_uris?.large
 
     return (
       <CardContainer className={cardFace}>
@@ -35,10 +35,12 @@ export const InspectorCard: FC<Props> = ({ card, cardFace, setCardFace }) => {
           <Refresh />
         </FlipButton>
         <SmallCard className="front" onClick={() => setCardFace('front')}>
-          <Image src={frontImage} layout="fill" priority={true} />
+          {frontImage && (
+            <Image src={frontImage} layout="fill" priority={true} />
+          )}
         </SmallCard>
         <SmallCard className="back" onClick={() => setCardFace('back')}>
-          <Image src={backImage} layout="fill" priority={true} />
+          {backImage && <Image src={backImage} layout="fill" priority={true} />}
         </SmallCard>
       </CardContainer>
     )
@@ -49,7 +51,7 @@ export const InspectorCard: FC<Props> = ({ card, cardFace, setCardFace }) => {
   return (
     <CardContainer>
       <BigCard>
-        <Image src={img} layout="fill" priority={true} />
+        {img && <Image src={img} layout="fill" priority={true} />}
       </BigCard>
     </CardContainer>
   )
